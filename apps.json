@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-28T08:53:30Z",
+  "generated_at": "2026-07-28T15:20:24Z",
   "source": {
     "name": "conversun/fnos-apps",
     "url": "https://github.com/conversun/fnos-apps"
@@ -381,7 +381,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:23:28Z",
-      "download_count": 11,
+      "download_count": 12,
       "app_type": "docker",
       "category": "system"
     },
@@ -1222,7 +1222,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:23:29Z",
-      "download_count": 87,
+      "download_count": 88,
       "app_type": "docker",
       "category": "content"
     },
@@ -2487,7 +2487,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:24:55Z",
-      "download_count": 8,
+      "download_count": 9,
       "app_type": "docker",
       "category": "content"
     },
@@ -2571,7 +2571,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:24:46Z",
-      "download_count": 159,
+      "download_count": 164,
       "app_type": "docker",
       "category": "media"
     },
@@ -3054,7 +3054,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:25:05Z",
-      "download_count": 32,
+      "download_count": 33,
       "app_type": "docker",
       "category": "automation",
       "post_install_note": "ZoneFoundry Bridge 客户端容器使用 host 网络模式运行，安装后请填写 ZF_TOKEN。"
