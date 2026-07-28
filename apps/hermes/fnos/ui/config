@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "hermes.Application":
+        {
+            "title": "Hermes",
+            "desc": "Hermes AI Agent",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "9119",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

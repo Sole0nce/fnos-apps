@@ -1,0 +1,15 @@
+appname         = hermes
+version         = 0.0.0
+display_name    = Hermes
+platform        = x86
+maintainer      = NousResearch
+maintainer_url  = https://github.com/NousResearch/hermes-agent
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = hermes.Application
+service_port    = 9119
+checkport       = false
+desc            = 自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。
+source          = thirdparty
+checksum        =
