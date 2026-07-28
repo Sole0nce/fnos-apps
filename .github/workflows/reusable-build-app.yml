@@ -255,6 +255,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update apps.json
-        run: gh workflow run update-apps-json.yml --ref main
+        run: gh workflow run update-apps-json.yml --ref main_custom
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

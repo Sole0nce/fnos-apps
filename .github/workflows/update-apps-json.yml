@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: main_custom
 
       - name: Generate apps.json
         run: bash scripts/ci/generate-apps-json.sh
@@ -50,7 +50,7 @@ jobs:
             echo "[WARN] Push failed (attempt $attempt), pulling and regenerating..."
             git reset HEAD~1
             git checkout -- apps.json
-            git pull --rebase origin main
+            git pull --rebase origin main_custom
             bash scripts/ci/generate-apps-json.sh
           done
 
