@@ -1,0 +1,22 @@
+#!/bin/bash
+
+LOG_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.log"
+PID_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.pid"
+
+APP_DIR="${TRIM_APPDEST}"
+APP_DATA_DIR="${TRIM_PKGVAR}"
+
+# Hermes uses Docker — no binary service command needed
+SERVICE_COMMAND=""
+SVC_BACKGROUND=y
+SVC_WRITE_PID=y
+
+service_preuninst() {
+    # Ensure all Hermes containers are stopped
+    docker compose -f ${APP_DIR}/app/docker-compose.yaml down 2>/dev/null || true
+    docker compose -f ${APP_DIR}/app/docker-compose.yaml rm -f 2>/dev/null || true
+}
+
+service_poststop() {
+    service_preuninst
+}
