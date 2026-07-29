@@ -288,9 +288,8 @@ config_callback ()
 
 start_daemon ()
 {
-    if [ -n "$DOCKER_NAME" ]; then
-        echo "Docker-based app, using docker compose up -d"
-        docker compose -f ${TRIM_APPDEST}/app/docker-compose.yaml up -d
+	if [ -n "$DOCKER_NAME" ]; then
+        echo "DOCKER_NAME is set to '$DOCKER_NAME', exiting function."
         return
     fi
     i=0
@@ -328,9 +327,8 @@ start_daemon ()
 
 stop_daemon ()
 {
-    if [ -n "$DOCKER_NAME" ]; then
-        echo "Docker-based app, using docker compose down"
-        docker compose -f ${TRIM_APPDEST}/app/docker-compose.yaml down
+	if [ -n "$DOCKER_NAME" ]; then
+        echo "DOCKER_NAME is set to '$DOCKER_NAME', exiting function."
         return
     fi
     if [ -n "${PID_FILE}" -a -r "${PID_FILE}" ]; then

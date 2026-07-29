@@ -1,0 +1,9 @@
+{
+    "type": "http",
+    "path": "/",
+    "expect_status": [200, 302],
+    "startup_timeout_seconds": 300,
+    "post_install_warmup_seconds": 60,
+    "skip_arch": [],
+    "note": "Hermes AI Agent Dashboard 需要首次启动时生成配置，Docker 拉取镜像也需时间，请耐心等待。"
+}
