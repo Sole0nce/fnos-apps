@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-30T10:33:22Z",
+  "generated_at": "2026-07-30T16:47:53Z",
   "source": {
     "name": "conversun/fnos-apps",
     "url": "https://github.com/conversun/fnos-apps"
@@ -381,7 +381,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:23:28Z",
-      "download_count": 17,
+      "download_count": 18,
       "app_type": "docker",
       "category": "system"
     },
@@ -795,7 +795,7 @@
       "fpk_version": "1.8.1",
       "release_tag": "fnos-apps-store/v1.8.1",
       "service_port": 8011,
-      "homepage_url": "https://github.com/conversun/fnos-store",
+      "homepage_url": "https://github.com/Sole0nce/fnos-store",
       "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/fnos-apps-store/fnos/ICON_256.PNG",
       "platforms": [
         "x86",
@@ -2255,7 +2255,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:24:27Z",
-      "download_count": 627,
+      "download_count": 630,
       "app_type": "native",
       "category": "automation"
     },
@@ -2571,7 +2571,7 @@
         "arm"
       ],
       "updated_at": "2026-07-25T17:24:46Z",
-      "download_count": 181,
+      "download_count": 188,
       "app_type": "docker",
       "category": "media"
     },
