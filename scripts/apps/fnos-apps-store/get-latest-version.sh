@@ -3,7 +3,7 @@ set -euo pipefail
 
 INPUT_VERSION="${1:-}"
 
-TAG=$(curl -sL "https://api.github.com/repos/conversun/fnos-store/releases/latest" | \
+TAG=$(curl -sL "https://api.github.com/repos/Sole0nce/fnos-store/releases/latest" | \
   jq -r '.tag_name')
 
 if [ -n "$INPUT_VERSION" ]; then
