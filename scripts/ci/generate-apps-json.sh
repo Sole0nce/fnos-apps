@@ -4,7 +4,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-REPO="conversun/fnos-apps"
+REPO="Sole0nce/fnos-apps"
 OUTPUT="${REPO_ROOT}/apps.json"
 
 command -v jq >/dev/null 2>&1 || { echo "[ERROR] jq is required" >&2; exit 1; }
@@ -97,7 +97,7 @@ for app_dir in "${REPO_ROOT}"/scripts/apps/*/; do
   version="${tag_version%%-r[0-9]*}"
   fpk_version="$tag_version"
 
-  icon_url="https://raw.githubusercontent.com/${REPO}/main/apps/${slug}/fnos/ICON_256.PNG"
+  icon_url="https://raw.githubusercontent.com/${REPO}/main_custom/apps/${slug}/fnos/ICON_256.PNG"
 
   app_type="native"
   if [ -f "${REPO_ROOT}/apps/${slug}/fnos/docker/docker-compose.yaml" ]; then
