@@ -7,14 +7,19 @@ Reimplements the trim.hermes ELF gateway in pure Python:
      here via ui/config gatewaySocket).
   2. Rewrites the Host header to 127.0.0.1:<dashboard-port> so Hermes'
      dashboard Host validation accepts the request.
-  3. Forwards plain HTTP to the dashboard and streams WebSocket upgrades
+  3. Injects X-Forwarded-Prefix (from --gateway-prefix) so the dashboard
+     generates prefix-aware asset URLs; without it the HTML references
+     "/assets/..." which the fnOS gateway cannot route back, leaving the
+     desktop iframe blank.
+  4. Forwards plain HTTP to the dashboard and streams WebSocket upgrades
      through unchanged.
-  4. Spawns and supervises `hermes dashboard` on 127.0.0.1, restarting it
+  5. Spawns and supervises `hermes dashboard` on 127.0.0.1, restarting it
      if it dies.
 
 Command line (mirrors trim-hermes-wrapper):
   hermes_wrapper.py --socket <path> --dashboard-host 127.0.0.1
                     --dashboard-port 19119 --app-root <dir> --data-root <dir>
+                    [--gateway-prefix /app/hermes-agent-native]
 """
 
 import argparse
@@ -165,8 +170,16 @@ def read_request_head(conn: socket.socket, timeout: float = 30.0) -> bytes:
     return buf
 
 
-def rewrite_request(raw: bytes, host: str, port: int) -> bytes:
-    """Rewrite Host header + absolute-form request line to dashboard form."""
+def rewrite_request(raw: bytes, host: str, port: int,
+                    gateway_prefix: str = "") -> bytes:
+    """Rewrite Host header + absolute-form request line to dashboard form.
+
+    When `gateway_prefix` is non-empty (e.g. "/app/hermes-agent-native"),
+    inject an X-Forwarded-Prefix header so the dashboard generates
+    prefix-aware asset URLs. Without it the served HTML references
+    "/assets/..." which the fnOS gateway cannot route back to the app,
+    leaving the desktop iframe blank.
+    """
     try:
         head, _, rest = raw.partition(b"\r\n\r\n")
         lines = head.split(b"\r\n")
@@ -193,11 +206,16 @@ def rewrite_request(raw: bytes, host: str, port: int) -> bytes:
                 replaced_host = True
             elif low.startswith(b"connection:"):
                 continue  # we force our own Connection: close
+            elif gateway_prefix and low.startswith(b"x-forwarded-prefix:"):
+                continue  # replace stale prefix from upstream proxy
             else:
                 new_headers.append(line)
         if not replaced_host:
             new_headers.append(
                 ("Host: %s:%d" % (host, port)).encode("latin-1"))
+        if gateway_prefix:
+            new_headers.append(
+                ("X-Forwarded-Prefix: %s" % gateway_prefix).encode("latin-1"))
         new_headers.append(HEADER_CONNECTION_CLOSE)
         return b"\r\n".join(new_headers) + b"\r\n\r\n" + rest
     except Exception as exc:  # noqa: BLE001
@@ -205,11 +223,12 @@ def rewrite_request(raw: bytes, host: str, port: int) -> bytes:
         return raw
 
 
-def proxy_http(conn: socket.socket, host: str, port: int) -> None:
+def proxy_http(conn: socket.socket, host: str, port: int,
+               gateway_prefix: str = "") -> None:
     raw = read_request_head(conn)
     if not raw:
         return
-    rewritten = rewrite_request(raw, host, port)
+    rewritten = rewrite_request(raw, host, port, gateway_prefix)
     try:
         upstream = socket.create_connection((host, port), timeout=10)
     except OSError as exc:
@@ -252,7 +271,9 @@ def proxy_http(conn: socket.socket, host: str, port: int) -> None:
             pass
 
 
-def accept_loop(sock_path: str, host: str, port: int, supervisor: DashboardSupervisor) -> None:
+def accept_loop(sock_path: str, host: str, port: int,
+                supervisor: DashboardSupervisor,
+                gateway_prefix: str = "") -> None:
     if os.path.exists(sock_path):
         try:
             os.unlink(sock_path)
@@ -266,7 +287,8 @@ def accept_loop(sock_path: str, host: str, port: int, supervisor: DashboardSuper
 
     while True:
         conn, _ = server.accept()
-        threading.Thread(target=proxy_http, args=(conn, host, port),
+        threading.Thread(target=proxy_http,
+                         args=(conn, host, port, gateway_prefix),
                          daemon=True).start()
 
 
@@ -291,6 +313,10 @@ def main() -> int:
     parser.add_argument("--dashboard-port", type=int, default=19119)
     parser.add_argument("--app-root", required=True)
     parser.add_argument("--data-root", required=True)
+    parser.add_argument("--gateway-prefix", default="",
+                        help="e.g. /app/hermes-agent-native; injected as "
+                             "X-Forwarded-Prefix so the dashboard emits "
+                             "prefix-aware asset URLs for the fnOS iframe")
     args = parser.parse_args()
 
     setup_logging(args.data_root)
@@ -323,7 +349,7 @@ def main() -> int:
 
     try:
         accept_loop(args.socket, args.dashboard_host, args.dashboard_port,
-                    supervisor)
+                    supervisor, args.gateway_prefix)
     except KeyboardInterrupt:
         pass
     finally:

@@ -22,3 +22,4 @@ icons/**
 
 # Agent workspace
 .sisyphus/__pycache__/
+__pycache__/
