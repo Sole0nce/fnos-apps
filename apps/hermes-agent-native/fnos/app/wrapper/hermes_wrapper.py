@@ -292,6 +292,25 @@ def accept_loop(sock_path: str, host: str, port: int,
                          daemon=True).start()
 
 
+def tcp_accept_loop(listen_port: int, host: str, port: int,
+                    gateway_prefix: str = "") -> None:
+    """Expose the dashboard over TCP (direct browser access, e.g. fnOS
+    desktop icon with ui/config type=url). Unlike the Unix-socket path this
+    must NOT inject X-Forwarded-Prefix: the browser hits the dashboard
+    directly, so asset URLs must stay unprefixed."""
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server.bind(("0.0.0.0", listen_port))
+    server.listen(64)
+    LOG.info("listening on 0.0.0.0:%d -> %s:%d", listen_port, host, port)
+
+    while True:
+        conn, _ = server.accept()
+        threading.Thread(target=proxy_http,
+                         args=(conn, host, port, gateway_prefix),
+                         daemon=True).start()
+
+
 def dashboard_ready(host: str, port: int, timeout: float = 90.0) -> bool:
     deadline = time.time() + timeout
     while time.time() < deadline:
@@ -317,6 +336,9 @@ def main() -> int:
                         help="e.g. /app/hermes-agent-native; injected as "
                              "X-Forwarded-Prefix so the dashboard emits "
                              "prefix-aware asset URLs for the fnOS iframe")
+    parser.add_argument("--listen-port", type=int, default=0,
+                        help="optional TCP port to expose the dashboard on "
+                             "0.0.0.0 (direct browser access, no prefix)")
     args = parser.parse_args()
 
     setup_logging(args.data_root)
@@ -338,6 +360,12 @@ def main() -> int:
     # upstream is up. The supervisor thread respawns it in the background.
     supervisor.start()
     threading.Thread(target=supervisor.supervise, daemon=True).start()
+
+    if args.listen_port:
+        threading.Thread(target=tcp_accept_loop,
+                         args=(args.listen_port, args.dashboard_host,
+                               args.dashboard_port, ""),
+                         daemon=True).start()
 
     def _shutdown(_sig, _frame):
         LOG.info("shutdown signal received")

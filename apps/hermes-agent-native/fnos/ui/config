@@ -4,11 +4,10 @@
       "title": "Hermes-原生版",
       "desc": "The Agent That Grows With You.",
       "icon": "images/icon_{0}.png",
-      "type": "iframe",
+      "type": "url",
+      "port": "19119",
       "protocol": "http",
-      "gatewaySocket": "run/hermes-agent-native.sock",
-      "gatewayPrefix": "/app/hermes-agent-native",
-      "url": "/app/hermes-agent-native/",
+      "url": "/",
       "allUsers": false
     }
   }

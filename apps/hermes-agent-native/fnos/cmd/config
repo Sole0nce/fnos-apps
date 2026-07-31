@@ -1,7 +1,8 @@
 #!/bin/bash
 
 FWPORTS_FILE="${TRIM_PKGETC}/${TRIM_APPNAME}.sc"
-DASHBOARD_PORT="${TRIM_HERMES_DASHBOARD_PORT:-19119}"
+DASHBOARD_PORT="${TRIM_HERMES_DASHBOARD_PORT:-19120}"
+LISTEN_PORT="${TRIM_HERMES_LISTEN_PORT:-19119}"
 GATEWAY_SOCKET="${TRIM_APPDEST}/run/hermes-agent-native.sock"
 GATEWAY_PREFIX="/app/${TRIM_APPNAME}"
 
@@ -37,4 +38,5 @@ CMD=(
   "--app-root" "${APP_ROOT}"
   "--data-root" "${DATA_ROOT}"
   "--gateway-prefix" "${GATEWAY_PREFIX}"
+  "--listen-port" "${LISTEN_PORT}"
 )
