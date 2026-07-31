@@ -43,12 +43,15 @@ uv python install "${PYTHON_VER}"
 UV_PY_BIN="$(uv python find "${PYTHON_VER}")"
 UV_PY_DIR="$(cd "$(dirname "$(dirname "$UV_PY_BIN")")" && pwd)"
 echo "==> python-build-standalone: $UV_PY_DIR"
-cp -a "$UV_PY_DIR" "$WORK_DIR/runtime/python"
 
-# Install directly into the standalone's site-packages (no venv layer).
-# python-build-standalone is marked externally managed (PEP 668) -> flag needed.
-uv pip install --break-system-packages --python "$WORK_DIR/runtime/python/bin/python3.11" \
+# Install into the ORIGINAL standalone path FIRST -- uv caches interpreter
+# metadata keyed on the canonical path; installing after `cp` makes uv resolve
+# scripts/bin against the CI machine path and fail with path traversal errors.
+uv pip install --break-system-packages --python "$UV_PY_BIN" \
   "hermes-agent[all]==${VERSION}"
+
+# Then copy the whole (already-populated) standalone into the package.
+cp -a "$UV_PY_DIR" "$WORK_DIR/runtime/python"
 
 # Rewrite bin/* console scripts (pip embeds CI-machine shebangs) into
 # relocatable sh wrappers, trim.hermes style.
