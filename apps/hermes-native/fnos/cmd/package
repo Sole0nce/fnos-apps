@@ -4,7 +4,7 @@ seed_config_if_missing() {
   if [ ! -f "${HERMES_HOME}/config.yaml" ]; then
     cat >"${HERMES_HOME}/config.yaml" <<'EOF'
 {
-  "_managed_by": "hermes-agent",
+  "_managed_by": "hermes-native",
   "_schema_version": 1,
   "model": {
     "default": "",
@@ -34,7 +34,7 @@ EOF
 
   if [ ! -f "${HERMES_HOME}/.env" ]; then
     cat >"${HERMES_HOME}/.env" <<'EOF'
-# Managed by hermes-agent install callback.
+# Managed by hermes-native install callback.
 # Add provider secrets here during Hermes integration.
 API_SERVER_ENABLED=true
 API_SERVER_HOST=127.0.0.1
@@ -49,7 +49,7 @@ EOF
 
   if [ ! -f "${WORKSPACE_ROOT}/README.md" ]; then
     cat >"${WORKSPACE_ROOT}/README.md" <<'EOF'
-# hermes-agent workspace
+# hermes-native workspace
 
 This directory is reserved for future Hermes task workspaces and user-approved
 file operations inside fnOS.
@@ -74,7 +74,7 @@ validate_tar_entry_path() {
   esac
 
   case "${normalized}" in
-    runtime/.hermes-agent-runtime-ready)
+    runtime/.hermes-native-runtime-ready)
       print_log "package" "runtime archive must not provide readiness marker"
       return 1
       ;;
@@ -99,7 +99,7 @@ validate_runtime_archive() {
 
 ensure_runtime_extracted() {
   local archive="${APP_ROOT}/runtime.tgz"
-  local marker="${APP_ROOT}/runtime/.hermes-agent-runtime-ready"
+  local marker="${APP_ROOT}/runtime/.hermes-native-runtime-ready"
   local tmp_runtime="${APP_ROOT}/runtime.unpacking.$$"
 
   if [ -x "${RUNTIME_ROOT}/python/bin/hermes" ]; then

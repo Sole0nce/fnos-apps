@@ -34,7 +34,7 @@ fi
 
 ${SUDO_SSH} "bash -c '
 set -x
-export TRIM_APPNAME=hermes-agent
+export TRIM_APPNAME=hermes-native
 export TRIM_APPDEST=/tmp/hagent-test/app
 export TRIM_PKGVAR=/tmp/hagent-test/data
 export TRIM_PKGETC=/tmp/hagent-test/etc
@@ -52,19 +52,19 @@ test -f /tmp/hagent-test/app/runtime/BUILD-INFO.json && echo \"runtime unpacked\
 echo \"=== 2. start ===\"
 /tmp/hagent-test/cmd/main start
 sleep 2
-test -S /tmp/hagent-test/app/run/hermes-agent.sock && echo \"socket created\"
+test -S /tmp/hagent-test/app/run/hermes-native.sock && echo \"socket created\"
 /tmp/hagent-test/cmd/main status
 
 echo \"=== 3. socket 502 fallback (cold start) ===\"
-curl -s --unix-socket /tmp/hagent-test/app/run/hermes-agent.sock http://localhost/ -o /dev/null -w \"http=%{http_code}\\n\" --max-time 3 || echo \"(dashboard may be up already)\"
+curl -s --unix-socket /tmp/hagent-test/app/run/hermes-native.sock http://localhost/ -o /dev/null -w \"http=%{http_code}\\\\n\" --max-time 3 || echo \"(dashboard may be up already)\"
 
 echo \"=== 4. browser flow ===\"
 sleep 8
-curl -s --unix-socket /tmp/hagent-test/app/run/hermes-agent.sock http://localhost/ -o /tmp/dash-index.html --max-time 10
+curl -s --unix-socket /tmp/hagent-test/app/run/hermes-native.sock http://localhost/ -o /tmp/dash-index.html --max-time 10
 TOKEN=\$(grep -o '\''__HERMES_SESSION_TOKEN__=\"[^\"]*\"'\'' /tmp/dash-index.html | head -1 | sed '\''s/.*\"\\(.*\\)\"/\\1/'\'')
 echo \"token_len=\${#TOKEN}\"
 grep -o \"__HERMES_AUTH_REQUIRED__=[a-z]*\" /tmp/dash-index.html | head -1
-curl -s --unix-socket /tmp/hagent-test/app/run/hermes-agent.sock http://localhost/api/status -H \"X-Hermes-Session-Token: \${TOKEN}\" --max-time 10 | head -c 200; echo
+curl -s --unix-socket /tmp/hagent-test/app/run/hermes-native.sock http://localhost/api/status -H \"X-Hermes-Session-Token: \\${TOKEN}\" --max-time 10 | head -c 200; echo
 
 echo \"=== 5. stop ===\"
 /tmp/hagent-test/cmd/main stop

@@ -1,4 +1,4 @@
-appname         = hermes-agent
+appname         = hermes-native
 version         = 0.0.0
 display_name    = Hermes-原生版
 platform        = x86
@@ -9,7 +9,7 @@ distributor_url = https://github.com/Sole0nce/fnos-apps
 helpurl         = https://github.com/NousResearch/hermes-agent
 os_min_version  = 1.1.3100
 desktop_uidir   = ui
-desktop_applaunchname = hermes-agent.Application
+desktop_applaunchname = hermes-native.Application
 service_port    = 19119
 checkport       = false
 desc            = 自进化 AI 智能体（原生 package 版），多模型供应商、多消息平台接入，持久记忆与工具调用。安装零联网，运行时预打包。
