@@ -1,0 +1,15 @@
+{
+  ".url": {
+    "hermes-agent.Application": {
+      "title": "Hermes-原生版",
+      "desc": "The Agent That Grows With You.",
+      "icon": "images/icon_{0}.png",
+      "type": "iframe",
+      "protocol": "http",
+      "gatewaySocket": "run/hermes-agent.sock",
+      "gatewayPrefix": "/app/hermes-agent",
+      "url": "/app/hermes-agent/",
+      "allUsers": false
+    }
+  }
+}

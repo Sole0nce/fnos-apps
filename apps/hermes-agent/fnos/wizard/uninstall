@@ -1,0 +1,28 @@
+[
+  {
+    "stepTitle": "卸载应用",
+    "items": [
+      {
+        "type": "radio",
+        "field": "wizard_delete_data",
+        "label": "是否删除 Hermes 数据目录",
+        "options": [
+          {
+            "label": "仅卸载，保留配置与会话数据",
+            "value": "false"
+          },
+          {
+            "label": "删除应用数据(不可恢复)",
+            "value": "true"
+          }
+        ],
+        "rules": [
+          {
+            "required": true,
+            "message": "请选择是否删除数据"
+          }
+        ]
+      }
+    ]
+  }
+]

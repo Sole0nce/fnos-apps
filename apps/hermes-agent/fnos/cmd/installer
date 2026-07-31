@@ -1,0 +1,3 @@
+#!/bin/bash
+# Package-mode app: no Docker installer framework needed.
+exit 0
