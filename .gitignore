@@ -21,4 +21,4 @@ scripts/misnap_*.sh
 icons/**
 
 # Agent workspace
-.sisyphus/
+.sisyphus/__pycache__/

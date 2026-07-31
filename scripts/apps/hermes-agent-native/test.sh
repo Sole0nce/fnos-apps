@@ -21,16 +21,8 @@ SUDO_SSH="ssh admin@${NAS_HOST} sudo"
 echo "==> NAS=${NAS_HOST}"
 ${SSH} "test -d /tmp/hagent-test/app && echo 'test dir ok' || { echo 'missing /tmp/hagent-test/app - build & extract first'; exit 1; }"
 
-# Point mock runtime at the real hermes venv if present (best-effort)
-${SUDO_SSH} "bash -c '
-REAL_VENV=/var/apps/hermes-agent/home/data/venv
-MOCK_RT=/tmp/hagent-test/app/runtime/python
-if [ -x \${REAL_VENV}/bin/hermes ]; then
-  ln -sf \${REAL_VENV}/bin/python3 \${MOCK_RT}/bin/python3
-  ln -sf \${REAL_VENV}/bin/hermes \${MOCK_RT}/bin/hermes
-  echo \"using real venv: \${REAL_VENV}\"
-fi
-'"
+# NOTE: runtime is self-contained (python-build-standalone + sh wrappers),
+# no external venv mock needed.
 
 ${SUDO_SSH} "bash -c '
 set -x

@@ -27,18 +27,38 @@ trap "rm -rf $WORK_DIR" EXIT
 
 mkdir -p "$WORK_DIR/app/wrapper" "$WORK_DIR/app/run"
 
-# ---------- 1. Python venv with hermes-agent[all] ----------
+# ---------- 1. Python runtime: python-build-standalone (relocatable) ----------
+# NOTE: do NOT use `uv venv` -- a venv's bin/python is an absolute symlink
+# into the CI machine (~/.local/share/uv/python/...) which does not exist on
+# the NAS. Instead we copy the whole python-build-standalone dist (the same
+# artifact uv caches): bin/python3.11 is a relocatable shim, python3.11.real
+# is the ELF, lib/ + system-libs/ are bundled. Mirrors trim.hermes layout.
 if ! command -v uv >/dev/null 2>&1; then
   echo "==> Installing uv"
   curl -LsSf https://astral.sh/uv/install.sh | sh
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
-uv venv --python "${PYTHON_VER}" "$WORK_DIR/runtime/python"
-uv pip install --python "$WORK_DIR/runtime/python/bin/python" \
+uv python install "${PYTHON_VER}"
+UV_PY_BIN="$(uv python find "${PYTHON_VER}")"
+UV_PY_DIR="$(cd "$(dirname "$(dirname "$UV_PY_BIN")")" && pwd)"
+echo "==> python-build-standalone: $UV_PY_DIR"
+cp -a "$UV_PY_DIR" "$WORK_DIR/runtime/python"
+
+# Install directly into the standalone's site-packages (no venv layer).
+uv pip install --python "$WORK_DIR/runtime/python/bin/python3.11" \
   "hermes-agent[all]==${VERSION}"
 
-PY_ACTUAL=$("$WORK_DIR/runtime/python/bin/python" -c "import sys; print('.'.join(map(str, sys.version_info[:3])))")
+# Rewrite bin/* console scripts (pip embeds CI-machine shebangs) into
+# relocatable sh wrappers, trim.hermes style.
+python3 "$SCRIPT_DIR/rewrite-console-scripts.py" "$WORK_DIR/runtime/python"
+
+# Ensure python3/python symlinks exist (cmd/config resolves python3)
+cd "$WORK_DIR/runtime/python/bin"
+[ -e python3 ] || ln -s python3.11 python3
+[ -e python ] || ln -s python3 python
+
+PY_ACTUAL=$("$WORK_DIR/runtime/python/bin/python3.11" -c "import sys; print('.'.join(map(str, sys.version_info[:3])))")
 
 # ---------- 2. Node runtime (bundled next to the venv) ----------
 echo "==> Downloading node ${NODE_VERSION}"
