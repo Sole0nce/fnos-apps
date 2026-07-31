@@ -42,7 +42,10 @@ fi
 uv python install "${PYTHON_VER}"
 UV_PY_BIN="$(uv python find "${PYTHON_VER}")"
 UV_PY_DIR="$(cd "$(dirname "$(dirname "$UV_PY_BIN")")" && pwd)"
-echo "==> python-build-standalone: $UV_PY_DIR"
+# uv keeps a versionless alias symlink (cpython-3.11-linux-x86_64-gnu ->
+# cpython-3.11.15-...): resolve it so we copy real content, not the link.
+UV_PY_DIR_REAL="$(readlink -f "$UV_PY_DIR")"
+echo "==> python-build-standalone: $UV_PY_DIR_REAL"
 
 # Install into the ORIGINAL standalone path FIRST -- uv caches interpreter
 # metadata keyed on the canonical path; installing after `cp` makes uv resolve
@@ -51,7 +54,7 @@ uv pip install --break-system-packages --python "$UV_PY_BIN" \
   "hermes-agent[all]==${VERSION}"
 
 # Then copy the whole (already-populated) standalone into the package.
-cp -a "$UV_PY_DIR" "$WORK_DIR/runtime/python"
+cp -aL "$UV_PY_DIR_REAL" "$WORK_DIR/runtime/python"
 
 # Rewrite bin/* console scripts (pip embeds CI-machine shebangs) into
 # relocatable sh wrappers, trim.hermes style.
