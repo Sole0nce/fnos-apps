@@ -1,0 +1,14 @@
+# Force LF line endings for shell scripts and config files that must be
+# executable / POSIX-compatible on fnOS. Windows autocrlf=true would convert
+# these to CRLF, breaking shebangs (#!/bin/bash\r) and docker-compose parsing.
+*.sh text eol=lf
+*.bash text eol=lf
+fnos/cmd/** text eol=lf
+fnos/docker/** text eol=lf
+fnos/manifest text eol=lf
+fnos/config/** text eol=lf
+fnos/*.sc text eol=lf
+shared/cmd/** text eol=lf
+scripts/**/*.sh text eol=lf
+var/** text eol=lf
+*.env text eol=lf

@@ -88,7 +88,11 @@ echo "service_postconfig"
 
 check_docker()
 {
-	FILE_PATH="${TRIM_APPDEST}/app/docker-compose.yaml"
+	# Hermes fpk 布局：docker-compose.yaml 位于 docker/ 目录（build.sh 打包位置）
+	FILE_PATH="${TRIM_APPDEST}/docker/docker-compose.yaml"
+	if [ ! -f "$FILE_PATH" ]; then
+		FILE_PATH="${TRIM_APPDEST}/app/docker-compose.yaml"
+	fi
 	if [ -f "$FILE_PATH" ]; then
 		# Collect all container names from docker-compose.yaml
 		DOCKER_NAME=$(cat $FILE_PATH | grep "container_name" | awk -F ':' '{print $2}' | xargs | tr ' ' ',')

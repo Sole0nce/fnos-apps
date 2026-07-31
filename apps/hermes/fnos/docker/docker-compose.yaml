@@ -3,9 +3,9 @@ services:
     image: ${DOCKER_MIRROR}nousresearch/hermes-agent:latest
     container_name: hermes
     restart: unless-stopped
-    command: dashboard --host 0.0.0.0 --skip-build
+    command: sh -c "python3 /opt/data/hermes_proxy.py & exec hermes dashboard --host 127.0.0.1 --skip-build"
     ports:
-      - "${TRIM_SERVICE_PORT}:9119"
+      - "${TRIM_SERVICE_PORT}:9120"
     volumes:
       - ${TRIM_PKGVAR:?}/data:/opt/data
     environment:

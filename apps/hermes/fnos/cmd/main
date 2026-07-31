@@ -39,6 +39,18 @@ case $1 in
             exit 3
         fi
         ;;
+    restart)
+        stop_daemon
+        sleep 2
+        start_daemon
+        if daemon_status; then
+            echo "${DNAME} restarted"
+            exit 0
+        else
+            echo "${DNAME} restart failed"
+            exit 1
+        fi
+        ;;
     *)
         exit 1
         ;;
