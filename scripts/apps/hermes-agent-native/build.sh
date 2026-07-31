@@ -25,7 +25,7 @@ echo "==> Building hermes-agent ${VERSION} (node ${NODE_VERSION}, python ${PYTHO
 WORK_DIR=$(mktemp -d)
 trap "rm -rf $WORK_DIR" EXIT
 
-mkdir -p "$WORK_DIR/app/wrapper" "$WORK_DIR/app/run"
+mkdir -p "$WORK_DIR/app/wrapper" "$WORK_DIR/app/run" "$WORK_DIR/runtime"
 
 # ---------- 1. Python runtime: python-build-standalone (relocatable) ----------
 # NOTE: do NOT use `uv venv` -- a venv's bin/python is an absolute symlink
