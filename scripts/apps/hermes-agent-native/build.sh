@@ -46,7 +46,8 @@ echo "==> python-build-standalone: $UV_PY_DIR"
 cp -a "$UV_PY_DIR" "$WORK_DIR/runtime/python"
 
 # Install directly into the standalone's site-packages (no venv layer).
-uv pip install --python "$WORK_DIR/runtime/python/bin/python3.11" \
+# python-build-standalone is marked externally managed (PEP 668) -> flag needed.
+uv pip install --break-system-packages --python "$WORK_DIR/runtime/python/bin/python3.11" \
   "hermes-agent[all]==${VERSION}"
 
 # Rewrite bin/* console scripts (pip embeds CI-machine shebangs) into
