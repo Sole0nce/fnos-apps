@@ -2,7 +2,7 @@
     ".url": {
         "hermes.Application":
         {
-            "title": "Hermes",
+            "title": "Hermes-容器版",
             "desc": "Hermes AI Agent",
             "icon": "images/{0}.png",
             "type": "url",

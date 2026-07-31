@@ -1,14 +1,14 @@
 {
   ".url": {
-    "hermes-native.Application": {
+    "hermes-agent-native.Application": {
       "title": "Hermes-原生版",
       "desc": "The Agent That Grows With You.",
       "icon": "images/icon_{0}.png",
       "type": "iframe",
       "protocol": "http",
-      "gatewaySocket": "run/hermes-native.sock",
-      "gatewayPrefix": "/app/hermes-native",
-      "url": "/app/hermes-native/",
+      "gatewaySocket": "run/hermes-agent-native.sock",
+      "gatewayPrefix": "/app/hermes-agent-native",
+      "url": "/app/hermes-agent-native/",
       "allUsers": false
     }
   }

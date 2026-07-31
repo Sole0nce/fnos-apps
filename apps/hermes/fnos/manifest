@@ -1,6 +1,6 @@
 appname         = hermes
 version         = 0.0.0
-display_name    = Hermes
+display_name    = Hermes-容器版
 platform        = x86
 maintainer      = soleo
 maintainer_url  = https://github.com/Sole0nce/fnos-apps

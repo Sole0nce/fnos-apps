@@ -1,0 +1,7 @@
+{
+  "defaults": {
+    "run-as": "package"
+  },
+  "username": "hermes-agent-native",
+  "groupname": "hermes-agent-native"
+}

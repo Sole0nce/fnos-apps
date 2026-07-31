@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""hermes-native fnOS wrapper.
+"""hermes-agent-native fnOS wrapper.
 
 Reimplements the trim.hermes ELF gateway in pure Python:
 
@@ -285,7 +285,7 @@ def dashboard_ready(host: str, port: int, timeout: float = 90.0) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="hermes-native fnOS gateway")
+    parser = argparse.ArgumentParser(description="hermes-agent-native fnOS gateway")
     parser.add_argument("--socket", required=True)
     parser.add_argument("--dashboard-host", default="127.0.0.1")
     parser.add_argument("--dashboard-port", type=int, default=19119)

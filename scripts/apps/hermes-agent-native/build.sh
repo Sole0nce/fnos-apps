@@ -18,7 +18,7 @@ PYTHON_VER="${PYTHON_VER:-3.11}"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
-APP_FNOS_DIR="$REPO_ROOT/apps/hermes-native/fnos"
+APP_FNOS_DIR="$REPO_ROOT/apps/hermes-agent-native/fnos"
 
 echo "==> Building hermes-agent ${VERSION} (node ${NODE_VERSION}, python ${PYTHON_VER})"
 
@@ -49,7 +49,7 @@ mv "$WORK_DIR/node-${NODE_VERSION}-linux-x64" "$WORK_DIR/runtime/python/node"
 # ---------- 3. BUILD-INFO.json ----------
 cat > "$WORK_DIR/runtime/BUILD-INFO.json" <<EOF
 {
-  "name": "hermes-native",
+  "name": "hermes-agent-native",
   "version": "${VERSION}",
   "built_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "source": "https://pypi.org/project/hermes-agent",
@@ -73,5 +73,5 @@ touch "$WORK_DIR/app/run/.keep"
 # ---------- 6. app.tgz ----------
 cd "$WORK_DIR/app"
 tar -czf "$REPO_ROOT/app.tgz" .
-echo "Built app.tgz for hermes-native ${VERSION}"
+echo "Built app.tgz for hermes-agent-native ${VERSION}"
 ls -lh "$REPO_ROOT/app.tgz"
