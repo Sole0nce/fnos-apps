@@ -10,6 +10,11 @@ SERVICE_COMMAND="$APP_DIR/store-server"
 SVC_BACKGROUND=y
 SVC_WRITE_PID=y
 
+# Distributor tags the store treats as its own installed apps.
+# conversun (upstream) is always allowed; append custom fork tags here.
+# See fnos-store internal/core/manifest.go allowedDistributors().
+export ALLOWED_DISTRIBUTORS="${ALLOWED_DISTRIBUTORS:-conversun,soleo}"
+
 service_preuninst() {
     # 兜底：确保 store-server 进程被完全终止
     pkill -x "store-server" 2>/dev/null || true

@@ -4,7 +4,7 @@
         {
             "title": "Hermes-容器版",
             "desc": "Hermes AI Agent",
-            "icon": "images/{0}.png",
+            "icon": "images/icon_{0}.png",
             "type": "url",
             "port": "9119",
             "protocol": "http",

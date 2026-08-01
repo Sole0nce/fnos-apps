@@ -2,5 +2,5 @@
 title="Hermes"
 desc="Hermes Web UI"
 port_forward="yes"
-src.ports="19119/tcp"
-dst.ports="19119/tcp"
+src.ports="9119/tcp"
+dst.ports="9119/tcp"

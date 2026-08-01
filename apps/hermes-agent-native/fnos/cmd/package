@@ -57,6 +57,22 @@ EOF
   fi
 }
 
+# Tighten permissions on sensitive files under HERMES_HOME (config secrets,
+# provider keys in .env, session DB). Default umask (022) leaves these 644;
+# force owner-only read/write. Run at install and upgrade so pre-existing
+# installs get hardened too, not just fresh ones.
+harden_permissions() {
+  local f
+  for f in \
+    "${HERMES_HOME}/.env" \
+    "${HERMES_HOME}/config.yaml" \
+    "${HERMES_HOME}/state.db"; do
+    if [ -f "${f}" ]; then
+      chmod 600 "${f}" 2>/dev/null && print_log "package" "hardened permissions: ${f}"
+    fi
+  done
+}
+
 validate_tar_entry_path() {
   local entry="$1"
   local normalized="${entry#./}"
@@ -164,6 +180,7 @@ install_callback() {
   check_dir
   ensure_runtime_extracted || exit 1
   seed_config_if_missing
+  harden_permissions
   exit 0
 }
 
@@ -193,5 +210,6 @@ upgrade_callback() {
   check_dir
   ensure_runtime_extracted || exit 1
   seed_config_if_missing
+  harden_permissions
   exit 0
 }
