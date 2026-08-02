@@ -55,7 +55,7 @@ require_manifest_key "service_port"
 require_manifest_key "source"
 
 # Read appname from manifest
-APPNAME=$(grep "^appname" "$APP_DIR/fnos/manifest" | awk -F'=' '{print $2}' | tr -d ' ')
+APPNAME=$(grep "^appname=" "$APP_DIR/fnos/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
 [ -z "$APPNAME" ] && error "Cannot read appname from manifest"
 
 info "Building fpk for: $APPNAME"
@@ -145,8 +145,9 @@ fi
 rm -f "$PKG_DIR/manifest.tmp"
 
 # Determine output filename
-MANIFEST_VERSION=$(grep "^version" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' ')
-MANIFEST_PLATFORM=$(grep "^platform" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' ')
+# Manifest now uses key="value" quoting, so strip surrounding quotes here.
+MANIFEST_VERSION=$(grep "^version=" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
+MANIFEST_PLATFORM=$(grep "^platform=" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
 FPK_NAME="${APPNAME}_${MANIFEST_VERSION}_${MANIFEST_PLATFORM:-x86}.fpk"
 
 # 11. Create fpk
