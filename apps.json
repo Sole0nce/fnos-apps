@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-02T11:30:30Z",
+  "generated_at": "2026-08-02T11:36:21Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -792,8 +792,8 @@
       "display_name": "fnOS Apps",
       "description": "fnOS第三方应用中心，支持一键安装、更新和卸载来自conversun/fnos-apps的所有应用。",
       "version": "1.8.3",
-      "fpk_version": "1.8.3",
-      "release_tag": "fnos-apps-store/v1.8.3",
+      "fpk_version": "1.8.3-r1",
+      "release_tag": "fnos-apps-store/v1.8.3-r1",
       "service_port": 8011,
       "homepage_url": "https://github.com/Sole0nce/fnos-store",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/fnos-apps-store/fnos/ICON_256.PNG",
@@ -801,7 +801,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-02T11:30:15Z",
+      "updated_at": "2026-08-02T11:36:07Z",
       "download_count": 6290,
       "app_type": "native",
       "category": "store"
@@ -1002,8 +1002,8 @@
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
       "version": "2026.8.2",
-      "fpk_version": "2026.8.2",
-      "release_tag": "hermes/v2026.8.2",
+      "fpk_version": "2026.8.2-r1",
+      "release_tag": "hermes/v2026.8.2-r1",
       "service_port": 9119,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
@@ -1011,7 +1011,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-02T10:05:20Z",
+      "updated_at": "2026-08-02T11:36:07Z",
       "download_count": 1,
       "app_type": "docker",
       "category": "ai"
