@@ -129,18 +129,18 @@ fi
 cp "$APP_DIR/fnos/manifest" "$PKG_DIR/manifest"
 
 if [ -n "$VERSION" ]; then
-    sed -i.tmp "s/^version.*/version         = ${VERSION}/" "$PKG_DIR/manifest"
+    sed -i.tmp "s/^version=.*/version=\"${VERSION}\"/" "$PKG_DIR/manifest"
 fi
 if [ -n "$PLATFORM" ]; then
-    if grep -q "^platform" "$PKG_DIR/manifest"; then
-        sed -i.tmp "s/^platform.*/platform        = ${PLATFORM}/" "$PKG_DIR/manifest"
+    if grep -q "^platform=" "$PKG_DIR/manifest"; then
+        sed -i.tmp "s/^platform=.*/platform=\"${PLATFORM}\"/" "$PKG_DIR/manifest"
     else
-        echo "platform        = ${PLATFORM}" >> "$PKG_DIR/manifest"
+        echo "platform=\"${PLATFORM}\"" >> "$PKG_DIR/manifest"
     fi
 fi
-sed -i.tmp "s/^checksum.*/checksum        = ${CHECKSUM}/" "$PKG_DIR/manifest"
+sed -i.tmp "s/^checksum=.*/checksum=\"${CHECKSUM}\"/" "$PKG_DIR/manifest"
 if [ -n "$FPK_VERSION" ]; then
-    echo "fpk_version     = ${FPK_VERSION}" >> "$PKG_DIR/manifest"
+    echo "fpk_version=\"${FPK_VERSION}\"" >> "$PKG_DIR/manifest"
 fi
 rm -f "$PKG_DIR/manifest.tmp"
 
