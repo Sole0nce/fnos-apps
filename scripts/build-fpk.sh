@@ -84,6 +84,14 @@ if [ -d "$APP_DIR/fnos/cmd" ]; then
     cp "$APP_DIR"/fnos/cmd/* "$PKG_DIR/cmd/" 2>/dev/null || true
 fi
 
+# Ensure all cmd scripts are executable inside the fpk. fnOS appcenter
+# extracts the archive but does NOT always preserve the tar mode bits,
+# so scripts like install_init end up non-executable and the install
+# fails with appcenter code 10237 (permission denied). Force +x here.
+for f in "$PKG_DIR"/cmd/*; do
+    [ -f "$f" ] && chmod +x "$f"
+done
+
 # 4. Copy config/
 if [ -d "$APP_DIR/fnos/config" ]; then
     cp -a "$APP_DIR/fnos/config" "$PKG_DIR/"
@@ -149,7 +157,12 @@ cd "$PKG_DIR"
 [ -d "config" ] || error "packaging validation failed: config missing"
 [ -f "ICON.PNG" ] || error "packaging validation failed: ICON.PNG missing"
 [ -f "ICON_256.PNG" ] || error "packaging validation failed: ICON_256.PNG missing"
-tar -czf "$OLDPWD/$FPK_NAME" *
+# Use GNU tar format so the file mode (executable bit) lives in the
+# regular tar header. The default pax format stores mode in a pax
+# extended header, which fnOS's Go archive/tar reader does NOT parse,
+# so extracted scripts end up 0644 and appcenter install fails with
+# code 10237 (permission denied) when it fork/execs cmd/install_init.
+tar --format=gnu -czf "$OLDPWD/$FPK_NAME" *
 cd "$OLDPWD"
 
 # Cleanup
