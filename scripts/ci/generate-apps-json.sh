@@ -14,8 +14,7 @@ parse_manifest() {
   local file="$1" key="$2"
   # strip key, surrounding whitespace, and any wrapping double quotes
   # (manifests use key="value" format), plus trailing CR for safety.
-  sed -n "s/^${key}[[:space:]]*=[[:space:]]*//p" "$file" | head -1 | tr -d '
-' | sed 's/^"//; s/"$//'
+  sed -n "s/^${key}[[:space:]]*=[[:space:]]*//p" "$file" | head -1 | tr -d '' | sed 's/^"//; s/"$//'
 }
 
 echo "Fetching release list from ${REPO}..."
