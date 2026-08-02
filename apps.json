@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-02T16:02:20Z",
+  "generated_at": "2026-08-02T16:02:53Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -960,8 +960,8 @@
       "display_name": "\"Grafana\"",
       "description": "\"可视化监控仪表盘，支持 Prometheus、Loki 等多种数据源。\"",
       "version": "13.1.1",
-      "fpk_version": "13.1.1-r4",
-      "release_tag": "grafana/v13.1.1-r4",
+      "fpk_version": "13.1.1-r5",
+      "release_tag": "grafana/v13.1.1-r5",
       "service_port": "3010",
       "homepage_url": "https://grafana.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/grafana/fnos/ICON_256.PNG",
@@ -969,7 +969,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-02T14:57:32Z",
+      "updated_at": "2026-08-02T16:02:34Z",
       "download_count": 121,
       "app_type": "native",
       "category": "system"
@@ -2014,8 +2014,8 @@
       "display_name": "\"NVIDIA Driver\"",
       "description": "\"NVIDIA GPU 驱动程序（R580 LTS）与容器工具包，支持 Docker GPU 直通和硬件转码。安装后请重启 NAS 以确保内核模块开机自动加载、飞牛系统服务重新识别 GPU。\"",
       "version": "580.167.08",
-      "fpk_version": "580.167.08-r5",
-      "release_tag": "nvidia-driver/v580.167.08-r5",
+      "fpk_version": "580.167.08-r6",
+      "release_tag": "nvidia-driver/v580.167.08-r6",
       "service_port": "0",
       "homepage_url": "https://www.nvidia.com/drivers",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/nvidia-driver/fnos/ICON_256.PNG",
@@ -2023,7 +2023,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-02T14:57:58Z",
+      "updated_at": "2026-08-02T16:02:33Z",
       "download_count": 438,
       "app_type": "native",
       "category": "system"
