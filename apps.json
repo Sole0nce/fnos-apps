@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-03T00:36:18Z",
+  "generated_at": "2026-08-03T11:37:15Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -781,7 +781,7 @@
         "arm"
       ],
       "updated_at": "2026-08-03T00:30:39Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "docker",
       "category": "browser"
     },
@@ -1033,7 +1033,7 @@
         "arm"
       ],
       "updated_at": "2026-08-03T00:31:24Z",
-      "download_count": 0,
+      "download_count": 1,
       "app_type": "native",
       "category": "ai"
     },
@@ -1148,9 +1148,9 @@
       "file_prefix": "jackett",
       "display_name": "Jackett",
       "description": "Torrent 索引器代理，为 Sonarr/Radarr 等工具提供统一的搜索接口。",
-      "version": "0.24.2315",
-      "fpk_version": "0.24.2315-r5",
-      "release_tag": "jackett/v0.24.2315-r5",
+      "version": "0.24.2323",
+      "fpk_version": "0.24.2323",
+      "release_tag": "jackett/v0.24.2323",
       "service_port": 9117,
       "homepage_url": "https://github.com/Jackett/Jackett",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/jackett/fnos/ICON_256.PNG",
@@ -1158,7 +1158,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:30:45Z",
+      "updated_at": "2026-08-03T11:37:00Z",
       "download_count": 0,
       "app_type": "native",
       "category": "automation"
@@ -1485,9 +1485,9 @@
       "file_prefix": "mail-archiver",
       "display_name": "Mail Archiver",
       "description": "IMAP/Microsoft 365 邮件归档、搜索与导出系统",
-      "version": "2607.4",
-      "fpk_version": "2607.4-r7",
-      "release_tag": "mail-archiver/v2607.4-r7",
+      "version": "2607.5",
+      "fpk_version": "2607.5",
+      "release_tag": "mail-archiver/v2607.5",
       "service_port": 5008,
       "homepage_url": "https://github.com/s1t5/mail-archiver",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/mail-archiver/fnos/ICON_256.PNG",
@@ -1495,7 +1495,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:31:15Z",
+      "updated_at": "2026-08-03T11:36:54Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content"
@@ -1717,9 +1717,9 @@
       "file_prefix": "moviepilot",
       "display_name": "MoviePilot",
       "description": "影视自动化管理工具,支持自动订阅、下载、整理和通知。首次启动通过 Web UI 配置。",
-      "version": "2.15.2",
-      "fpk_version": "2.15.2-r4",
-      "release_tag": "moviepilot/v2.15.2-r4",
+      "version": "2.15.3",
+      "fpk_version": "2.15.3",
+      "release_tag": "moviepilot/v2.15.3",
       "service_port": 3000,
       "homepage_url": "https://github.com/jxxghp/MoviePilot",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/moviepilot/fnos/ICON_256.PNG",
@@ -1727,7 +1727,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-02T16:42:19Z",
+      "updated_at": "2026-08-03T11:37:02Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content",
@@ -1823,9 +1823,9 @@
       "file_prefix": "netbird",
       "display_name": "NetBird",
       "description": "零信任 VPN 管理平台，提供简单的私有网络组建。",
-      "version": "0.76.0",
-      "fpk_version": "0.76.0-r6",
-      "release_tag": "netbird/v0.76.0-r6",
+      "version": "0.76.1",
+      "fpk_version": "0.76.1",
+      "release_tag": "netbird/v0.76.1",
       "service_port": 8820,
       "homepage_url": "https://netbird.io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/netbird/fnos/ICON_256.PNG",
@@ -1833,7 +1833,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:31:28Z",
+      "updated_at": "2026-08-03T11:36:59Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "network",
