@@ -2,13 +2,18 @@
 set -euo pipefail
 
 # Builds the hermes-agent fnOS package:
-#   - prebuilt Python venv (hermes-agent[all]==$VERSION) + Node runtime
+#   - prebuilt Python venv (hermes-agent[all] @ git tag) + Node runtime
 #   - Python wrapper (Unix socket gateway + dashboard supervisor)
 #   - ui/config + desktop icons
 # Produces app.tgz at the repo root for build-fpk.sh.
 #
 # Runtime layout mirrors trim.hermes (DavidChen) 0.18.x so the install
 # path is zero-network: install_callback only unpacks runtime.tgz.
+#
+# VERSION is the point-separated date of the upstream release tag, e.g.
+# "2026.8.3"; the git tag referenced is "v${VERSION}". We install from the
+# tagged commit (stable) rather than a PyPI wheel, so the fnOS build tracks
+# the latest official GitHub release, ahead of PyPI.
 
 VERSION="${VERSION:-}"
 [ -z "$VERSION" ] && { echo "VERSION is required" >&2; exit 1; }
@@ -50,8 +55,9 @@ echo "==> python-build-standalone: $UV_PY_DIR_REAL"
 # Install into the ORIGINAL standalone path FIRST -- uv caches interpreter
 # metadata keyed on the canonical path; installing after `cp` makes uv resolve
 # scripts/bin against the CI machine path and fail with path traversal errors.
+# Install from the official tagged release (stable), not PyPI.
 uv pip install --break-system-packages --python "$UV_PY_BIN" \
-  "hermes-agent[all]==${VERSION}"
+  "hermes-agent[all] @ git+https://github.com/NousResearch/hermes-agent@v${VERSION}"
 
 # Then copy the whole (already-populated) standalone into the package.
 cp -aL "$UV_PY_DIR_REAL" "$WORK_DIR/runtime/python"
@@ -79,7 +85,7 @@ cat > "$WORK_DIR/runtime/BUILD-INFO.json" <<EOF
   "name": "hermes-agent-native",
   "version": "${VERSION}",
   "built_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "source": "https://pypi.org/project/hermes-agent",
+  "source": "git+https://github.com/NousResearch/hermes-agent@v${VERSION}",
   "python": "${PY_ACTUAL}",
   "node": "${NODE_VERSION}",
   "extras": "all",
