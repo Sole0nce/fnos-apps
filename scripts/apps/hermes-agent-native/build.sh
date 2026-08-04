@@ -55,8 +55,11 @@ echo "==> python-build-standalone: $UV_PY_DIR_REAL"
 # Install into the ORIGINAL standalone path FIRST -- uv caches interpreter
 # metadata keyed on the canonical path; installing after `cp` makes uv resolve
 # scripts/bin against the CI machine path and fail with path traversal errors.
-# Install from the official tagged release (stable), not PyPI.
-uv pip install --break-system-packages --python "$UV_PY_BIN" \
+# Install from the official tagged release (stable), not PyPI. HERMES_NIX_BUILD=1
+# is the upstream-sanctioned escape hatch: setup.py blocks PEP 517 wheel builds
+# unless this env var is set (their own Nix packaging uses it), so uv can build
+# a wheel from the git tag.
+HERMES_NIX_BUILD=1 uv pip install --break-system-packages --python "$UV_PY_BIN" \
   "hermes-agent[all] @ git+https://github.com/NousResearch/hermes-agent@v${VERSION}"
 
 # Then copy the whole (already-populated) standalone into the package.
