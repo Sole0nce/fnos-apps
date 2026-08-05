@@ -82,6 +82,30 @@ curl -fsSL --retry 3 "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSIO
   | tar -xJ -C "$WORK_DIR"
 mv "$WORK_DIR/node-${NODE_VERSION}-linux-x64" "$WORK_DIR/runtime/python/node"
 
+# ---------- 2b. Build the web frontend into the venv ----------
+# The upstream wheel intentionally ships WITHOUT web_dist (setup.py: assets
+# resolved at runtime; see hermes_cli/web_server.py WEB_DIST). The shell
+# installer/Docker build the SPA separately; we must do the same or the
+# dashboard answers {"error":"Frontend not built..."}. vite.config.ts emits
+# to ../hermes_cli/web_dist, exactly where web_server.py looks by default
+# (Path(__file__).parent / "web_dist"), so building the tagged source and
+# copying that directory into site-packages is all that's needed.
+echo "==> Building web frontend (v${VERSION})"
+FRONTEND_SRC="$WORK_DIR/hermes-agent"
+git clone --depth 1 --branch "v${VERSION}" \
+  https://github.com/NousResearch/hermes-agent.git "$FRONTEND_SRC"
+(cd "$FRONTEND_SRC/web" && \
+  "$WORK_DIR/runtime/python/node/bin/npm" ci --no-audit --no-fund && \
+  "$WORK_DIR/runtime/python/node/bin/npm" run build)
+SITE_PACKAGES="$WORK_DIR/runtime/python/lib/python3.11/site-packages"
+if [ -d "$FRONTEND_SRC/hermes_cli/web_dist" ]; then
+  cp -a "$FRONTEND_SRC/hermes_cli/web_dist" "$SITE_PACKAGES/hermes_cli/"
+  echo "==> web_dist copied to $SITE_PACKAGES/hermes_cli/web_dist"
+else
+  echo "ERROR: web frontend build produced no hermes_cli/web_dist" >&2
+  exit 1
+fi
+
 # ---------- 3. BUILD-INFO.json ----------
 cat > "$WORK_DIR/runtime/BUILD-INFO.json" <<EOF
 {
