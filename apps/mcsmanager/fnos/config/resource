@@ -1,0 +1,43 @@
+{
+    "port-config": {
+        "protocol-file": "MCSManager.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "mcsmanager/daemon_data",
+                "permission": {
+                    "rw": [
+                        "mcsmanager"
+                    ]
+                }
+            },
+            {
+                "name": "mcsmanager/daemon_logs",
+                "permission": {
+                    "rw": [
+                        "mcsmanager"
+                    ]
+                }
+            },
+            {
+                "name": "mcsmanager/web_data",
+                "permission": {
+                    "rw": [
+                        "mcsmanager"
+                    ]
+                }
+            },
+            {
+                "name": "mcsmanager/web_logs",
+                "permission": {
+                    "rw": [
+                        "mcsmanager"
+                    ]
+                }
+            }
+        ]
+    },
+    "systemd-unit": {
+    }
+}

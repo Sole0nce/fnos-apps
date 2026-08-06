@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "mcsmanager.Application":
+        {
+            "title": "MCSManager 面板",
+            "desc": "MCSManager 开源游戏服务器管理面板",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "23333",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}
