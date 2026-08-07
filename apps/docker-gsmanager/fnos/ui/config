@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "docker-gsmanager.Application":
+        {
+            "title": "GSManager",
+            "desc": "GSManager 游戏服务器管理面板",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "13001",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "GSManager.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "docker-gsmanager",
+                "permission": {
+                    "rw": [
+                        "docker-gsmanager"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "docker-gsmanager",
+                "path": "docker"
+            }
+        ]
+    }
+}

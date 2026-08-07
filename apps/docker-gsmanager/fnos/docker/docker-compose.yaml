@@ -1,0 +1,26 @@
+services:
+  management_panel:
+    container_name: gsmanager
+    image: ${DOCKER_MIRROR}xiaozhu674/gameservermanager:${VERSION}
+    user: root
+    ports:
+      # GSM3 管理面板端口
+      - "${TRIM_SERVICE_PORT}:3001"
+      # 游戏端口（Steam 游戏服务器常用端口段，按需映射）
+      - "27015:27015/tcp"
+      - "27015:27015/udp"
+    volumes:
+      # steam 用户数据目录 不建议修改
+      - ${TRIM_PKGVAR:?}/home/config:/home/.config
+      - ${TRIM_PKGVAR:?}/home/local:/home/.local
+      - ${TRIM_PKGVAR:?}/home/steam/games:/home/steam/games
+      - ${TRIM_PKGVAR:?}/root/config:/root/.config
+      - ${TRIM_PKGVAR:?}/root/local:/root/.local
+      - ${TRIM_PKGVAR:?}/root/steam/games:/root/steam/games
+      - ${TRIM_PKGVAR:?}/root/server/data:/root/server/data
+    environment:
+      - TZ=Asia/Shanghai              # 设置时区
+      - SERVER_PORT=3001              # GSM3 服务端口
+    stdin_open: true                  # 保持 STDIN 打开
+    tty: true                         # 分配 TTY
+    restart: unless-stopped           # 自动重启策略
