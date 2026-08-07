@@ -1,0 +1,15 @@
+appname         = suwayomi
+version         = 0.0.0
+display_name    = Suwayomi
+platform        = x86
+maintainer      = Suwayomi
+maintainer_url  = https://github.com/Suwayomi/Suwayomi-Server
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = suwayomi.Application
+service_port    = 4567
+checkport       = false
+desc            = 免费开源的漫画阅读服务器，支持多来源扩展与 Web 阅读界面。
+source          = thirdparty
+checksum        = 

@@ -1,0 +1,23 @@
+services:
+  handbrake:
+    image: ${DOCKER_MIRROR}docker.io/jlesage/handbrake:v${VERSION}
+    container_name: handbrake
+    ports:
+      - "${TRIM_SERVICE_PORT}:5800"
+    volumes:
+      # Application configuration, state and logs.
+      - ${TRIM_PKGVAR:?}/config:/config
+      # Read-only view of NAS storage so source videos can be picked in the GUI.
+      - ${STORAGE_PATH:-/vol1}:/storage:ro
+      # Automatic conversion watch folder / output folder.
+      - ${TRIM_PKGVAR:?}/watch:/watch
+      - ${TRIM_PKGVAR:?}/output:/output
+    environment:
+      - USER_ID=${TRIM_UID}
+      - GROUP_ID=${TRIM_GID}
+      - TZ=Asia/Shanghai
+      - KEEP_APP_RUNNING=1
+    devices:
+      # Intel/AMD VA-API + QSV hardware transcoding.
+      - /dev/dri:/dev/dri
+    restart: unless-stopped

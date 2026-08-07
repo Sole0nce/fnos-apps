@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "suwayomi.Application":
+        {
+            "title": "Suwayomi",
+            "desc": "Suwayomi Manga Server",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "4567",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

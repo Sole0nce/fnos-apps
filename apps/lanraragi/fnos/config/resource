@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "LANraragi.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "LANraragi",
+                "permission": {
+                    "rw": [
+                        "lanraragi"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "lanraragi",
+                "path": "docker"
+            }
+        ]
+    }
+}

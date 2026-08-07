@@ -1,0 +1,15 @@
+appname         = lanraragi
+version         = 0.0.0
+display_name    = LANraragi
+platform        = x86
+maintainer      = Difegue
+maintainer_url  = https://github.com/Difegue/LANraragi
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = lanraragi.Application
+service_port    = 3000
+checkport       = false
+desc            = 自托管的漫画/存档管理服务器，支持自动元数据刮削与标签分类。
+source          = thirdparty
+checksum        = 

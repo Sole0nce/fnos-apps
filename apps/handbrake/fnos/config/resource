@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "HandBrake.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "HandBrake",
+                "permission": {
+                    "rw": [
+                        "handbrake"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "handbrake",
+                "path": "docker"
+            }
+        ]
+    }
+}

@@ -1,0 +1,21 @@
+[
+    {
+        "stepTitle": "Miniflux 设置",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "Miniflux 首次启动会创建管理员账号，用户名为 <b>admin</b>。<br>请在下方设置密码 —— Miniflux <b>要求至少 6 位</b>，过短会导致初始化失败。"
+            },
+            {
+                "type": "password",
+                "field": "wizard_password",
+                "label": "管理员密码",
+                "placeholder": "至少 6 位字符",
+                "rules": [
+                    { "required": true, "message": "请设置管理员密码" },
+                    { "min": 6, "message": "密码至少 6 位（Miniflux 要求）" }
+                ]
+            }
+        ]
+    }
+]

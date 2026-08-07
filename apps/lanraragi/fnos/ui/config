@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "lanraragi.Application":
+        {
+            "title": "LANraragi",
+            "desc": "LANraragi Comic Archive Server",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "3000",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

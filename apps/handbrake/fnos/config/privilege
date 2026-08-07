@@ -1,0 +1,8 @@
+{
+    "defaults": {
+        "run-as": "package"
+    },
+    "username": "handbrake",
+    "groupname": "handbrake",
+    "extra-groups": ["video", "render"]
+}

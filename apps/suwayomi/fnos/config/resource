@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "Suwayomi.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "Suwayomi",
+                "permission": {
+                    "rw": [
+                        "suwayomi"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "suwayomi",
+                "path": "docker"
+            }
+        ]
+    }
+}

@@ -22,6 +22,6 @@ services:
       - RUN_MIGRATIONS=1
       - CREATE_ADMIN=1
       - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=admin
+      - ADMIN_PASSWORD=${wizard_password}
       - TZ=Asia/Shanghai
     restart: unless-stopped

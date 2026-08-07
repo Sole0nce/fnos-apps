@@ -1,0 +1,15 @@
+appname         = handbrake
+version         = 0.0.0
+display_name    = HandBrake
+platform        = x86
+maintainer      = jlesage
+maintainer_url  = https://github.com/jlesage/docker-handbrake
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = handbrake.Application
+service_port    = 5800
+checkport       = false
+desc            = 开源视频转码工具，支持 GPU 硬件加速，Web 图形界面操作。
+source          = thirdparty
+checksum        = 

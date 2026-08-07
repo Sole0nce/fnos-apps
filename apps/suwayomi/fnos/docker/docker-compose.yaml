@@ -1,0 +1,14 @@
+services:
+  suwayomi:
+    image: ${DOCKER_MIRROR}ghcr.io/suwayomi/suwayomi-server:v${VERSION}
+    container_name: suwayomi
+    ports:
+      - "${TRIM_SERVICE_PORT}:4567"
+    volumes:
+      # Documented Suwayomi data location (library, database, downloads, extensions).
+      - ${TRIM_PKGVAR:?}/data:/home/suwayomi/.local/share/Tachidesk
+    environment:
+      - TZ=Asia/Shanghai
+      - BIND_IP=0.0.0.0
+      - BIND_PORT=4567
+    restart: unless-stopped

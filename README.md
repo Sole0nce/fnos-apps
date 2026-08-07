@@ -1,7 +1,7 @@
 # fnOS Apps
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Apps](https://img.shields.io/badge/apps-121-2ea44f)
+![Apps](https://img.shields.io/badge/apps-124-2ea44f)
 ![Platform](https://img.shields.io/badge/fnOS-third--party-orange)
 
 面向飞牛 fnOS 的第三方应用打包仓库。自动跟踪上游版本，构建可直接安装的 `.fpk` 包。
@@ -60,6 +60,8 @@
 | <img src="apps/wizarr/fnos/ICON.PNG" width="28"> | **Wizarr** | `5690` | Plex/Jellyfin 用户邀请管理 | [GitHub](https://github.com/wizarrrr/wizarr) | [Release][r-wizarr] |
 | <img src="apps/medusa/fnos/ICON.PNG" width="28"> | **Medusa** | `8081` | 电视剧自动下载管理 | [GitHub](https://github.com/pymedusa/Medusa) | [Release][r-medusa] |
 | <img src="apps/bililive-go/fnos/ICON.PNG" width="28"> | **Bililive-go** | `8680` | 多平台直播录制工具，支持 Bilibili、斗鱼、虎牙等 | [GitHub](https://github.com/hr3lxphr6j/bililive-go) | [Release][r-bililive-go] |
+| <img src="apps/handbrake/fnos/ICON.PNG" width="28"> | **HandBrake** | `5800` | 开源视频转码工具，支持 GPU 硬件加速 | [GitHub](https://github.com/jlesage/docker-handbrake) | [Release][r-handbrake] |
+| <img src="apps/suwayomi/fnos/ICON.PNG" width="28"> | **Suwayomi** | `4567` | 免费开源漫画阅读服务器，支持多来源扩展 | [GitHub](https://github.com/Suwayomi/Suwayomi-Server) | [Release][r-suwayomi] |
 
 ### ⬇️ 下载工具
 
@@ -94,6 +96,7 @@
 | <img src="apps/paperless-ngx/fnos/ICON.PNG" width="28"> | **Paperless-ngx** | `8000` | 文档数字化管理，OCR 支持 | [官网](https://docs.paperless-ngx.com) | [Release][r-paperless] |
 | <img src="apps/appflowy/fnos/ICON.PNG" width="28"> | **AppFlowy** | `8501` | Notion 开源替代品，协作文档平台 | [官网](https://appflowy.io) | [Release][r-appflowy] |
 | <img src="apps/reactive-resume/fnos/ICON.PNG" width="28"> | **Reactive Resume** | `3200` | 在线简历制作工具 | [GitHub](https://github.com/AmruthPillworking/Reactive-Resume) | [Release][r-reactive-resume] |
+| <img src="apps/lanraragi/fnos/ICON.PNG" width="28"> | **LANraragi** | `3000` | 自托管漫画/存档管理服务器，自动元数据刮削 | [GitHub](https://github.com/Difegue/LANraragi) | [Release][r-lanraragi] |
 
 ### 🎵 媒体自动化
 
@@ -345,6 +348,9 @@ fnos-apps/
 [r-netbird]: https://github.com/conversun/fnos-apps/releases?q=netbird
 [r-komga]: https://github.com/conversun/fnos-apps/releases?q=komga
 [r-koodo]: https://github.com/conversun/fnos-apps/releases?q=koodo-reader
+[r-handbrake]: https://github.com/conversun/fnos-apps/releases?q=handbrake
+[r-suwayomi]: https://github.com/conversun/fnos-apps/releases?q=suwayomi
+[r-lanraragi]: https://github.com/conversun/fnos-apps/releases?q=lanraragi
 [r-jellystat]: https://github.com/conversun/fnos-apps/releases?q=jellystat
 [r-ombi]: https://github.com/conversun/fnos-apps/releases?q=ombi
 [r-wizarr]: https://github.com/conversun/fnos-apps/releases?q=wizarr

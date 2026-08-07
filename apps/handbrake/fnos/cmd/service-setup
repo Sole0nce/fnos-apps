@@ -1,0 +1,30 @@
+#!/bin/bash
+
+service_postinst() {
+    mkdir -p "${TRIM_PKGVAR}/config" 2>/dev/null || true
+    mkdir -p "${TRIM_PKGVAR}/watch" 2>/dev/null || true
+    mkdir -p "${TRIM_PKGVAR}/output" 2>/dev/null || true
+}
+
+COMPOSE_FILE="${TRIM_APPDEST}/docker/docker-compose.yaml"
+PORT_SAVE="${TRIM_PKGVAR}/.port"
+
+apply_port() {
+    local port="$1"
+    [ -z "$port" ] && return
+    sed -i 's/"[^"]*:5800"/"'"${port}"':5800"/' "$COMPOSE_FILE"
+    echo "${port}" > "$PORT_SAVE"
+    install_log "Patched docker-compose.yaml: port=${port}"
+}
+
+service_postupgrade() {
+    if [ -f "$PORT_SAVE" ]; then
+        apply_port "$(cat "$PORT_SAVE")"
+    fi
+}
+
+service_postconfig() {
+    if [ -n "${wizard_port:-}" ]; then
+        apply_port "${wizard_port}"
+    fi
+}

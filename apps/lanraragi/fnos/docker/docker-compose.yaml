@@ -1,0 +1,16 @@
+services:
+  lanraragi:
+    image: ${DOCKER_MIRROR}docker.io/difegue/lanraragi:v.${VERSION}
+    container_name: lanraragi
+    ports:
+      - "${TRIM_SERVICE_PORT}:3000"
+    volumes:
+      # Persistent volumes declared by the upstream image.
+      - ${TRIM_PKGVAR:?}/content:/home/koyomi/lanraragi/content
+      - ${TRIM_PKGVAR:?}/thumb:/home/koyomi/lanraragi/thumb
+      - ${TRIM_PKGVAR:?}/database:/home/koyomi/lanraragi/database
+    environment:
+      - TZ=Asia/Shanghai
+      - LRR_UID=${TRIM_UID}
+      - LRR_GID=${TRIM_GID}
+    restart: unless-stopped

@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "handbrake.Application":
+        {
+            "title": "HandBrake",
+            "desc": "HandBrake Video Transcoder",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "5800",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

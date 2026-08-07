@@ -996,6 +996,27 @@
       "category": "system"
     },
     {
+      "slug": "handbrake",
+      "appname": "handbrake",
+      "file_prefix": "handbrake",
+      "display_name": "HandBrake",
+      "description": "开源视频转码工具，支持 GPU 硬件加速，Web 图形界面操作。",
+      "version": "26.07.2",
+      "fpk_version": "26.07.2",
+      "release_tag": "handbrake/v26.07.2",
+      "service_port": 5800,
+      "homepage_url": "https://github.com/jlesage/docker-handbrake",
+      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/handbrake/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-08-02T16:58:01Z",
+      "download_count": 11,
+      "app_type": "docker",
+      "category": "media"
+    },
+    {
       "slug": "headscale",
       "appname": "headscale",
       "file_prefix": "headscale",
@@ -1372,6 +1393,27 @@
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
+    },
+    {
+      "slug": "lanraragi",
+      "appname": "lanraragi",
+      "file_prefix": "lanraragi",
+      "display_name": "LANraragi",
+      "description": "自托管的漫画/存档管理服务器，支持自动元数据刮削与标签分类。",
+      "version": "0.9.81",
+      "fpk_version": "0.9.81",
+      "release_tag": "lanraragi/v0.9.81",
+      "service_port": 3000,
+      "homepage_url": "https://github.com/Difegue/LANraragi",
+      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/lanraragi/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-08-02T16:57:56Z",
+      "download_count": 3,
+      "app_type": "docker",
+      "category": "content"
     },
     {
       "slug": "librechat",
@@ -2784,6 +2826,27 @@
       "download_count": 0,
       "app_type": "docker",
       "category": "system"
+    },
+    {
+      "slug": "suwayomi",
+      "appname": "suwayomi",
+      "file_prefix": "suwayomi",
+      "display_name": "Suwayomi",
+      "description": "免费开源的漫画阅读服务器，支持多来源扩展与 Web 阅读界面。",
+      "version": "2.3.2243",
+      "fpk_version": "2.3.2243",
+      "release_tag": "suwayomi/v2.3.2243",
+      "service_port": 4567,
+      "homepage_url": "https://github.com/Suwayomi/Suwayomi-Server",
+      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/suwayomi/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-08-02T16:57:50Z",
+      "download_count": 14,
+      "app_type": "docker",
+      "category": "media"
     },
     {
       "slug": "syncthing",
