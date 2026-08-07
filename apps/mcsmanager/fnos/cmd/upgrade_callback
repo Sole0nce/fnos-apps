@@ -11,7 +11,9 @@ export PATH=/var/apps/nodejs_v22/target/bin:$PATH
 # 用户目录
 IFS=':' read -r -a SHARE_PATHS <<< "$TRIM_DATA_SHARE_PATHS"
 
-# 重建数据目录软链（升级后 server 目录被新版本替换，需重新挂载）
+# 重建数据目录软链（升级后 server 目录被新版本替换,需重新挂载）——先清理旧软链
+rm -f "${TRIM_APPDEST}/server/daemon/data" "${TRIM_APPDEST}/server/daemon/logs" \
+      "${TRIM_APPDEST}/server/web/data" "${TRIM_APPDEST}/server/web/logs"
 ln -s "${SHARE_PATHS[0]}" "${TRIM_APPDEST}/server/daemon/data" >> "${LOG_FILE}" 2>&1
 ln -s "${SHARE_PATHS[1]}" "${TRIM_APPDEST}/server/daemon/logs" >> "${LOG_FILE}" 2>&1
 ln -s "${SHARE_PATHS[2]}" "${TRIM_APPDEST}/server/web/data" >> "${LOG_FILE}" 2>&1
