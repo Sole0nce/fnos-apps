@@ -173,6 +173,15 @@
 | <img src="apps/firefox/fnos/ICON.PNG" width="28"> | **Firefox** | `5801` | 远程浏览器，支持中文 | [GitHub](https://github.com/jlesage/docker-firefox) | [Release][r-firefox] |
 | <img src="apps/chromium/fnos/ICON.PNG" width="28"> | **Chromium** | `5802` | 远程浏览器，支持中文 | [GitHub](https://github.com/jlesage/docker-chromium) | [Release][r-chromium] |
 
+### ⭐ 自定义套件
+
+| | App | 端口 | 说明 | 来源 | 下载 |
+|:---:|---|---:|---|:---:|:---:|
+| <img src="apps/docker-gsmanager/fnos/ICON.PNG" width="28"> | **GSManager** | `13001` | 游戏服务器管理面板，基于 Docker 一键部署多款热门游戏 | [GitHub](https://github.com/GSManagerXZ/GameServerManager) | [Release][r-gsmanager] |
+| <img src="apps/hermes/fnos/ICON.PNG" width="28"> | **Hermes-容器版** | `9119` | 自进化 AI 智能体（Docker 版），支持多模型供应商与多消息平台接入 | [GitHub](https://github.com/NousResearch/hermes-agent) | [Release][r-hermes] |
+| <img src="apps/hermes-agent-native/fnos/ICON.PNG" width="28"> | **Hermes-原生版** | `9119` | 自进化 AI 智能体（原生版），安装零联网、运行时预打包 | [GitHub](https://github.com/NousResearch/hermes-agent) | [Release][r-hermes-native] |
+| <img src="apps/mcsmanager/fnos/ICON.PNG" width="28"> | **MCSManager 面板** | `23333` | Minecraft/Steam 游戏服务器管理面板，整合节点端与面板端 | [GitHub](https://github.com/MCSManager/MCSManager) | [Release][r-mcsmanager] |
+
 ## 反馈与请求
 
 - 新应用请求：[Open App Request](https://github.com/conversun/fnos-apps/issues/new?template=new-app-request.yml)
@@ -359,3 +368,7 @@ fnos-apps/
 [r-nanobot]: https://github.com/conversun/fnos-apps/releases?q=nanobot
 [r-copaw]: https://github.com/conversun/fnos-apps/releases?q=copaw
 [r-cowagent]: https://github.com/conversun/fnos-apps/releases?q=cowagent
+[r-gsmanager]: https://github.com/Sole0nce/fnos-apps/releases?q=docker-gsmanager
+[r-hermes]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes
+[r-hermes-native]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-agent-native
+[r-mcsmanager]: https://github.com/Sole0nce/fnos-apps/releases?q=mcsmanager
