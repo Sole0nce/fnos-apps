@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-07T09:13:06Z",
+  "generated_at": "2026-08-07T12:13:24Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -551,6 +551,27 @@
       "updated_at": "2026-08-03T00:30:33Z",
       "download_count": 0,
       "app_type": "native",
+      "category": "system"
+    },
+    {
+      "slug": "docker-gsmanager",
+      "appname": "docker-gsmanager",
+      "file_prefix": "docker-gsmanager",
+      "display_name": "GSManager",
+      "description": "GameServerManager 面板（简称：GSManager 面板）是一个基于现代化技术栈的游戏服务器管理平台，专为简化游戏服务器的部署、管理和维护而设计。基于 Docker 技术，支持多款热门游戏一键部署。面板端口 13001，游戏端口 27015。",
+      "version": "3.13.21",
+      "fpk_version": "3.13.21",
+      "release_tag": "docker-gsmanager/v3.13.21",
+      "service_port": 13001,
+      "homepage_url": "https://github.com/GSManagerXZ/GameServerManager",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/docker-gsmanager/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-08-07T12:13:08Z",
+      "download_count": 0,
+      "app_type": "docker",
       "category": "system"
     },
     {
