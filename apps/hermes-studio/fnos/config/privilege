@@ -1,0 +1,7 @@
+{
+    "defaults": {
+        "run-as": "root"
+    },
+    "username": "hermes-studio",
+    "groupname": "hermes-studio"
+}

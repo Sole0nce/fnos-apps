@@ -1,0 +1,18 @@
+{
+    ".url": {
+        "hermes-agent-bbis.Application": {
+            "title": "Hermes Agent",
+            "icon": "images/{0}.png",
+            "type": "iframe",
+            "protocol": "http",
+            "gatewaySocket": "hermes-agent-bbis.sock",
+            "gatewayPrefix": "/app/hermes-agent-bbis",
+            "port": "",
+            "url": "/app/hermes-agent-bbis",
+            "allUsers": false,
+            "control": {
+                "accessPerm": "readonly"
+            }
+        }
+    }
+}

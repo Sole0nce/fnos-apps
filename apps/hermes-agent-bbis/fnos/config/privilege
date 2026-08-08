@@ -1,0 +1,7 @@
+{
+    "defaults": {
+        "run-as": "root"
+    },
+    "username": "hermes-agent-bbis",
+    "groupname": "hermes-agent-bbis"
+}

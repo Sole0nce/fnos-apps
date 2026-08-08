@@ -1,0 +1,18 @@
+{
+    ".url": {
+        "hermes-agent-veenyi.Application": {
+            "title": "Hermes Agent",
+            "icon": "images/{0}.png",
+            "type": "iframe",
+            "protocol": "http",
+            "gatewaySocket": "hermes-agent-veenyi.sock",
+            "gatewayPrefix": "/app/hermes-agent-veenyi",
+            "port": "",
+            "url": "/app/hermes-agent-veenyi",
+            "allUsers": false,
+            "control": {
+                "accessPerm": "readonly"
+            }
+        }
+    }
+}
