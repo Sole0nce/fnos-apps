@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-08T13:04:02Z",
+  "generated_at": "2026-08-08T13:37:08Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -1044,8 +1044,8 @@
       "display_name": "Hermes Agent (bbis)",
       "description": "Hermes Agent 开源 AI Agent（iranee/bbis 打包版），支持多平台消息网关、内置学习循环、技能系统和 MCP 扩展。通过飞牛应用中心安装，即开即用。<br/><br/><strong>核心能力：</strong><br/>• 多模型支持：OpenAI、Anthropic、Kimi、MiniMax 等<br/>• 消息平台：微信ClawBot、QQ Bot、飞书、WhatsApp、Telegram 等<br/>• 定时任务：自然语言描述的自动化调度<br/>• 持久记忆：跨会话学习和技能进化<br/>• MCP 扩展：连接 GitHub 等外部工具<br/><br/><strong>免责声明：</strong><br/>本应用仅作为服务集成工具，不对 Hermes Agent 软件本身的安全性、稳定性作任何保证。使用过程中产生的所有风险由用户自行承担。",
       "version": "0.20.0",
-      "fpk_version": "0.20.0",
-      "release_tag": "hermes-agent-bbis/v0.20.0",
+      "fpk_version": "0.20.0-r1",
+      "release_tag": "hermes-agent-bbis/v0.20.0-r1",
       "service_port": 0,
       "homepage_url": "https://github.com/iranee/fnos-hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes-agent-bbis/fnos/ICON_256.PNG",
@@ -1053,7 +1053,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-08T13:03:19Z",
+      "updated_at": "2026-08-08T13:36:52Z",
       "download_count": 0,
       "app_type": "native",
       "category": "ai"
@@ -1086,8 +1086,8 @@
       "display_name": "Hermes Agent (veenyi)",
       "description": "Hermes Agent 开源 AI Agent（veenyi 打包版），支持多平台消息网关、内置学习循环、技能系统和 MCP 扩展。通过飞牛应用中心安装，即开即用。<br/><br/><strong>核心能力：</strong><br/>• 多模型支持：OpenAI、Anthropic、Kimi、MiniMax 等<br/>• 消息平台：微信ClawBot、QQ Bot、飞书、WhatsApp、Telegram 等<br/>• 定时任务：自然语言描述的自动化调度<br/>• 持久记忆：跨会话学习和技能进化<br/>• MCP 扩展：连接 GitHub 等外部工具<br/><br/><strong>免责声明：</strong><br/>本应用仅作为服务集成工具，不对 Hermes Agent 软件本身的安全性、稳定性作任何保证。使用过程中产生的所有风险由用户自行承担。",
       "version": "0.21.96",
-      "fpk_version": "0.21.96",
-      "release_tag": "hermes-agent-veenyi/v0.21.96",
+      "fpk_version": "0.21.96-r1",
+      "release_tag": "hermes-agent-veenyi/v0.21.96-r1",
       "service_port": 0,
       "homepage_url": "https://github.com/veenyi/fnos-hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes-agent-veenyi/fnos/ICON_256.PNG",
@@ -1095,7 +1095,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-08T13:03:13Z",
+      "updated_at": "2026-08-08T13:36:50Z",
       "download_count": 0,
       "app_type": "native",
       "category": "ai"
@@ -1117,7 +1117,7 @@
         "arm"
       ],
       "updated_at": "2026-08-08T13:03:47Z",
-      "download_count": 0,
+      "download_count": 1,
       "app_type": "native",
       "category": "ai"
     },
@@ -1770,7 +1770,7 @@
         "arm"
       ],
       "updated_at": "2026-08-08T13:03:16Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "native",
       "category": "network"
     },
