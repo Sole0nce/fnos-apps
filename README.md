@@ -184,6 +184,9 @@
 | <img src="apps/hermes/fnos/ICON.PNG" width="28"> | **Hermes-容器版** | `9119` | 自进化 AI 智能体（Docker 版），支持多模型供应商与多消息平台接入 | [GitHub](https://github.com/NousResearch/hermes-agent) | [Release][r-hermes] |
 | <img src="apps/hermes-agent-native/fnos/ICON.PNG" width="28"> | **Hermes-原生版** | `9119` | 自进化 AI 智能体（原生版），安装零联网、运行时预打包 | [GitHub](https://github.com/NousResearch/hermes-agent) | [Release][r-hermes-native] |
 | <img src="apps/mcsmanager/fnos/ICON.PNG" width="28"> | **MCSManager 面板** | `23333` | Minecraft/Steam 游戏服务器管理面板，整合节点端与面板端 | [GitHub](https://github.com/MCSManager/MCSManager) | [Release][r-mcsmanager] |
+| <img src="apps/hermes-agent-veenyi/fnos/ICON.PNG" width="28"> | **Hermes-Agent (veenyi)** | socket | 自进化 AI 智能体（转包版），经 fnOS socket 网关接入，多模型供应商 | [GitHub](https://github.com/veenyi/fnos-hermes-agent) | [Release][r-hermes-veenyi] |
+| <img src="apps/hermes-agent-bbis/fnos/ICON.PNG" width="28"> | **Hermes-Agent (bbis)** | socket | 自进化 AI 智能体（转包版），经 fnOS socket 网关接入，多模型供应商 | [GitHub](https://github.com/iranee/fnos-hermes-agent) | [Release][r-hermes-bbis] |
+| <img src="apps/hermes-studio/fnos/ICON.PNG" width="28"> | **Hermes Studio** | `8648` | AI 工作台（转包版），可视化对话与工作流管理 | [GitHub](https://github.com/EKKOLearnAI/hermes-studio) | [Release][r-hermes-studio] |
 
 ## 反馈与请求
 
@@ -378,3 +381,6 @@ fnos-apps/
 [r-hermes]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes
 [r-hermes-native]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-agent-native
 [r-mcsmanager]: https://github.com/Sole0nce/fnos-apps/releases?q=mcsmanager
+[r-hermes-veenyi]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-agent-veenyi
+[r-hermes-bbis]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-agent-bbis
+[r-hermes-studio]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-studio

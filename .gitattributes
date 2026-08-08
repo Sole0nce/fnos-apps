@@ -13,3 +13,4 @@ shared/cmd/** text eol=lf
 scripts/**/*.sh text eol=lf
 var/** text eol=lf
 *.env text eol=lf
+apps/*/fnos/config/prompts/skills/trim-cli/bin/* binary
