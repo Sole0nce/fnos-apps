@@ -126,5 +126,25 @@ tar xzf "$WORK_DIR_MSYS/upstream.fpk" -C "$WORK_DIR_MSYS" app.tgz
 
 [ -s "$WORK_DIR_MSYS/app.tgz" ] || { echo "ERROR: app.tgz missing/empty in upstream fpk" >&2; exit 1; }
 
+# The upstream app.tgz embeds the upstream ui/config, whose service name
+# is the upstream appname (e.g. "hermes-studio.Application" or another
+# upstream appname). fnOS appcenter validates that ui/config service name
+# against the fpk manifest appname at install time and rejects mismatches
+# with code 10111 (APP_INSTALL_FAILED_PKG_EXCEPTION). Overlay our repo's
+# ui/config — which already carries the correct appname, socket, and
+# gateway prefix — into the extracted payload so the packaged app.tgz
+# matches our manifest.
+TMP_TGZ="$WORK_DIR_MSYS/tgz-rewrite"
+mkdir -p "$TMP_TGZ"
+tar xzf "$WORK_DIR_MSYS/app.tgz" -C "$TMP_TGZ"
+if [ -f "$TMP_TGZ/ui/config" ]; then
+    cp "$REPO_ROOT/apps/hermes-studio/fnos/ui/config" "$TMP_TGZ/ui/config"
+    echo "==> Rewrote app.tgz ui/config with repo version (appname/socket/prefix)"
+else
+    echo "==> WARN: no ui/config inside upstream app.tgz; fpk-level ui/config will be used"
+fi
+tar czf "$WORK_DIR_MSYS/app.tgz" -C "$TMP_TGZ" .
+rm -rf "$TMP_TGZ"
+
 cp "$WORK_DIR_MSYS/app.tgz" "$REPO_ROOT/app.tgz"
 echo "==> Extracted app.tgz ($(du -h "$REPO_ROOT/app.tgz" | cut -f1)) to repo root"
