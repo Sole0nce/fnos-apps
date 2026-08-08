@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-08T08:53:10Z",
+  "generated_at": "2026-08-08T13:03:40Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -560,8 +560,8 @@
       "display_name": "GSManager",
       "description": "GameServerManager 面板（简称：GSManager 面板）是一个基于现代化技术栈的游戏服务器管理平台，专为简化游戏服务器的部署、管理和维护而设计。基于 Docker 技术，支持多款热门游戏一键部署。面板端口 13001，游戏端口 27015。",
       "version": "3.13.22",
-      "fpk_version": "3.13.22",
-      "release_tag": "docker-gsmanager/v3.13.22",
+      "fpk_version": "3.13.22-r1",
+      "release_tag": "docker-gsmanager/v3.13.22-r1",
       "service_port": 13001,
       "homepage_url": "https://github.com/GSManagerXZ/GameServerManager",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/docker-gsmanager/fnos/ICON_256.PNG",
@@ -569,7 +569,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-08T08:52:42Z",
+      "updated_at": "2026-08-08T13:03:14Z",
       "download_count": 1,
       "app_type": "docker",
       "category": "system"
@@ -996,27 +996,6 @@
       "category": "system"
     },
     {
-      "slug": "handbrake",
-      "appname": "handbrake",
-      "file_prefix": "handbrake",
-      "display_name": "HandBrake",
-      "description": "开源视频转码工具，支持 GPU 硬件加速，Web 图形界面操作。",
-      "version": "26.07.2",
-      "fpk_version": "26.07.2",
-      "release_tag": "handbrake/v26.07.2",
-      "service_port": 5800,
-      "homepage_url": "https://github.com/jlesage/docker-handbrake",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/handbrake/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-08-02T16:58:01Z",
-      "download_count": 11,
-      "app_type": "docker",
-      "category": "media"
-    },
-    {
       "slug": "headscale",
       "appname": "headscale",
       "file_prefix": "headscale",
@@ -1059,6 +1038,27 @@
       "category": "ai"
     },
     {
+      "slug": "hermes-agent-bbis",
+      "appname": "hermes-agent-bbis",
+      "file_prefix": "hermes-agent-bbis",
+      "display_name": "Hermes Agent (bbis)",
+      "description": "Hermes Agent 开源 AI Agent（iranee/bbis 打包版），支持多平台消息网关、内置学习循环、技能系统和 MCP 扩展。通过飞牛应用中心安装，即开即用。<br/><br/><strong>核心能力：</strong><br/>• 多模型支持：OpenAI、Anthropic、Kimi、MiniMax 等<br/>• 消息平台：微信ClawBot、QQ Bot、飞书、WhatsApp、Telegram 等<br/>• 定时任务：自然语言描述的自动化调度<br/>• 持久记忆：跨会话学习和技能进化<br/>• MCP 扩展：连接 GitHub 等外部工具<br/><br/><strong>免责声明：</strong><br/>本应用仅作为服务集成工具，不对 Hermes Agent 软件本身的安全性、稳定性作任何保证。使用过程中产生的所有风险由用户自行承担。",
+      "version": "0.20.0",
+      "fpk_version": "0.20.0",
+      "release_tag": "hermes-agent-bbis/v0.20.0",
+      "service_port": 0,
+      "homepage_url": "https://github.com/iranee/fnos-hermes-agent",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes-agent-bbis/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-08-08T13:03:19Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "ai"
+    },
+    {
       "slug": "hermes-agent-native",
       "appname": "hermes-agent-native",
       "file_prefix": "hermes-agent-native",
@@ -1076,6 +1076,48 @@
       ],
       "updated_at": "2026-08-05T01:17:15Z",
       "download_count": 2,
+      "app_type": "native",
+      "category": "ai"
+    },
+    {
+      "slug": "hermes-agent-veenyi",
+      "appname": "hermes-agent-veenyi",
+      "file_prefix": "hermes-agent-veenyi",
+      "display_name": "Hermes Agent (veenyi)",
+      "description": "Hermes Agent 开源 AI Agent（veenyi 打包版），支持多平台消息网关、内置学习循环、技能系统和 MCP 扩展。通过飞牛应用中心安装，即开即用。<br/><br/><strong>核心能力：</strong><br/>• 多模型支持：OpenAI、Anthropic、Kimi、MiniMax 等<br/>• 消息平台：微信ClawBot、QQ Bot、飞书、WhatsApp、Telegram 等<br/>• 定时任务：自然语言描述的自动化调度<br/>• 持久记忆：跨会话学习和技能进化<br/>• MCP 扩展：连接 GitHub 等外部工具<br/><br/><strong>免责声明：</strong><br/>本应用仅作为服务集成工具，不对 Hermes Agent 软件本身的安全性、稳定性作任何保证。使用过程中产生的所有风险由用户自行承担。",
+      "version": "0.21.96",
+      "fpk_version": "0.21.96",
+      "release_tag": "hermes-agent-veenyi/v0.21.96",
+      "service_port": 0,
+      "homepage_url": "https://github.com/veenyi/fnos-hermes-agent",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes-agent-veenyi/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-08-08T13:03:13Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "ai"
+    },
+    {
+      "slug": "hermes-studio",
+      "appname": "hermes-studio",
+      "file_prefix": "hermes-studio",
+      "display_name": "Hermes Studio",
+      "description": "Hermes Studio 是 Hermes Agent 的桌面 / Web 控制台与本地运行时，支持与 AI Agent 流式对话、管理模型与配置、接入多平台渠道、自动化任务、文件浏览器、Web 终端、编码 Agent 与本地数据持久化。<br/><br/><strong>核心能力：</strong><br/>• Agent 聊天：Socket.IO 流式运行 Hermes Agent，支持工具追踪、文件收发、本地会话持久化<br/>• 本地控制台：集中管理 profiles、providers、models、凭证、记忆、技能、插件、日志与运行时设置<br/>• 自动化：配置平台渠道、cron 定时任务、看板任务、群聊房间、MCP 服务器<br/>• 工作区工具：文件浏览器、Web 终端、语音输入/输出、编码 Agent 运行器、设备发现、性能监控<br/><br/><strong>部署说明：</strong><br/>本包以官方预构建产物 + bundled node_modules 方式安装（非 Docker），已将 hermes-web-ui 的 node_modules 与 Hermes Agent 的 browser tools + TUI 依赖（hermes-agent-node）一并预装进 FPK，首次安装会自动使用飞牛应用中心 Node.js v24 运行时并把预装依赖复制到数据目录，后台安装不再联网跑 npm install，启动后默认监听 8648 端口，通过应用图标即可在浏览器打开原版 Web UI。<br/><br/><strong>免责声明：</strong><br/>本应用仅作为 Hermes Studio 在飞牛 fnOS 上的打包分发，不对软件本身的安全性、稳定性作任何保证。使用过程中产生的所有风险由用户自行承担。",
+      "version": "0.6.39-1",
+      "fpk_version": "0.6.39-1",
+      "release_tag": "hermes-studio/v0.6.39-1",
+      "service_port": 8648,
+      "homepage_url": "https://github.com/EKKOLearnAI/hermes-studio",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes-studio/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "0001-01-01T00:00:00Z",
+      "download_count": 0,
       "app_type": "native",
       "category": "ai"
     },
@@ -1393,27 +1435,6 @@
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
-    },
-    {
-      "slug": "lanraragi",
-      "appname": "lanraragi",
-      "file_prefix": "lanraragi",
-      "display_name": "LANraragi",
-      "description": "自托管的漫画/存档管理服务器，支持自动元数据刮削与标签分类。",
-      "version": "0.9.81",
-      "fpk_version": "0.9.81",
-      "release_tag": "lanraragi/v0.9.81",
-      "service_port": 3000,
-      "homepage_url": "https://github.com/Difegue/LANraragi",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/lanraragi/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-08-02T16:57:56Z",
-      "download_count": 3,
-      "app_type": "docker",
-      "category": "content"
     },
     {
       "slug": "librechat",
@@ -1739,8 +1760,8 @@
       "display_name": "Mihomo",
       "description": "Clash.Meta 多协议代理 + MetaCubeXD 面板 (管理:9097 代理:7890)",
       "version": "1.19.29",
-      "fpk_version": "1.19.29-r10",
-      "release_tag": "mihomo/v1.19.29-r10",
+      "fpk_version": "1.19.29-r11",
+      "release_tag": "mihomo/v1.19.29-r11",
       "service_port": 9097,
       "homepage_url": "https://github.com/MetaCubeX/mihomo",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/mihomo/fnos/ICON_256.PNG",
@@ -1748,7 +1769,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:31:54Z",
+      "updated_at": "2026-08-08T13:03:16Z",
       "download_count": 0,
       "app_type": "native",
       "category": "network"
@@ -1760,8 +1781,8 @@
       "display_name": "Miniflux",
       "description": "极简 RSS 阅读器，Go 编写，性能优异",
       "version": "2.3.3",
-      "fpk_version": "2.3.3-r9",
-      "release_tag": "miniflux/v2.3.3-r9",
+      "fpk_version": "2.3.3-r10",
+      "release_tag": "miniflux/v2.3.3-r10",
       "service_port": 8190,
       "homepage_url": "https://miniflux.app",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/miniflux/fnos/ICON_256.PNG",
@@ -1769,7 +1790,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:32:20Z",
+      "updated_at": "2026-08-08T13:03:17Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content"
@@ -1887,8 +1908,8 @@
       "display_name": "Navidrome",
       "description": "开源的个人音乐流媒体服务器,兼容 Subsonic/Airsonic API,支持多用户和移动端应用。",
       "version": "0.63.2",
-      "fpk_version": "0.63.2-r9",
-      "release_tag": "navidrome/v0.63.2-r9",
+      "fpk_version": "0.63.2-r10",
+      "release_tag": "navidrome/v0.63.2-r10",
       "service_port": 4533,
       "homepage_url": "https://www.navidrome.org",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/navidrome/fnos/ICON_256.PNG",
@@ -1896,7 +1917,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:31:57Z",
+      "updated_at": "2026-08-08T13:03:13Z",
       "download_count": 0,
       "app_type": "native",
       "category": "media"
@@ -2826,27 +2847,6 @@
       "download_count": 0,
       "app_type": "docker",
       "category": "system"
-    },
-    {
-      "slug": "suwayomi",
-      "appname": "suwayomi",
-      "file_prefix": "suwayomi",
-      "display_name": "Suwayomi",
-      "description": "免费开源的漫画阅读服务器，支持多来源扩展与 Web 阅读界面。",
-      "version": "2.3.2243",
-      "fpk_version": "2.3.2243",
-      "release_tag": "suwayomi/v2.3.2243",
-      "service_port": 4567,
-      "homepage_url": "https://github.com/Suwayomi/Suwayomi-Server",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/suwayomi/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-08-02T16:57:50Z",
-      "download_count": 14,
-      "app_type": "docker",
-      "category": "media"
     },
     {
       "slug": "syncthing",
