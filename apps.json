@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-08T13:03:40Z",
+  "generated_at": "2026-08-08T13:04:02Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -1116,7 +1116,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "0001-01-01T00:00:00Z",
+      "updated_at": "2026-08-08T13:03:47Z",
       "download_count": 0,
       "app_type": "native",
       "category": "ai"
