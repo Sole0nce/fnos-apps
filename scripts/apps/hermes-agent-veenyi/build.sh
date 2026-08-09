@@ -142,6 +142,18 @@ if [ -f "$TMP_TGZ/ui/config" ]; then
 else
     echo "==> WARN: no ui/config inside upstream app.tgz; fpk-level ui/config will be used"
 fi
+# The upstream ui/index.html carries <base href="/app/hermes-agent/"> —
+# the page base URL for every relative API/asset request. After we rename
+# the app to hermes-agent-veenyi the fnOS gateway prefix is
+# /app/hermes-agent-veenyi, so an unrewritten base href makes the whole UI
+# 404 (page loads, then /app/hermes-agent/api/status returns 404 and fnOS
+# reports "启动失败 http 404"). Rewrite the base href to our appname.
+if [ -f "$TMP_TGZ/ui/index.html" ]; then
+    sed -i 's|<base href="/app/hermes-agent/">|<base href="/app/hermes-agent-veenyi/">|g' "$TMP_TGZ/ui/index.html"
+    echo "==> Rewrote app.tgz ui/index.html base href -> /app/hermes-agent-veenyi/"
+else
+    echo "==> WARN: no ui/index.html inside upstream app.tgz; fpk-level index.html will be used"
+fi
 tar czf "$WORK_DIR_MSYS/app.tgz" -C "$TMP_TGZ" .
 rm -rf "$TMP_TGZ"
 

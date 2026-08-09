@@ -51,6 +51,13 @@ resolve_release() {
     rm -f "$WORK_DIR_MSYS/release.json"
     curl -fsSL --retry 2 --connect-timeout 20 "$api_base/latest" -o "$json_file" 2>/dev/null || true
   fi
+  # Direct curl to api.github.com is routinely reset/EOF'd by GFW interference
+  # on CN networks; gh CLI (authenticated, retries internally) is more reliable.
+  if ! grep -q '"assets"' "$WORK_DIR_MSYS/release.json" 2>/dev/null && command -v gh >/dev/null 2>&1; then
+    rm -f "$WORK_DIR_MSYS/release.json"
+    gh api "repos/${UPSTREAM_REPO}/releases/tags/v${VERSION}" --jq '.' > "$json_file" 2>/dev/null \
+      || gh api "repos/${UPSTREAM_REPO}/releases/latest" --jq '.' > "$json_file" 2>/dev/null || true
+  fi
   grep -q '"assets"' "$WORK_DIR_MSYS/release.json" 2>/dev/null || { echo "ERROR: cannot resolve upstream release for v${VERSION}" >&2; exit 1; }
 }
 
