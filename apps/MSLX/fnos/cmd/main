@@ -1,0 +1,44 @@
+#!/bin/bash
+
+FILE_PATH="${TRIM_APPDEST}/docker/docker-compose.yaml"
+
+is_docker_running () {
+    DOCKER_NAME=""
+
+    if [ -f "$FILE_PATH" ]; then
+        DOCKER_NAME=$(cat $FILE_PATH | grep "container_name" | awk -F ':' '{print $2}' | xargs)
+        echo "DOCKER_NAME is set to: $DOCKER_NAME"
+    fi
+
+    if [ -n "$DOCKER_NAME" ]; then
+        docker inspect $DOCKER_NAME | grep -q "\"Status\": \"running\"," || exit 1
+        return
+    fi
+}
+
+case $1 in
+start)
+    # run start command. exit 0 if success, exit 1 if failed
+    # do nothing, docker application will be started by appcenter
+    exit 0
+    ;;
+stop)
+    # run stop command. exit 0 if success, exit 1 if failed
+    # do nothing, docker application will be stopped by appcenter
+    exit 0
+    ;;
+status)
+    if is_docker_running; then
+        CRED_FILE="${TRIM_DATA_SHARE_PATHS}/初始登录凭证.txt"
+        
+        if [ ! -f "$CRED_FILE" ]; then
+            sleep 5
+            sudo docker logs mslx-daemon | grep -E "API Key|账号:|密码:" > "$CRED_FILE"
+            chmod 777 "$CRED_FILE"
+        fi
+        exit 0
+    else
+        exit 3
+    fi
+    ;;
+esac

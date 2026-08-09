@@ -187,6 +187,7 @@
 | <img src="apps/hermes-agent-veenyi/fnos/ICON.PNG" width="28"> | **Hermes-Agent (veenyi)** | socket | 自进化 AI 智能体（转包版），经 fnOS socket 网关接入，多模型供应商 | [GitHub](https://github.com/veenyi/fnos-hermes-agent) | [Release][r-hermes-veenyi] |
 | <img src="apps/hermes-agent-bbis/fnos/ICON.PNG" width="28"> | **Hermes-Agent (bbis)** | socket | 自进化 AI 智能体（转包版），经 fnOS socket 网关接入，多模型供应商 | [GitHub](https://github.com/iranee/fnos-hermes-agent) | [Release][r-hermes-bbis] |
 | <img src="apps/hermes-studio/fnos/ICON.PNG" width="28"> | **Hermes Studio** | `8648` | AI 工作台（转包版），可视化对话与工作流管理 | [GitHub](https://github.com/EKKOLearnAI/hermes-studio) | [Release][r-hermes-studio] |
+| <img src="apps/MSLX/fnos/ICON.PNG" width="28"> | **MSLX** | `1027` | Minecraft 服务端进程管理面板（跨平台），内置 FRP 内网穿透与定时备份 | [官网](https://mslx.mslmc.cn) | [Release][r-mslx] |
 
 ## 反馈与请求
 
@@ -384,3 +385,4 @@ fnos-apps/
 [r-hermes-veenyi]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-agent-veenyi
 [r-hermes-bbis]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-agent-bbis
 [r-hermes-studio]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-studio
+[r-mslx]: https://github.com/Sole0nce/fnos-apps/releases?q=MSLX

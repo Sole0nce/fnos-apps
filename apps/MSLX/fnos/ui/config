@@ -1,0 +1,13 @@
+{
+    ".url": {
+        "MSLX.Application": {
+            "title": "MSLX 控制面板",
+            "icon": "images/icon-{0}.png",
+            "type": "url",
+            "protocol": "http",
+            "port": "1027",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

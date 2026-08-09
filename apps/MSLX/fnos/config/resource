@@ -1,0 +1,20 @@
+{
+    "data-share": {
+        "shares": [
+            {
+                "name": "MSLX",
+                "permission": {
+                    "rw": ["MSLX"]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "mslx-daemon-app",
+                "path": "docker"
+            }
+        ]
+    }
+}

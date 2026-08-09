@@ -1,0 +1,45 @@
+[
+    {
+        "stepTitle": "安装必看提示",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "🎉 欢迎安装 <strong>MSLX (Minecraft Server Launcher X)</strong> 服务器管理面板！<br><br>🚨 <strong>【必看：初始账号密码获取】</strong><br>安装完成后，请打开飞牛「文件管理器」，进入应用数据目录下的 <strong>MSLX</strong> 文件夹，查看 <u><i><a href=\"https://mslx.mslmc.cn/docs/install/fnos/#%e6%9f%a5%e8%af%a2%e5%88%9d%e5%a7%8b%e8%b4%a6%e6%88%b7%e5%af%86%e7%a0%81%e4%bf%a1%e6%81%af\" target=\"_blank\">「初始登录凭证.txt」</a></i></u> 获取！<br>💡 提示：文件生成需要一小会儿，如果没看到该文件，请点一下刷新按钮。<br><br>🔌 <strong>端口与访问说明：</strong><br>面板默认运行在 NAS 的 1027 端口。强烈建议自行配置反向代理（如 Nginx Proxy Manager）来实现 SSL/HTTPS 访问。<br><br>🌐 <strong>相关链接：</strong><br><a href=\"https://mslx.mslmc.cn/\" target=\"_blank\">官网文档</a> ｜ <a href=\"https://mslx.mslmc.cn/article/qq/\" target=\"_blank\">QQ 交流群</a> ｜ <a href=\"https://mslx.mslmc.cn/eula/\" target=\"_blank\">阅读《最终用户许可协议(EULA)》</a>"
+            },
+            {
+                "type": "checkbox",
+                "field": "wizard_understand_password",
+                "label": "密码须知",
+                "options": [
+                    {
+                        "label": "我已清楚了解在哪获取初始账号和密码",
+                        "value": "understood"
+                    }
+                ],
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "⚠️ 必须确认已知晓密码获取方式才能安装 MSLX"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "field": "wizard_agree_eula",
+                "label": "使用协议",
+                "options": [
+                    {
+                        "label": "我已阅读并同意上述《MSLX 最终用户许可协议(EULA)》",
+                        "value": "agreed"
+                    }
+                ],
+                "rules": [
+                    {
+                        "required": true,
+                        "message": "⚠️ 必须勾选同意使用协议才能安装 MSLX"
+                    }
+                ]
+            }
+        ]
+    }
+]
