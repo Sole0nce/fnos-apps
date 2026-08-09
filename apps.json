@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-09T08:55:09Z",
+  "generated_at": "2026-08-09T12:40:33Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -1044,8 +1044,8 @@
       "display_name": "Hermes Agent (bbis)",
       "description": "Hermes Agent 开源 AI Agent（iranee/bbis 打包版），支持多平台消息网关、内置学习循环、技能系统和 MCP 扩展。通过飞牛应用中心安装，即开即用。<br/><br/><strong>核心能力：</strong><br/>• 多模型支持：OpenAI、Anthropic、Kimi、MiniMax 等<br/>• 消息平台：微信ClawBot、QQ Bot、飞书、WhatsApp、Telegram 等<br/>• 定时任务：自然语言描述的自动化调度<br/>• 持久记忆：跨会话学习和技能进化<br/>• MCP 扩展：连接 GitHub 等外部工具<br/><br/><strong>免责声明：</strong><br/>本应用仅作为服务集成工具，不对 Hermes Agent 软件本身的安全性、稳定性作任何保证。使用过程中产生的所有风险由用户自行承担。",
       "version": "0.20.0",
-      "fpk_version": "0.20.0-r2",
-      "release_tag": "hermes-agent-bbis/v0.20.0-r2",
+      "fpk_version": "0.20.0-r3",
+      "release_tag": "hermes-agent-bbis/v0.20.0-r3",
       "service_port": 0,
       "homepage_url": "https://github.com/iranee/fnos-hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes-agent-bbis/fnos/ICON_256.PNG",
@@ -1053,7 +1053,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-09T08:11:10Z",
+      "updated_at": "2026-08-09T12:40:20Z",
       "download_count": 0,
       "app_type": "native",
       "category": "ai"
@@ -1117,7 +1117,7 @@
         "arm"
       ],
       "updated_at": "2026-08-09T08:12:13Z",
-      "download_count": 2,
+      "download_count": 5,
       "app_type": "native",
       "category": "ai"
     },
