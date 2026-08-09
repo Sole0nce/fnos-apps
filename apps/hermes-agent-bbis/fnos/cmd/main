@@ -69,7 +69,7 @@ log_msg "[环境] TRIM_PKGHOME=${TRIM_PKGHOME}"
 log_msg "[环境] DATA_DIR=${DATA_DIR}"
 export PATH="${DATA_DIR}/node/bin:/usr/local/bin:$PATH"
 VAR_DIR="${TRIM_PKGVAR}"
-MONITOR_SCRIPT="${TRIM_APPDEST}/server/monitor.js"
+MONITOR_SCRIPT="${TRIM_APPDEST}/server/boot.js"
 SOCKET_PATH="${TRIM_APPDEST}/hermes-agent-bbis.sock"
 
 log_msg() { echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> ${LOG_FILE}; }
