@@ -17,6 +17,11 @@ service_preuninst() {
     pkill -9 -x "forgejo" 2>/dev/null || true
 }
 
+service_postinst() {
+    # 安装完成后把数据目录所有权交给 forgejo 用户（run-as: root 时默认归 root）
+    chown -R "forgejo:forgejo" "${APP_DATA_DIR}" "${TRIM_PKGETC}" "${TRIM_PKGHOME}" 2>/dev/null || true
+}
+
 service_poststop() {
     service_preuninst
 }

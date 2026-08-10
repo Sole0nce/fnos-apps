@@ -4,6 +4,16 @@ APP_DATA_DIR=$1
 
 DATA_DIR="$APP_DATA_DIR/data"
 mkdir -p "$DATA_DIR/custom/conf"
+# 目录是 root 创建的（脚本以 root 运行），forgejo 用户需要写权限保存 app.ini
+chown -R forgejo:forgejo "$DATA_DIR" 2>/dev/null || true
 
 cd "$APP_DIR" || exit 1
-exec ./forgejo web --port ${TRIM_SERVICE_PORT} --custom-path "$DATA_DIR/custom" --config "$DATA_DIR/custom/conf/app.ini" --work-path "$DATA_DIR"
+export PATH="/usr/local/bin:/usr/bin:/bin:${PATH:-}"
+
+# Forgejo 拒绝以 root 运行（mustNotRunAsRoot）；安装是 run-as: root（规避
+# fnOS 10237 目录遍历坑），这里降权到 forgejo 用户再启动。
+# su 会把 HOME 重置为 passwd 的 /home/forgejo（不存在），导致 Forgejo
+# 重写 $HOME/.ssh 时崩溃；必须在 su 的 shell 里重新 export HOME 指向
+# TRIM_PKGHOME（/vol1/@apphome/forgejo，已 chown forgejo，可写）。
+PKGHOME="${TRIM_PKGHOME:-$APP_DATA_DIR}"
+exec su -s /bin/sh forgejo -c "export HOME='$PKGHOME'; cd '$APP_DIR' && exec ./forgejo web --port ${TRIM_SERVICE_PORT:-3006} --custom-path '$DATA_DIR/custom' --config '$DATA_DIR/custom/conf/app.ini' --work-path '$DATA_DIR'"

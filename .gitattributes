@@ -16,3 +16,11 @@ var/** text eol=lf
 *.env text eol=lf
 apps/*/fnos/config/prompts/skills/trim-cli/bin/* binary
 **/fnos/ui/** text eol=lf
+**/fnos/ui/**/*.png binary
+**/fnos/ui/**/*.jpg binary
+**/fnos/ui/**/*.jpeg binary
+**/fnos/ui/**/*.webp binary
+**/fnos/ui/**/*.gif binary
+**/fnos/ui/**/*.ico binary
+**/fnos/ui/**/*.svg text eol=lf
+**/fnos/ui/**/*.woff2 binary

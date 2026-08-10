@@ -6,7 +6,7 @@
             "desc": "Forgejo Git Hosting",
             "icon": "images/{0}.png",
             "type": "url",
-            "port": "3005",
+            "port": "3006",
             "protocol": "http",
             "url": "/",
             "allUsers": true
