@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-10T03:58:57Z",
+  "generated_at": "2026-08-10T05:03:19Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -918,8 +918,8 @@
       "display_name": "Gitea",
       "description": "轻量级 Git 代码托管服务器，提供代码仓库、Issue 追踪和 CI/CD。",
       "version": "1.27.1",
-      "fpk_version": "1.27.1-r10",
-      "release_tag": "gitea/v1.27.1-r10",
+      "fpk_version": "1.27.1-r11",
+      "release_tag": "gitea/v1.27.1-r11",
       "service_port": 3033,
       "homepage_url": "https://gitea.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/gitea/fnos/ICON_256.PNG",
@@ -927,7 +927,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-10T03:58:41Z",
+      "updated_at": "2026-08-10T05:03:00Z",
       "download_count": 0,
       "app_type": "native",
       "category": "system"
