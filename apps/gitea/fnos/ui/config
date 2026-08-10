@@ -4,7 +4,7 @@
         {
             "title": "Gitea",
             "desc": "Gitea Git Hosting",
-            "icon": "images/{0}.png",
+            "icon": "images/icon_{0}.png",
             "type": "url",
             "port": "3033",
             "protocol": "http",
