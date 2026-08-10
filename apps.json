@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-09T15:36:46Z",
+  "generated_at": "2026-08-10T03:22:11Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -591,7 +591,7 @@
         "arm"
       ],
       "updated_at": "2026-08-09T08:54:44Z",
-      "download_count": 1,
+      "download_count": 7,
       "app_type": "docker",
       "category": "system"
     },
@@ -918,8 +918,8 @@
       "display_name": "Gitea",
       "description": "轻量级 Git 代码托管服务器，提供代码仓库、Issue 追踪和 CI/CD。",
       "version": "1.27.1",
-      "fpk_version": "1.27.1-r8",
-      "release_tag": "gitea/v1.27.1-r8",
+      "fpk_version": "1.27.1-r9",
+      "release_tag": "gitea/v1.27.1-r9",
       "service_port": 3033,
       "homepage_url": "https://gitea.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/gitea/fnos/ICON_256.PNG",
@@ -927,7 +927,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:31:13Z",
+      "updated_at": "2026-08-10T03:21:56Z",
       "download_count": 0,
       "app_type": "native",
       "category": "system"
@@ -1075,7 +1075,7 @@
         "arm"
       ],
       "updated_at": "2026-08-09T12:40:20Z",
-      "download_count": 0,
+      "download_count": 1,
       "app_type": "native",
       "category": "ai"
     },
@@ -1117,7 +1117,7 @@
         "arm"
       ],
       "updated_at": "2026-08-09T08:11:19Z",
-      "download_count": 1,
+      "download_count": 2,
       "app_type": "native",
       "category": "ai"
     },
@@ -1665,7 +1665,7 @@
         "arm"
       ],
       "updated_at": "2026-08-07T05:57:37Z",
-      "download_count": 0,
+      "download_count": 1,
       "app_type": "native",
       "category": "system"
     },
