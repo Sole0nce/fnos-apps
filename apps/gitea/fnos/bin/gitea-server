@@ -5,9 +5,13 @@ APP_DATA_DIR=$1
 mkdir -p "$APP_DATA_DIR/custom"
 
 cd "$APP_DIR" || exit 1
-export HOME="${TRIM_PKGHOME:-$APP_DATA_DIR}"
 export PATH="/usr/local/bin:/usr/bin:/bin:${PATH:-}"
 
 # Gitea 拒绝以 root 运行（mustNotRunAsRoot）；安装是 run-as: root（规避
 # fnOS 10237 目录遍历坑），这里降权到 gitea 用户再启动。
-exec su -s /bin/sh gitea -c "cd '$APP_DIR' && exec ./gitea web --port ${TRIM_SERVICE_PORT:-3033} --custom-path '$APP_DATA_DIR/custom' --work-path '$APP_DATA_DIR'"
+# su 会把 HOME 重置为 passwd 的 /home/gitea（该目录不存在），导致 Gitea
+# 重写 $HOME/.ssh 时崩溃（mkdir /home/gitea: permission denied）。
+# 必须在 su 的 shell 里重新 export HOME 指向 TRIM_PKGHOME
+# （/vol1/@apphome/gitea，已 chown gitea，可写）。
+PKGHOME="${TRIM_PKGHOME:-$APP_DATA_DIR}"
+exec su -s /bin/sh gitea -c "export HOME='$PKGHOME'; cd '$APP_DIR' && exec ./gitea web --port ${TRIM_SERVICE_PORT:-3033} --custom-path '$APP_DATA_DIR/custom' --work-path '$APP_DATA_DIR'"
