@@ -7,4 +7,7 @@ mkdir -p "$APP_DATA_DIR/custom"
 cd "$APP_DIR" || exit 1
 export HOME="${TRIM_PKGHOME:-$APP_DATA_DIR}"
 export PATH="/usr/local/bin:/usr/bin:/bin:${PATH:-}"
-exec ./gitea web --port ${TRIM_SERVICE_PORT:-3033} --custom-path "$APP_DATA_DIR/custom" --work-path "$APP_DATA_DIR"
+
+# Gitea 拒绝以 root 运行（mustNotRunAsRoot）；安装是 run-as: root（规避
+# fnOS 10237 目录遍历坑），这里降权到 gitea 用户再启动。
+exec su -s /bin/sh gitea -c "cd '$APP_DIR' && exec ./gitea web --port ${TRIM_SERVICE_PORT:-3033} --custom-path '$APP_DATA_DIR/custom' --work-path '$APP_DATA_DIR'"

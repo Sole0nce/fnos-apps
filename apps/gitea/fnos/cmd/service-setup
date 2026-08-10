@@ -5,10 +5,19 @@ PID_FILE="${TRIM_PKGVAR}/${TRIM_APPNAME}.pid"
 
 APP_DIR="${TRIM_APPDEST}"
 APP_DATA_DIR="${TRIM_PKGVAR}"
+APP_USER="gitea"
 
+# Gitea 拒绝以 root 运行（mustNotRunAsRoot 安全检查）。
+# 安装以 run-as: root 进行（规避 fnOS 10237 目录遍历坑），
+# gitea-server 包装脚本内部会 su 降权到 gitea 用户再启动。
 SERVICE_COMMAND="$APP_DIR/bin/gitea-server $APP_DATA_DIR"
 SVC_BACKGROUND=y
 SVC_WRITE_PID=y
+
+service_postinst() {
+    # 安装完成后把数据目录所有权交给 gitea 用户（run-as: root 时默认归 root）
+    chown -R "${APP_USER}:${APP_USER}" "${APP_DATA_DIR}" "${TRIM_PKGETC}" "${TRIM_PKGHOME}" 2>/dev/null || true
+}
 
 service_preuninst() {
     # 使用 -x 精确匹配进程名，避免误杀 appcenter-cli 等包含 "gitea" 参数的进程
