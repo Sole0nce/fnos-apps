@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-15T08:43:55Z",
+  "generated_at": "2026-08-16T08:39:28Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -591,7 +591,7 @@
         "arm"
       ],
       "updated_at": "2026-08-14T09:15:07Z",
-      "download_count": 7,
+      "download_count": 9,
       "app_type": "docker",
       "category": "system"
     },
@@ -706,9 +706,9 @@
       "file_prefix": "ente",
       "display_name": "Ente",
       "description": "端到端加密照片备份和存储服务，Google Photos 的隐私替代方案。",
-      "version": "latest-2026.08.15",
-      "fpk_version": "latest-2026.08.15",
-      "release_tag": "ente/vlatest-2026.08.15",
+      "version": "latest-2026.08.16",
+      "fpk_version": "latest-2026.08.16",
+      "release_tag": "ente/vlatest-2026.08.16",
       "service_port": 8510,
       "homepage_url": "https://ente.io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ente/fnos/ICON_256.PNG",
@@ -716,7 +716,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-15T08:38:35Z",
+      "updated_at": "2026-08-16T08:38:47Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media",
@@ -928,7 +928,7 @@
         "arm"
       ],
       "updated_at": "2026-08-14T09:15:18Z",
-      "download_count": 1,
+      "download_count": 2,
       "app_type": "native",
       "category": "system"
     },
@@ -1043,9 +1043,9 @@
       "file_prefix": "hermes",
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
-      "version": "2026.8.15",
-      "fpk_version": "2026.8.15",
-      "release_tag": "hermes/v2026.8.15",
+      "version": "2026.8.16",
+      "fpk_version": "2026.8.16",
+      "release_tag": "hermes/v2026.8.16",
       "service_port": 9119,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
@@ -1053,7 +1053,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-15T08:38:39Z",
+      "updated_at": "2026-08-16T08:38:44Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -1096,7 +1096,7 @@
         "arm"
       ],
       "updated_at": "2026-08-14T09:16:41Z",
-      "download_count": 2,
+      "download_count": 5,
       "app_type": "native",
       "category": "ai"
     },
@@ -1117,7 +1117,7 @@
         "arm"
       ],
       "updated_at": "2026-08-15T08:38:45Z",
-      "download_count": 2,
+      "download_count": 4,
       "app_type": "native",
       "category": "ai"
     },
@@ -1211,9 +1211,9 @@
       "file_prefix": "immich",
       "display_name": "Immich",
       "description": "自托管照片和视频备份方案,支持人脸识别和智能搜索。",
-      "version": "release-2026.08.15",
-      "fpk_version": "release-2026.08.15",
-      "release_tag": "immich/vrelease-2026.08.15",
+      "version": "release-2026.08.16",
+      "fpk_version": "release-2026.08.16",
+      "release_tag": "immich/vrelease-2026.08.16",
       "service_port": 2283,
       "homepage_url": "https://github.com/immich-app/immich",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/immich/fnos/ICON_256.PNG",
@@ -1221,7 +1221,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-15T08:38:32Z",
+      "updated_at": "2026-08-16T08:38:49Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
@@ -1253,9 +1253,9 @@
       "file_prefix": "jackett",
       "display_name": "Jackett",
       "description": "Torrent 索引器代理，为 Sonarr/Radarr 等工具提供统一的搜索接口。",
-      "version": "0.24.2406",
-      "fpk_version": "0.24.2406",
-      "release_tag": "jackett/v0.24.2406",
+      "version": "0.24.2413",
+      "fpk_version": "0.24.2413",
+      "release_tag": "jackett/v0.24.2413",
       "service_port": 9117,
       "homepage_url": "https://github.com/Jackett/Jackett",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/jackett/fnos/ICON_256.PNG",
@@ -1263,7 +1263,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-14T09:15:20Z",
+      "updated_at": "2026-08-16T08:38:58Z",
       "download_count": 0,
       "app_type": "native",
       "category": "automation"
@@ -1992,9 +1992,9 @@
       "file_prefix": "next-ai-draw-io",
       "display_name": "Next AI Draw.io",
       "description": "基于大语言模型的 draw.io 图表生成与编辑工具",
-      "version": "latest-2026.08.15",
-      "fpk_version": "latest-2026.08.15",
-      "release_tag": "next-ai-draw-io/vlatest-2026.08.15",
+      "version": "latest-2026.08.16",
+      "fpk_version": "latest-2026.08.16",
+      "release_tag": "next-ai-draw-io/vlatest-2026.08.16",
       "service_port": 3007,
       "homepage_url": "https://github.com/chadkunsman/next-ai-draw-io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/next-ai-draw-io/fnos/ICON_256.PNG",
@@ -2002,7 +2002,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-15T08:38:35Z",
+      "updated_at": "2026-08-16T08:38:48Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -2959,9 +2959,9 @@
       "file_prefix": "transmission",
       "display_name": "Transmission",
       "description": "Transmission 是一个轻量级的 BitTorrent 客户端，以简洁高效著称，支持 Web 远程管理。",
-      "version": "latest-2026.08.15",
-      "fpk_version": "latest-2026.08.15",
-      "release_tag": "transmission/vlatest-2026.08.15",
+      "version": "latest-2026.08.16",
+      "fpk_version": "latest-2026.08.16",
+      "release_tag": "transmission/vlatest-2026.08.16",
       "service_port": 9091,
       "homepage_url": "https://transmissionbt.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/transmission/fnos/ICON_256.PNG",
@@ -2969,7 +2969,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-15T08:38:36Z",
+      "updated_at": "2026-08-16T08:38:50Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "download"
