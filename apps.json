@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-17T08:55:57Z",
+  "generated_at": "2026-08-17T08:58:32Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -1085,9 +1085,9 @@
       "file_prefix": "hermes-agent-native",
       "display_name": "Hermes-原生版",
       "description": "自进化 AI 智能体（原生 package 版），多模型供应商、多消息平台接入，持久记忆与工具调用。安装零联网，运行时预打包。",
-      "version": "2026.8.13",
-      "fpk_version": "2026.8.13",
-      "release_tag": "hermes-agent-native/v2026.8.13",
+      "version": "2026.8.16",
+      "fpk_version": "2026.8.16",
+      "release_tag": "hermes-agent-native/v2026.8.16",
       "service_port": 9119,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes-agent-native/fnos/ICON_256.PNG",
@@ -1095,7 +1095,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-14T09:16:41Z",
+      "updated_at": "2026-08-17T08:58:17Z",
       "download_count": 5,
       "app_type": "native",
       "category": "ai"
