@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T08:41:21Z",
+  "generated_at": "2026-08-23T08:40:42Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -117,9 +117,9 @@
       "file_prefix": "ani-rss",
       "display_name": "ANI-RSS",
       "description": "动漫 RSS 自动追番、订阅、下载和刮削工具，支持自动识别季数集数和重命名。默认用户名admin，密码admin。",
-      "version": "3.2.15",
-      "fpk_version": "3.2.15",
-      "release_tag": "ani-rss/v3.2.15",
+      "version": "3.2.16",
+      "fpk_version": "3.2.16",
+      "release_tag": "ani-rss/v3.2.16",
       "service_port": 7789,
       "homepage_url": "https://github.com/wushuo894/ani-rss",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ani-rss/fnos/ICON_256.PNG",
@@ -127,7 +127,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:37Z",
+      "updated_at": "2026-08-23T08:39:58Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content"
@@ -706,9 +706,9 @@
       "file_prefix": "ente",
       "display_name": "Ente",
       "description": "端到端加密照片备份和存储服务，Google Photos 的隐私替代方案。",
-      "version": "latest-2026.08.22",
-      "fpk_version": "latest-2026.08.22",
-      "release_tag": "ente/vlatest-2026.08.22",
+      "version": "latest-2026.08.23",
+      "fpk_version": "latest-2026.08.23",
+      "release_tag": "ente/vlatest-2026.08.23",
       "service_port": 8510,
       "homepage_url": "https://ente.io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ente/fnos/ICON_256.PNG",
@@ -716,7 +716,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:38Z",
+      "updated_at": "2026-08-23T08:39:57Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media",
@@ -865,7 +865,7 @@
         "arm"
       ],
       "updated_at": "2026-08-21T08:51:38Z",
-      "download_count": 2,
+      "download_count": 3,
       "app_type": "native",
       "category": "system"
     },
@@ -1043,9 +1043,9 @@
       "file_prefix": "hermes",
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
-      "version": "2026.8.22",
-      "fpk_version": "2026.8.22",
-      "release_tag": "hermes/v2026.8.22",
+      "version": "2026.8.23",
+      "fpk_version": "2026.8.23",
+      "release_tag": "hermes/v2026.8.23",
       "service_port": 9119,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
@@ -1053,7 +1053,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:39Z",
+      "updated_at": "2026-08-23T08:39:59Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -1075,7 +1075,7 @@
         "arm"
       ],
       "updated_at": "2026-08-21T08:51:34Z",
-      "download_count": 2,
+      "download_count": 3,
       "app_type": "native",
       "category": "ai"
     },
@@ -1211,9 +1211,9 @@
       "file_prefix": "immich",
       "display_name": "Immich",
       "description": "自托管照片和视频备份方案,支持人脸识别和智能搜索。",
-      "version": "release-2026.08.22",
-      "fpk_version": "release-2026.08.22",
-      "release_tag": "immich/vrelease-2026.08.22",
+      "version": "release-2026.08.23",
+      "fpk_version": "release-2026.08.23",
+      "release_tag": "immich/vrelease-2026.08.23",
       "service_port": 2283,
       "homepage_url": "https://github.com/immich-app/immich",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/immich/fnos/ICON_256.PNG",
@@ -1221,7 +1221,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:40Z",
+      "updated_at": "2026-08-23T08:40:00Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
@@ -1253,9 +1253,9 @@
       "file_prefix": "jackett",
       "display_name": "Jackett",
       "description": "Torrent 索引器代理，为 Sonarr/Radarr 等工具提供统一的搜索接口。",
-      "version": "0.24.2440",
-      "fpk_version": "0.24.2440",
-      "release_tag": "jackett/v0.24.2440",
+      "version": "0.24.2451",
+      "fpk_version": "0.24.2451",
+      "release_tag": "jackett/v0.24.2451",
       "service_port": 9117,
       "homepage_url": "https://github.com/Jackett/Jackett",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/jackett/fnos/ICON_256.PNG",
@@ -1263,7 +1263,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:44Z",
+      "updated_at": "2026-08-23T08:40:11Z",
       "download_count": 0,
       "app_type": "native",
       "category": "automation"
@@ -1654,9 +1654,9 @@
       "file_prefix": "mcsmanager",
       "display_name": "MCSManager 面板",
       "description": "开源，一键开服，分布式架构，多用户，现代化的 Minecraft 和 Steam 游戏服务器管理面板，此应用整合了节点端和面板端两个子应用，默认需要 23333 和 24444 端口才可正常工作。",
-      "version": "10.18.0",
-      "fpk_version": "10.18.0",
-      "release_tag": "mcsmanager/v10.18.0",
+      "version": "10.18.2",
+      "fpk_version": "10.18.2",
+      "release_tag": "mcsmanager/v10.18.2",
       "service_port": 23333,
       "homepage_url": "https://github.com/MCSManager/MCSManager",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/mcsmanager/fnos/ICON_256.PNG",
@@ -1664,7 +1664,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-11T09:08:49Z",
+      "updated_at": "2026-08-23T08:40:12Z",
       "download_count": 2,
       "app_type": "native",
       "category": "system"
@@ -1992,9 +1992,9 @@
       "file_prefix": "next-ai-draw-io",
       "display_name": "Next AI Draw.io",
       "description": "基于大语言模型的 draw.io 图表生成与编辑工具",
-      "version": "latest-2026.08.22",
-      "fpk_version": "latest-2026.08.22",
-      "release_tag": "next-ai-draw-io/vlatest-2026.08.22",
+      "version": "latest-2026.08.23",
+      "fpk_version": "latest-2026.08.23",
+      "release_tag": "next-ai-draw-io/vlatest-2026.08.23",
       "service_port": 3007,
       "homepage_url": "https://github.com/chadkunsman/next-ai-draw-io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/next-ai-draw-io/fnos/ICON_256.PNG",
@@ -2002,7 +2002,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:36Z",
+      "updated_at": "2026-08-23T08:39:56Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -2938,9 +2938,9 @@
       "file_prefix": "tinymediamanager",
       "display_name": "tinyMediaManager",
       "description": "影视文件元数据管理工具，支持从 TheMovieDB、IMDb 刮削元数据，为 Kodi、Emby、Jellyfin、Plex 创建 NFO 文件，自动重命名和整理。含内置 JRE，通过虚拟显示运行。",
-      "version": "5.3.1",
-      "fpk_version": "5.3.1",
-      "release_tag": "tinymediamanager/v5.3.1",
+      "version": "5.3.2",
+      "fpk_version": "5.3.2",
+      "release_tag": "tinymediamanager/v5.3.2",
       "service_port": 5800,
       "homepage_url": "https://www.tinymediamanager.org",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/tinymediamanager/fnos/ICON_256.PNG",
@@ -2948,7 +2948,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-11T09:08:43Z",
+      "updated_at": "2026-08-23T08:39:59Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
@@ -2959,9 +2959,9 @@
       "file_prefix": "transmission",
       "display_name": "Transmission",
       "description": "Transmission 是一个轻量级的 BitTorrent 客户端，以简洁高效著称，支持 Web 远程管理。",
-      "version": "latest-2026.08.22",
-      "fpk_version": "latest-2026.08.22",
-      "release_tag": "transmission/vlatest-2026.08.22",
+      "version": "latest-2026.08.23",
+      "fpk_version": "latest-2026.08.23",
+      "release_tag": "transmission/vlatest-2026.08.23",
       "service_port": 9091,
       "homepage_url": "https://transmissionbt.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/transmission/fnos/ICON_256.PNG",
@@ -2969,7 +2969,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:49Z",
+      "updated_at": "2026-08-23T08:40:04Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "download"
@@ -2980,9 +2980,9 @@
       "file_prefix": "uptime-kuma",
       "display_name": "Uptime Kuma",
       "description": "简洁美观的服务监控工具，支持多种监控类型和告警通知",
-      "version": "2.5.1",
-      "fpk_version": "2.5.1",
-      "release_tag": "uptime-kuma/v2.5.1",
+      "version": "2.5.3",
+      "fpk_version": "2.5.3",
+      "release_tag": "uptime-kuma/v2.5.3",
       "service_port": 3001,
       "homepage_url": "https://github.com/louislam/uptime-kuma",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/uptime-kuma/fnos/ICON_256.PNG",
@@ -2990,7 +2990,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:47Z",
+      "updated_at": "2026-08-23T08:40:02Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "system"
@@ -3001,9 +3001,9 @@
       "file_prefix": "vaultwarden",
       "display_name": "Vaultwarden",
       "description": "轻量级 Bitwarden 兼容密码管理服务器，使用 Rust 编写，支持自托管密码管理。",
-      "version": "1.37.1",
-      "fpk_version": "1.37.1-r5",
-      "release_tag": "vaultwarden/v1.37.1-r5",
+      "version": "1.37.2",
+      "fpk_version": "1.37.2",
+      "release_tag": "vaultwarden/v1.37.2",
       "service_port": 8880,
       "homepage_url": "https://github.com/dani-garcia/vaultwarden",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/vaultwarden/fnos/ICON_256.PNG",
@@ -3011,7 +3011,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:32:23Z",
+      "updated_at": "2026-08-23T08:40:03Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "system"
