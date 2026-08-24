@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T08:40:42Z",
+  "generated_at": "2026-08-24T08:58:49Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -117,9 +117,9 @@
       "file_prefix": "ani-rss",
       "display_name": "ANI-RSS",
       "description": "动漫 RSS 自动追番、订阅、下载和刮削工具，支持自动识别季数集数和重命名。默认用户名admin，密码admin。",
-      "version": "3.2.16",
-      "fpk_version": "3.2.16",
-      "release_tag": "ani-rss/v3.2.16",
+      "version": "3.2.18",
+      "fpk_version": "3.2.18",
+      "release_tag": "ani-rss/v3.2.18",
       "service_port": 7789,
       "homepage_url": "https://github.com/wushuo894/ani-rss",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ani-rss/fnos/ICON_256.PNG",
@@ -127,7 +127,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-23T08:39:58Z",
+      "updated_at": "2026-08-24T08:58:14Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content"
@@ -391,9 +391,9 @@
       "file_prefix": "clouddrive2",
       "display_name": "CloudDrive2",
       "description": "多网盘挂载与管理工具",
-      "version": "1.0.14",
-      "fpk_version": "1.0.14",
-      "release_tag": "clouddrive2/v1.0.14",
+      "version": "1.0.15",
+      "fpk_version": "1.0.15",
+      "release_tag": "clouddrive2/v1.0.15",
       "service_port": 19798,
       "homepage_url": "https://www.clouddrive2.com/",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/clouddrive2/fnos/ICON_256.PNG",
@@ -401,7 +401,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-12T09:20:21Z",
+      "updated_at": "2026-08-24T08:58:14Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "system"
@@ -538,9 +538,9 @@
       "file_prefix": "daidai-panel",
       "display_name": "Daidai Panel",
       "description": "轻量现代的定时任务与脚本管理面板",
-      "version": "3.0.7",
-      "fpk_version": "3.0.7",
-      "release_tag": "daidai-panel/v3.0.7",
+      "version": "3.0.8",
+      "fpk_version": "3.0.8",
+      "release_tag": "daidai-panel/v3.0.8",
       "service_port": 5701,
       "homepage_url": "https://github.com/linzixuanzz/daidai-panel",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/daidai-panel/fnos/ICON_256.PNG",
@@ -548,7 +548,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-22T08:39:35Z",
+      "updated_at": "2026-08-24T08:58:11Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "system"
@@ -706,9 +706,9 @@
       "file_prefix": "ente",
       "display_name": "Ente",
       "description": "端到端加密照片备份和存储服务，Google Photos 的隐私替代方案。",
-      "version": "latest-2026.08.23",
-      "fpk_version": "latest-2026.08.23",
-      "release_tag": "ente/vlatest-2026.08.23",
+      "version": "latest-2026.08.24",
+      "fpk_version": "latest-2026.08.24",
+      "release_tag": "ente/vlatest-2026.08.24",
       "service_port": 8510,
       "homepage_url": "https://ente.io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ente/fnos/ICON_256.PNG",
@@ -716,7 +716,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-23T08:39:57Z",
+      "updated_at": "2026-08-24T08:58:14Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media",
@@ -865,7 +865,7 @@
         "arm"
       ],
       "updated_at": "2026-08-21T08:51:38Z",
-      "download_count": 3,
+      "download_count": 5,
       "app_type": "native",
       "category": "system"
     },
@@ -1043,9 +1043,9 @@
       "file_prefix": "hermes",
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
-      "version": "2026.8.23",
-      "fpk_version": "2026.8.23",
-      "release_tag": "hermes/v2026.8.23",
+      "version": "2026.8.24",
+      "fpk_version": "2026.8.24",
+      "release_tag": "hermes/v2026.8.24",
       "service_port": 9119,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
@@ -1053,7 +1053,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-23T08:39:59Z",
+      "updated_at": "2026-08-24T08:58:10Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -1075,7 +1075,7 @@
         "arm"
       ],
       "updated_at": "2026-08-21T08:51:34Z",
-      "download_count": 3,
+      "download_count": 9,
       "app_type": "native",
       "category": "ai"
     },
@@ -1096,7 +1096,7 @@
         "arm"
       ],
       "updated_at": "2026-08-22T08:40:54Z",
-      "download_count": 8,
+      "download_count": 9,
       "app_type": "native",
       "category": "ai"
     },
@@ -1211,9 +1211,9 @@
       "file_prefix": "immich",
       "display_name": "Immich",
       "description": "自托管照片和视频备份方案,支持人脸识别和智能搜索。",
-      "version": "release-2026.08.23",
-      "fpk_version": "release-2026.08.23",
-      "release_tag": "immich/vrelease-2026.08.23",
+      "version": "release-2026.08.24",
+      "fpk_version": "release-2026.08.24",
+      "release_tag": "immich/vrelease-2026.08.24",
       "service_port": 2283,
       "homepage_url": "https://github.com/immich-app/immich",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/immich/fnos/ICON_256.PNG",
@@ -1221,7 +1221,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-23T08:40:00Z",
+      "updated_at": "2026-08-24T08:58:14Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
@@ -1253,9 +1253,9 @@
       "file_prefix": "jackett",
       "display_name": "Jackett",
       "description": "Torrent 索引器代理，为 Sonarr/Radarr 等工具提供统一的搜索接口。",
-      "version": "0.24.2451",
-      "fpk_version": "0.24.2451",
-      "release_tag": "jackett/v0.24.2451",
+      "version": "0.24.2457",
+      "fpk_version": "0.24.2457",
+      "release_tag": "jackett/v0.24.2457",
       "service_port": 9117,
       "homepage_url": "https://github.com/Jackett/Jackett",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/jackett/fnos/ICON_256.PNG",
@@ -1263,7 +1263,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-23T08:40:11Z",
+      "updated_at": "2026-08-24T08:58:23Z",
       "download_count": 0,
       "app_type": "native",
       "category": "automation"
@@ -1665,7 +1665,7 @@
         "arm"
       ],
       "updated_at": "2026-08-23T08:40:12Z",
-      "download_count": 2,
+      "download_count": 5,
       "app_type": "native",
       "category": "system"
     },
@@ -1865,9 +1865,9 @@
       "file_prefix": "msf",
       "display_name": "MSF",
       "description": "MosDNS + Mihomo DNS 分流与透明代理管理面板",
-      "version": "0.4.7.7",
-      "fpk_version": "0.4.7.7",
-      "release_tag": "msf/v0.4.7.7",
+      "version": "0.6.0",
+      "fpk_version": "0.6.0",
+      "release_tag": "msf/v0.6.0",
       "service_port": 7777,
       "homepage_url": "https://github.com/scoltzero/msf",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/msf/fnos/ICON_256.PNG",
@@ -1875,7 +1875,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-18T08:47:37Z",
+      "updated_at": "2026-08-24T08:58:26Z",
       "download_count": 0,
       "app_type": "native",
       "category": "network"
@@ -1992,9 +1992,9 @@
       "file_prefix": "next-ai-draw-io",
       "display_name": "Next AI Draw.io",
       "description": "基于大语言模型的 draw.io 图表生成与编辑工具",
-      "version": "latest-2026.08.23",
-      "fpk_version": "latest-2026.08.23",
-      "release_tag": "next-ai-draw-io/vlatest-2026.08.23",
+      "version": "latest-2026.08.24",
+      "fpk_version": "latest-2026.08.24",
+      "release_tag": "next-ai-draw-io/vlatest-2026.08.24",
       "service_port": 3007,
       "homepage_url": "https://github.com/chadkunsman/next-ai-draw-io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/next-ai-draw-io/fnos/ICON_256.PNG",
@@ -2002,7 +2002,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-23T08:39:56Z",
+      "updated_at": "2026-08-24T08:58:18Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -2433,9 +2433,9 @@
       "file_prefix": "puter",
       "display_name": "Puter",
       "description": "开源云桌面环境,在浏览器中提供完整的桌面体验,支持文件管理和应用生态。",
-      "version": "26.08.1",
-      "fpk_version": "26.08.1",
-      "release_tag": "puter/v26.08.1",
+      "version": "26.08.2",
+      "fpk_version": "26.08.2",
+      "release_tag": "puter/v26.08.2",
       "service_port": 4100,
       "homepage_url": "https://puter.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/puter/fnos/ICON_256.PNG",
@@ -2443,7 +2443,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-13T09:21:04Z",
+      "updated_at": "2026-08-24T08:58:20Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "content"
@@ -2959,9 +2959,9 @@
       "file_prefix": "transmission",
       "display_name": "Transmission",
       "description": "Transmission 是一个轻量级的 BitTorrent 客户端，以简洁高效著称，支持 Web 远程管理。",
-      "version": "latest-2026.08.23",
-      "fpk_version": "latest-2026.08.23",
-      "release_tag": "transmission/vlatest-2026.08.23",
+      "version": "latest-2026.08.24",
+      "fpk_version": "latest-2026.08.24",
+      "release_tag": "transmission/vlatest-2026.08.24",
       "service_port": 9091,
       "homepage_url": "https://transmissionbt.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/transmission/fnos/ICON_256.PNG",
@@ -2969,7 +2969,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-23T08:40:04Z",
+      "updated_at": "2026-08-24T08:58:22Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "download"
