@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-29T13:49:06Z",
+  "generated_at": "2026-08-30T13:46:18Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -538,9 +538,9 @@
       "file_prefix": "daidai-panel",
       "display_name": "Daidai Panel",
       "description": "轻量现代的定时任务与脚本管理面板",
-      "version": "3.0.10",
-      "fpk_version": "3.0.10",
-      "release_tag": "daidai-panel/v3.0.10",
+      "version": "3.1.1",
+      "fpk_version": "3.1.1",
+      "release_tag": "daidai-panel/v3.1.1",
       "service_port": 5701,
       "homepage_url": "https://github.com/linzixuanzz/daidai-panel",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/daidai-panel/fnos/ICON_256.PNG",
@@ -548,7 +548,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-25T08:52:58Z",
+      "updated_at": "2026-08-30T13:45:48Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "system"
@@ -580,9 +580,9 @@
       "file_prefix": "docker-gsmanager",
       "display_name": "GSManager",
       "description": "GameServerManager 面板（简称：GSManager 面板）是一个基于现代化技术栈的游戏服务器管理平台，专为简化游戏服务器的部署、管理和维护而设计。基于 Docker 技术，支持多款热门游戏一键部署。面板端口 13001，游戏端口 27015。",
-      "version": "3.13.26",
-      "fpk_version": "3.13.26",
-      "release_tag": "docker-gsmanager/v3.13.26",
+      "version": "3.13.31",
+      "fpk_version": "3.13.31",
+      "release_tag": "docker-gsmanager/v3.13.31",
       "service_port": 13001,
       "homepage_url": "https://github.com/GSManagerXZ/GameServerManager",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/docker-gsmanager/fnos/ICON_256.PNG",
@@ -590,7 +590,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-27T19:03:02Z",
+      "updated_at": "2026-08-30T13:45:49Z",
       "download_count": 10,
       "app_type": "docker",
       "category": "system"
@@ -706,9 +706,9 @@
       "file_prefix": "ente",
       "display_name": "Ente",
       "description": "端到端加密照片备份和存储服务，Google Photos 的隐私替代方案。",
-      "version": "latest-2026.08.29",
-      "fpk_version": "latest-2026.08.29",
-      "release_tag": "ente/vlatest-2026.08.29",
+      "version": "latest-2026.08.30",
+      "fpk_version": "latest-2026.08.30",
+      "release_tag": "ente/vlatest-2026.08.30",
       "service_port": 8510,
       "homepage_url": "https://ente.io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ente/fnos/ICON_256.PNG",
@@ -716,8 +716,8 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-29T13:48:17Z",
-      "download_count": 0,
+      "updated_at": "2026-08-30T13:45:52Z",
+      "download_count": 2,
       "app_type": "docker",
       "category": "media",
       "post_install_note": "首次启动会初始化 PostgreSQL 和 MinIO，请耐心等待。"
@@ -917,9 +917,9 @@
       "file_prefix": "gitea",
       "display_name": "Gitea",
       "description": "轻量级 Git 代码托管服务器，提供代码仓库、Issue 追踪和 CI/CD。",
-      "version": "1.27.2",
-      "fpk_version": "1.27.2",
-      "release_tag": "gitea/v1.27.2",
+      "version": "1.27.3",
+      "fpk_version": "1.27.3",
+      "release_tag": "gitea/v1.27.3",
       "service_port": 3033,
       "homepage_url": "https://gitea.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/gitea/fnos/ICON_256.PNG",
@@ -927,7 +927,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-14T09:15:18Z",
+      "updated_at": "2026-08-30T13:46:00Z",
       "download_count": 2,
       "app_type": "native",
       "category": "system"
@@ -1043,9 +1043,9 @@
       "file_prefix": "hermes",
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
-      "version": "2026.8.29",
-      "fpk_version": "2026.8.29",
-      "release_tag": "hermes/v2026.8.29",
+      "version": "2026.8.30",
+      "fpk_version": "2026.8.30",
+      "release_tag": "hermes/v2026.8.30",
       "service_port": 9119,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
@@ -1053,7 +1053,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-29T13:48:18Z",
+      "updated_at": "2026-08-30T13:45:48Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -1075,7 +1075,7 @@
         "arm"
       ],
       "updated_at": "2026-08-21T08:51:34Z",
-      "download_count": 13,
+      "download_count": 14,
       "app_type": "native",
       "category": "ai"
     },
@@ -1211,9 +1211,9 @@
       "file_prefix": "immich",
       "display_name": "Immich",
       "description": "自托管照片和视频备份方案,支持人脸识别和智能搜索。",
-      "version": "release-2026.08.29",
-      "fpk_version": "release-2026.08.29",
-      "release_tag": "immich/vrelease-2026.08.29",
+      "version": "release-2026.08.30",
+      "fpk_version": "release-2026.08.30",
+      "release_tag": "immich/vrelease-2026.08.30",
       "service_port": 2283,
       "homepage_url": "https://github.com/immich-app/immich",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/immich/fnos/ICON_256.PNG",
@@ -1221,7 +1221,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-29T13:48:11Z",
+      "updated_at": "2026-08-30T13:45:49Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
@@ -1253,9 +1253,9 @@
       "file_prefix": "jackett",
       "display_name": "Jackett",
       "description": "Torrent 索引器代理，为 Sonarr/Radarr 等工具提供统一的搜索接口。",
-      "version": "0.24.2489",
-      "fpk_version": "0.24.2489",
-      "release_tag": "jackett/v0.24.2489",
+      "version": "0.24.2492",
+      "fpk_version": "0.24.2492",
+      "release_tag": "jackett/v0.24.2492",
       "service_port": 9117,
       "homepage_url": "https://github.com/Jackett/Jackett",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/jackett/fnos/ICON_256.PNG",
@@ -1263,7 +1263,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-29T13:48:24Z",
+      "updated_at": "2026-08-30T13:45:53Z",
       "download_count": 0,
       "app_type": "native",
       "category": "automation"
@@ -1992,9 +1992,9 @@
       "file_prefix": "next-ai-draw-io",
       "display_name": "Next AI Draw.io",
       "description": "基于大语言模型的 draw.io 图表生成与编辑工具",
-      "version": "latest-2026.08.29",
-      "fpk_version": "latest-2026.08.29",
-      "release_tag": "next-ai-draw-io/vlatest-2026.08.29",
+      "version": "latest-2026.08.30",
+      "fpk_version": "latest-2026.08.30",
+      "release_tag": "next-ai-draw-io/vlatest-2026.08.30",
       "service_port": 3007,
       "homepage_url": "https://github.com/chadkunsman/next-ai-draw-io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/next-ai-draw-io/fnos/ICON_256.PNG",
@@ -2002,7 +2002,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-29T13:48:37Z",
+      "updated_at": "2026-08-30T13:45:51Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "ai"
@@ -2770,9 +2770,9 @@
       "file_prefix": "sub-store",
       "display_name": "Sub-Store",
       "description": "订阅链接管理工具，支持 QX、Loon、Surge、Stash、Egern 和 Shadowrocket 等多种代理客户端的订阅聚合与转换。",
-      "version": "2.36.40",
-      "fpk_version": "2.36.40",
-      "release_tag": "sub-store/v2.36.40",
+      "version": "2.36.54",
+      "fpk_version": "2.36.54",
+      "release_tag": "sub-store/v2.36.54",
       "service_port": 3001,
       "homepage_url": "https://github.com/sub-store-org/Sub-Store",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/sub-store/fnos/ICON_256.PNG",
@@ -2780,7 +2780,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-26T08:54:16Z",
+      "updated_at": "2026-08-30T13:45:55Z",
       "download_count": 2,
       "app_type": "docker",
       "category": "system"
@@ -2959,9 +2959,9 @@
       "file_prefix": "transmission",
       "display_name": "Transmission",
       "description": "Transmission 是一个轻量级的 BitTorrent 客户端，以简洁高效著称，支持 Web 远程管理。",
-      "version": "latest-2026.08.29",
-      "fpk_version": "latest-2026.08.29",
-      "release_tag": "transmission/vlatest-2026.08.29",
+      "version": "latest-2026.08.30",
+      "fpk_version": "latest-2026.08.30",
+      "release_tag": "transmission/vlatest-2026.08.30",
       "service_port": 9091,
       "homepage_url": "https://transmissionbt.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/transmission/fnos/ICON_256.PNG",
@@ -2969,7 +2969,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-29T13:48:37Z",
+      "updated_at": "2026-08-30T13:45:53Z",
       "download_count": 2,
       "app_type": "docker",
       "category": "download"
