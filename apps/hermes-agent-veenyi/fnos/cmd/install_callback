@@ -35,6 +35,49 @@ PROMPTS_SRC="${APP_DIR}/config/prompts"
 # 本包内置完整源码目录，安装时走 editable 安装（build_editable 不触发守卫）。
 HERMES_SRC="${APP_DIR}/hermes-src"
 
+# ---------------------------------------------------------------------------
+# 确保 hermes-src 存在：fpk 未内置源码时从 GitHub 下载（v0.20+ 仅支持源码安装）
+# ---------------------------------------------------------------------------
+ensure_hermes_src() {
+    if [ -f "${HERMES_SRC}/pyproject.toml" ]; then
+        return 0
+    fi
+    log_msg ">>> hermes-src 缺失，正在从 GitHub 下载 hermes-agent 源码 ..."
+    rm -rf "${HERMES_SRC}" 2>/dev/null || true
+    mkdir -p "$(dirname "${HERMES_SRC}")"
+    local TGZ="${DATA_DIR}/hermes-agent-src.tar.gz"
+    local REF="${HERMES_GIT_TAG:-main}"
+    local U
+    local DL_OK=false
+    for U in \
+        "https://github.com/NousResearch/hermes-agent/archive/refs/tags/${REF}.tar.gz" \
+        "https://github.com/NousResearch/hermes-agent/archive/refs/heads/main.tar.gz"; do
+        log_msg ">>> 下载 hermes-agent 源码: ${U}"
+        if curl -L --retry 3 --retry-delay 3 --connect-timeout 20 --max-time 600 \
+             -o "${TGZ}" "${U}" 2>>"${LOG_FILE}" \
+           && [ -s "${TGZ}" ] \
+           && tar xzf "${TGZ}" -C "$(dirname "${HERMES_SRC}")" 2>>"${LOG_FILE}"; then
+            DL_OK=true
+            break
+        fi
+        rm -f "${TGZ}" 2>/dev/null || true
+    done
+    rm -f "${TGZ}" 2>/dev/null || true
+    if [ "${DL_OK}" = "true" ]; then
+        local EXTRACTED
+        EXTRACTED=$(find "$(dirname "${HERMES_SRC}")" -maxdepth 1 -type d -name 'hermes-agent-*' 2>/dev/null | head -1) || true
+        if [ -n "${EXTRACTED}" ] && [ -d "${EXTRACTED}" ]; then
+            rm -rf "${HERMES_SRC}" 2>/dev/null || true
+            mv "${EXTRACTED}" "${HERMES_SRC}" 2>/dev/null || true
+        fi
+    fi
+    if [ -f "${HERMES_SRC}/pyproject.toml" ]; then
+        log_msg "hermes-src 就绪: ${HERMES_SRC}"
+    else
+        log_msg "WARNING: hermes-src 下载失败，将尝试 PyPI 兜底"
+    fi
+}
+
 export HOME="${DATA_DIR}"
 
 # uv 缓存目录放到 DATA_DIR 下，确保和 venv 同一文件系统，hardlink 可用
@@ -426,11 +469,20 @@ if [ "${SKIP_INSTALL}" = "false" ]; then
             exit 1
         fi
     else
-        # 兜底：无内置源码（旧包/热补丁场景）→ 退回 PyPI wheel 安装
-        log_msg "WARNING: hermes-src 不存在（${HERMES_SRC}），退回 PyPI wheel 安装 hermes-agent[all]==${HERMES_VERSION}"
-        UV_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple" \
-            "$UV" pip install --no-cache --python "${VENV_DIR}/bin/python3" "hermes-agent[all,voice]==${HERMES_VERSION}" \
-            2>>"${LOG_FILE}"
+        # 兜底：无内置源码（v0.20+ 已停止 PyPI 分发）→ 从 GitHub 下载源码后 editable 安装
+        log_msg "WARNING: hermes-src 不存在（${HERMES_SRC}），尝试从 GitHub 拉取源码安装 hermes-agent[all,voice] ..."
+        ensure_hermes_src
+        if [ -f "${HERMES_SRC}/pyproject.toml" ]; then
+            log_msg ">>> 从 GitHub 源码 editable 安装 hermes-agent[all,voice] ..."
+            UV_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple" \
+                "$UV" pip install --no-cache --python "${VENV_DIR}/bin/python3" -e "${HERMES_SRC}[all,voice]" \
+                2>>"${LOG_FILE}" || true
+        else
+            log_msg "WARNING: GitHub 源码拉取失败，退回 PyPI wheel 安装（v0.20+ 通常不可用）"
+            UV_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple" \
+                "$UV" pip install --no-cache --python "${VENV_DIR}/bin/python3" "hermes-agent[all,voice]==${HERMES_VERSION}" \
+                2>>"${LOG_FILE}"
+        fi
     fi
 
     if [ ! -f "${HERMES}" ]; then
