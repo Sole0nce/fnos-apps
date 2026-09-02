@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-02T12:44:15Z",
+  "generated_at": "2026-09-02T12:44:36Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -2244,9 +2244,9 @@
       "file_prefix": "openlist",
       "display_name": "OpenList",
       "description": "支持多种存储后端的文件列表/WebDAV 程序（AList 社区分支）",
-      "version": "4.2.5",
-      "fpk_version": "4.2.5",
-      "release_tag": "openlist/v4.2.5",
+      "version": "4.2.6",
+      "fpk_version": "4.2.6",
+      "release_tag": "openlist/v4.2.6",
       "service_port": 5244,
       "homepage_url": "https://github.com/OpenListTeam/OpenList",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/openlist/fnos/ICON_256.PNG",
@@ -2254,7 +2254,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-09T08:54:52Z",
+      "updated_at": "2026-09-02T12:44:15Z",
       "download_count": 0,
       "app_type": "native",
       "category": "content"
