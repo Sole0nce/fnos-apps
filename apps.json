@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-03T12:47:46Z",
+  "generated_at": "2026-09-03T12:48:06Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -1211,9 +1211,9 @@
       "file_prefix": "immich",
       "display_name": "Immich",
       "description": "自托管照片和视频备份方案,支持人脸识别和智能搜索。",
-      "version": "release-2026.09.02",
-      "fpk_version": "release-2026.09.02",
-      "release_tag": "immich/vrelease-2026.09.02",
+      "version": "release-2026.09.03",
+      "fpk_version": "release-2026.09.03",
+      "release_tag": "immich/vrelease-2026.09.03",
       "service_port": 2283,
       "homepage_url": "https://github.com/immich-app/immich",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/immich/fnos/ICON_256.PNG",
@@ -1221,7 +1221,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-02T12:43:54Z",
+      "updated_at": "2026-09-03T12:47:45Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "media"
