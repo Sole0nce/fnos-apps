@@ -153,6 +153,111 @@ class DashboardSupervisor:
 
 
 # --------------------------------------------------------------------------
+# Hermes messaging gateway subprocess management
+# --------------------------------------------------------------------------
+
+class GatewaySupervisor:
+    """Spawns `hermes gateway run` and keeps it alive.
+
+    The dashboard is only the web UI; the messaging/backend gateway is the
+    process that actually serves the agent loop, cron, webhooks and platform
+    connections. Hermes reports `overall: degraded` until the gateway is
+    running, so we launch and supervise it alongside the dashboard.
+    """
+
+    def __init__(self, runtime_root: str, hermes_home: str,
+                 workspace_root: str, data_root: str, accept_hooks: bool = True):
+        self.runtime_root = runtime_root
+        self.hermes_home = hermes_home
+        self.workspace_root = workspace_root
+        self.data_root = data_root
+        self.accept_hooks = accept_hooks
+        self.proc: subprocess.Popen | None = None
+        self.lock = threading.Lock()
+        self.stop_event = threading.Event()
+
+    @property
+    def hermes_bin(self) -> str:
+        return os.path.join(self.runtime_root, "python", "bin", "hermes")
+
+    def is_up(self) -> bool:
+        with self.lock:
+            return self.proc is not None and self.proc.poll() is None
+
+    def _build_env(self) -> dict:
+        env = dict(os.environ)
+        env.update({
+            "HERMES_HOME": self.hermes_home,
+            "HERMES_WRITE_SAFE_ROOT": self.workspace_root,
+            "TRIM_HERMES_DATA_ROOT": self.data_root,
+            "PATH": os.pathsep.join([
+                os.path.join(self.runtime_root, "python", "bin"),
+                os.path.join(self.runtime_root, "python", "node", "bin"),
+                os.path.join(self.hermes_home, "node", "bin"),
+                env.get("PATH", ""),
+            ]),
+        })
+        return env
+
+    def start(self) -> None:
+        with self.lock:
+            if self.proc is not None and self.proc.poll() is None:
+                return
+            args = [
+                self.hermes_bin,
+                "gateway",
+                "run",
+                "--replace",
+            ]
+            if self.accept_hooks:
+                args.append("--accept-hooks")
+            LOG.info("spawn gateway: %s", " ".join(args))
+            self.proc = subprocess.Popen(
+                args,
+                env=self._build_env(),
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+
+    def supervise(self) -> None:
+        """Loop: keep gateway alive until stop_event is set."""
+        while not self.stop_event.is_set():
+            if not self.is_up():
+                LOG.warning("gateway not running, respawning")
+                self.start()
+            try:
+                self.proc.wait(timeout=2.0)
+            except subprocess.TimeoutExpired:
+                continue
+            LOG.warning("gateway exited with code %s", self.proc.returncode)
+            self.proc = None
+            if self.stop_event.is_set():
+                break
+            time.sleep(1)
+
+    def stop(self) -> None:
+        self.stop_event.set()
+        with self.lock:
+            proc = self.proc
+        if proc is not None and proc.poll() is None:
+            try:
+                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+            except (ProcessLookupError, PermissionError):
+                try:
+                    proc.terminate()
+                except ProcessLookupError:
+                    pass
+            try:
+                proc.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                try:
+                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+                except (ProcessLookupError, PermissionError):
+                    proc.kill()
+
+
+# --------------------------------------------------------------------------
 # HTTP / WebSocket proxy over a Unix socket
 # --------------------------------------------------------------------------
 
@@ -355,11 +460,25 @@ def main() -> int:
         data_root=args.data_root,
     )
 
+    gateway_supervisor = GatewaySupervisor(
+        runtime_root=runtime_root,
+        hermes_home=hermes_home,
+        workspace_root=workspace_root,
+        data_root=args.data_root,
+    )
+
     # Serve the socket FIRST so the desktop icon never hangs during
     # dashboard cold start; requests get 502 with a clear body until the
     # upstream is up. The supervisor thread respawns it in the background.
     supervisor.start()
     threading.Thread(target=supervisor.supervise, daemon=True).start()
+
+    # Start the messaging/backend gateway so the agent loop, cron, webhooks
+    # and platform connections actually run (dashboard alone reports
+    # `overall: degraded`). Supervised independently so one crashing does not
+    # take down the other; both are stopped together on shutdown.
+    gateway_supervisor.start()
+    threading.Thread(target=gateway_supervisor.supervise, daemon=True).start()
 
     if args.listen_port:
         threading.Thread(target=tcp_accept_loop,
@@ -370,6 +489,7 @@ def main() -> int:
     def _shutdown(_sig, _frame):
         LOG.info("shutdown signal received")
         supervisor.stop()
+        gateway_supervisor.stop()
         sys.exit(0)
 
     signal.signal(signal.SIGTERM, _shutdown)
@@ -382,6 +502,7 @@ def main() -> int:
         pass
     finally:
         supervisor.stop()
+        gateway_supervisor.stop()
     return 0
 
 
