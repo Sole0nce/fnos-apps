@@ -106,6 +106,25 @@ else
   exit 1
 fi
 
+# ---------- 2c. Bundle upstream resources (locales/skills/mcp catalog) ----------
+# The upstream wheel ships WITHOUT these (setup.py: assets are resolved at
+# runtime via env-var overrides set by the Nix wrapper or the source-checkout
+# layout). Bundle them under runtime/resources/ and point the wrapper's env
+# vars at them (HERMES_BUNDLED_LOCALES / HERMES_BUNDLED_SKILLS /
+# HERMES_OPTIONAL_MCPS / HERMES_OPTIONAL_SKILLS) so i18n catalogs, the
+# bundled skill library, and the optional MCP catalog are all present in the
+# zero-network package.
+RESOURCES_DIR="$WORK_DIR/runtime/resources"
+mkdir -p "$RESOURCES_DIR"
+for res in locales skills optional-mcps optional-skills; do
+  if [ -d "$FRONTEND_SRC/$res" ]; then
+    cp -a "$FRONTEND_SRC/$res" "$RESOURCES_DIR/"
+    echo "==> bundled $res -> runtime/resources/$res"
+  else
+    echo "WARNING: upstream source has no $res/ directory" >&2
+  fi
+done
+
 # ---------- 3. BUILD-INFO.json ----------
 cat > "$WORK_DIR/runtime/BUILD-INFO.json" <<EOF
 {
@@ -117,6 +136,7 @@ cat > "$WORK_DIR/runtime/BUILD-INFO.json" <<EOF
   "node": "${NODE_VERSION}",
   "extras": "all",
   "builder": "uv",
+  "resources": "locales, skills, optional-mcps, optional-skills (runtime/resources)",
   "install": "zero-network (runtime prebuilt in CI)"
 }
 EOF

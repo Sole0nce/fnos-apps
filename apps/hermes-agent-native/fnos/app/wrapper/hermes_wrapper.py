@@ -40,7 +40,29 @@ LOG = logging.getLogger("hermes-wrapper")
 
 # Keep-alive connections carry an un-rewritten Host on reuse, which the
 # dashboard rejects with 400. Force close after every response instead.
-HEADER_CONNECTION_CLOSE = b"Connection: close\r\n"
+HEADER_CONNECTION_CLOSE = b"Connection: close"
+# WebSocket upgrades MUST keep the Upgrade semantics (host + switch), so a
+# request carrying an ``Upgrade:`` header gets this connection directive.
+HEADER_CONNECTION_UPGRADE = b"Connection: Upgrade"
+
+
+def resource_env(runtime_root: str) -> dict:
+    """Env overrides pointing Hermes at the bundled resources.
+
+    The upstream wheel ships without locales/skills/optional-mcps (setup.py:
+    assets are resolved at runtime via env-var overrides set by the Nix
+    wrapper or the source-checkout layout). build.sh bundles them under
+    runtime/resources/; point Hermes at them here so i18n catalogs, the
+    bundled skill library, and the optional MCP catalog are available in the
+    zero-network package.
+    """
+    res = os.path.join(runtime_root, "resources")
+    return {
+        "HERMES_BUNDLED_LOCALES": os.path.join(res, "locales"),
+        "HERMES_BUNDLED_SKILLS": os.path.join(res, "skills"),
+        "HERMES_OPTIONAL_MCPS": os.path.join(res, "optional-mcps"),
+        "HERMES_OPTIONAL_SKILLS": os.path.join(res, "optional-skills"),
+    }
 
 
 def setup_logging(data_root: str) -> str:
@@ -98,6 +120,7 @@ class DashboardSupervisor:
                     env.get("PATH", ""),
                 ]),
             })
+            env.update(resource_env(self.runtime_root))
             args = [
                 self.hermes_bin,
                 "dashboard",
@@ -197,6 +220,7 @@ class GatewaySupervisor:
                 env.get("PATH", ""),
             ]),
         })
+        env.update(resource_env(self.runtime_root))
         return env
 
     def start(self) -> None:
@@ -262,7 +286,13 @@ class GatewaySupervisor:
 # --------------------------------------------------------------------------
 
 def read_request_head(conn: socket.socket, timeout: float = 30.0) -> bytes:
-    """Read until \r\n\r\n, honouring a tiny initial read for keep-alive."""
+    """Read full request: header block plus body up to Content-Length.
+
+    The original implementation stopped at the \r\n\r\n header terminator
+    and forwarded only whatever body bytes had already arrived in the first
+    recv(). For POST/PUT that truncated the JSON body, so any save (keys,
+    plugin providers, memory provider) failed with a 422 JSON decode error.
+    """
     conn.settimeout(timeout)
     buf = b""
     while b"\r\n\r\n" not in buf:
@@ -270,8 +300,26 @@ def read_request_head(conn: socket.socket, timeout: float = 30.0) -> bytes:
         if not chunk:
             return buf
         buf += chunk
-        if len(buf) > 1024 * 1024:
+        if len(buf) > 4 * 1024 * 1024:
+            return buf
+    # content-length (may be multi-line or absent); default: no body
+    clen = 0
+    head, _, body = buf.partition(b"\r\n\r\n")
+    for line in head.split(b"\r\n"):
+        if line.lower().startswith(b"content-length:"):
+            try:
+                clen = int(line.split(b":", 1)[1].strip())
+            except ValueError:
+                clen = 0
             break
+    if clen:
+        have = len(body)
+        while have < clen:
+            chunk = conn.recv(max(65536, clen - have))
+            if not chunk:
+                break
+            buf += chunk
+            have += len(chunk)
     return buf
 
 
@@ -303,6 +351,18 @@ def rewrite_request(raw: bytes, host: str, port: int,
                                      parts[2]])
         new_headers = [reqline]
         replaced_host = False
+        is_upgrade = any(
+            line.lstrip().lower().startswith(b"upgrade:")
+            for line in lines[1:]
+        )
+        # WebSocket upgrade origin: the dashboard validates the WS ``Origin``
+        # header and rejects anything that isn't loopback (403 -> client sees
+        # code 1006 and the chat tab never connects). When the app is reached
+        # via its LAN IP the browser sends ``Origin: http://<lan-ip>:9119``,
+        # which the dashboard refuses. Rewrite it to the loopback origin that
+        # matches the rewritten Host so upgrades succeed regardless of the
+        # address used to reach the app.
+        origin_rewritten = False
         for line in lines[1:]:
             low = line.lower()
             if low.startswith(b"host:"):
@@ -310,18 +370,30 @@ def rewrite_request(raw: bytes, host: str, port: int,
                     ("Host: %s:%d" % (host, port)).encode("latin-1"))
                 replaced_host = True
             elif low.startswith(b"connection:"):
-                continue  # we force our own Connection: close
+                continue  # a rewrite directive is appended below
+            elif low.startswith(b"origin:") and is_upgrade:
+                new_headers.append(
+                    ("Origin: http://%s:%d" % (host, port)).encode("latin-1"))
+                origin_rewritten = True
             elif gateway_prefix and low.startswith(b"x-forwarded-prefix:"):
                 continue  # replace stale prefix from upstream proxy
             else:
                 new_headers.append(line)
+        if is_upgrade and not origin_rewritten:
+            # The client sent no Origin, but keep the socket happy by adding
+            # one that mirrors the rewritten Host rather than a foreign one.
+            new_headers.append(
+                ("Origin: http://%s:%d" % (host, port)).encode("latin-1"))
         if not replaced_host:
             new_headers.append(
                 ("Host: %s:%d" % (host, port)).encode("latin-1"))
         if gateway_prefix:
             new_headers.append(
                 ("X-Forwarded-Prefix: %s" % gateway_prefix).encode("latin-1"))
-        new_headers.append(HEADER_CONNECTION_CLOSE)
+        if is_upgrade:
+            new_headers.append(HEADER_CONNECTION_UPGRADE)
+        else:
+            new_headers.append(HEADER_CONNECTION_CLOSE)
         return b"\r\n".join(new_headers) + b"\r\n\r\n" + rest
     except Exception as exc:  # noqa: BLE001
         LOG.warning("rewrite failed: %s", exc)
