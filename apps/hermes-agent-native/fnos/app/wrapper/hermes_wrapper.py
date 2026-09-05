@@ -90,15 +90,18 @@ def dashboard_session_token(data_root: str) -> str:
     token_path = os.path.join(data_root, "dashboard-session.token")
     try:
         token = open(token_path, encoding="utf-8").read().strip()
-        if token:
+        if (len(token) >= 16
+                and all(c.isalnum() or c in "-_." for c in token)):
             return token
-    except OSError:
+    except (OSError, UnicodeDecodeError):
         pass
     token = secrets.token_urlsafe(32)
     try:
         fd = os.open(token_path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
         with os.fdopen(fd, "w", encoding="utf-8") as fh:
             fh.write(token)
+            fh.flush()
+            os.fsync(fh.fileno())
     except OSError as exc:
         LOG.warning("could not persist dashboard session token: %s", exc)
     return token
