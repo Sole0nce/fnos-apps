@@ -26,6 +26,7 @@ import argparse
 import json
 import logging
 import os
+import secrets
 import select
 import signal
 import socket
@@ -77,6 +78,32 @@ def setup_logging(data_root: str) -> str:
     return log_path
 
 
+def dashboard_session_token(data_root: str) -> str:
+    """Return a stable dashboard session token, persisted across restarts.
+
+    Without this the dashboard mints a fresh random ``_SESSION_TOKEN`` per
+    process; any restart (app update, crash, manual restart) then leaves
+    already-open chat pages with a stale token and the next /api/pty
+    reconnect is rejected with ``token_mismatch`` until the user reloads.
+    Upstream shells pass HERMES_DASHBOARD_SESSION_TOKEN for the same reason.
+    """
+    token_path = os.path.join(data_root, "dashboard-session.token")
+    try:
+        token = open(token_path, encoding="utf-8").read().strip()
+        if token:
+            return token
+    except OSError:
+        pass
+    token = secrets.token_urlsafe(32)
+    try:
+        fd = os.open(token_path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            fh.write(token)
+    except OSError as exc:
+        LOG.warning("could not persist dashboard session token: %s", exc)
+    return token
+
+
 # --------------------------------------------------------------------------
 # Hermes dashboard subprocess management
 # --------------------------------------------------------------------------
@@ -113,6 +140,7 @@ class DashboardSupervisor:
                 "HERMES_HOME": self.hermes_home,
                 "HERMES_WRITE_SAFE_ROOT": self.workspace_root,
                 "TRIM_HERMES_DATA_ROOT": self.data_root,
+                "HERMES_DASHBOARD_SESSION_TOKEN": dashboard_session_token(self.data_root),
                 "PATH": os.pathsep.join([
                     os.path.join(self.runtime_root, "python", "bin"),
                     os.path.join(self.runtime_root, "python", "node", "bin"),

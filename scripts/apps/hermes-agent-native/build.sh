@@ -125,6 +125,27 @@ for res in locales skills optional-mcps optional-skills; do
   fi
 done
 
+# ---------- 2d. Build the TUI bundle into the venv ----------
+# Same packaging gap as web_dist: the upstream wheel ships WITHOUT tui_dist
+# (setup.py: assets resolved at runtime). The dashboard Chat tab (/api/pty)
+# spawns the TUI via hermes_cli/tui_dist/entry.js when present; without it
+# _make_tui_argv aborts with "TUI workspace missing" (SystemExit 1) and every
+# chat connection closes with code 1011. ui-tui/scripts/build.mjs emits a
+# self-contained dist/entry.js ("No runtime node_modules needed"), so copying
+# that one file is all the zero-network package needs.
+echo "==> Building TUI bundle (v${VERSION})"
+(cd "$FRONTEND_SRC" && \
+  "$WORK_DIR/runtime/python/node/bin/npm" ci --workspace ui-tui --no-audit --no-fund && \
+  "$WORK_DIR/runtime/python/node/bin/npm" run build --workspace ui-tui)
+if [ -f "$FRONTEND_SRC/ui-tui/dist/entry.js" ]; then
+  mkdir -p "$SITE_PACKAGES/hermes_cli/tui_dist"
+  cp -a "$FRONTEND_SRC/ui-tui/dist/entry.js" "$SITE_PACKAGES/hermes_cli/tui_dist/"
+  echo "==> tui_dist copied to $SITE_PACKAGES/hermes_cli/tui_dist"
+else
+  echo "ERROR: TUI build produced no ui-tui/dist/entry.js" >&2
+  exit 1
+fi
+
 # ---------- 3. BUILD-INFO.json ----------
 cat > "$WORK_DIR/runtime/BUILD-INFO.json" <<EOF
 {
@@ -136,7 +157,7 @@ cat > "$WORK_DIR/runtime/BUILD-INFO.json" <<EOF
   "node": "${NODE_VERSION}",
   "extras": "all",
   "builder": "uv",
-  "resources": "locales, skills, optional-mcps, optional-skills (runtime/resources)",
+  "resources": "locales, skills, optional-mcps, optional-skills (runtime/resources), web_dist + tui_dist (site-packages/hermes_cli)",
   "install": "zero-network (runtime prebuilt in CI)"
 }
 EOF
