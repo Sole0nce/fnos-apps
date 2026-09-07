@@ -6,7 +6,7 @@
             "desc": "Hermes AI Agent",
             "icon": "images/icon_{0}.png",
             "type": "url",
-            "port": "9119",
+            "port": "9120",
             "protocol": "http",
             "url": "/",
             "allUsers": true
