@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-06T12:08:11Z",
+  "generated_at": "2026-09-07T12:04:57Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -44,7 +44,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:16Z",
-      "download_count": 3,
+      "download_count": 6,
       "app_type": "docker",
       "category": "game"
     },
@@ -128,7 +128,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:15Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "docker",
       "category": "content"
     },
@@ -549,7 +549,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:19Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "docker",
       "category": "system"
     },
@@ -717,7 +717,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:18Z",
-      "download_count": 2,
+      "download_count": 4,
       "app_type": "docker",
       "category": "media",
       "post_install_note": "首次启动会初始化 PostgreSQL 和 MinIO，请耐心等待。"
@@ -1043,18 +1043,18 @@
       "file_prefix": "hermes",
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
-      "version": "2026.9.6",
-      "fpk_version": "2026.9.6",
-      "release_tag": "hermes/v2026.9.6",
-      "service_port": 9119,
+      "version": "2026.9.7",
+      "fpk_version": "2026.9.7",
+      "release_tag": "hermes/v2026.9.7",
+      "service_port": 9120,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
       "platforms": [
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-06T12:06:16Z",
-      "download_count": 4,
+      "updated_at": "2026-09-07T12:04:39Z",
+      "download_count": 23,
       "app_type": "docker",
       "category": "ai"
     },
@@ -1222,7 +1222,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:15Z",
-      "download_count": 2,
+      "download_count": 4,
       "app_type": "docker",
       "category": "media"
     },
@@ -1264,7 +1264,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:30Z",
-      "download_count": 4,
+      "download_count": 6,
       "app_type": "native",
       "category": "automation"
     },
@@ -1876,7 +1876,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:30Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "native",
       "category": "network"
     },
@@ -2003,7 +2003,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:20Z",
-      "download_count": 4,
+      "download_count": 6,
       "app_type": "docker",
       "category": "ai"
     },
@@ -2970,7 +2970,7 @@
         "arm"
       ],
       "updated_at": "2026-09-06T12:06:25Z",
-      "download_count": 4,
+      "download_count": 6,
       "app_type": "docker",
       "category": "download"
     },
