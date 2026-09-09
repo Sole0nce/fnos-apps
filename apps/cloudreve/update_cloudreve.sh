@@ -29,14 +29,15 @@ EOF
 }
 
 app_get_latest_version() {
-    info "获取最新版本信息..."
-
-    local tag
-    tag=$(curl -sL "https://api.github.com/repos/cloudreve/cloudreve/releases/latest" 2>/dev/null | \
-        grep '"tag_name":' | sed -E 's/.*"v?([^"]+)".*/\1/')
+    # 与 scripts/apps/cloudreve/get-latest-version.sh 保持一致，固定在 3.8.3
+    # ——V3 的最后一个版本。Cloudreve V4 是不兼容的重写，自动升级会清空 V3
+    # 用户的数据（issue #163）。此前这里取的是 releases/latest，本地构建会打出
+    # 4.x 包，与 CI 的固定版本产生分叉。要有计划地升到 V4 请显式指定版本号。
+    local pinned_version="3.8.3"
 
     if [ "$APP_VERSION" = "latest" ]; then
-        APP_VERSION="$tag"
+        APP_VERSION="$pinned_version"
+        info "使用固定版本: $APP_VERSION（V4 需显式指定，详见 issue #163）"
     fi
 
     [ -z "$APP_VERSION" ] && error "无法获取版本信息，请手动指定: $0 3.8.3"

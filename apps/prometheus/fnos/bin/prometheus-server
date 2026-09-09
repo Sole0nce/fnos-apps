@@ -1,8 +1,16 @@
 #!/bin/sh
 APP_DIR="${TRIM_APPDEST}"
 APP_DATA_DIR=$1
+CONFIG_FILE="$APP_DATA_DIR/prometheus.yml"
 
 mkdir -p "$APP_DATA_DIR/data"
 
+# Seed the upstream default config on first start. Prometheus exits immediately
+# when --config.file does not exist and nothing else ever created it, so a fresh
+# install could never start. Copied only when absent, so user edits survive.
+if [ ! -f "$CONFIG_FILE" ]; then
+    cp "$APP_DIR/config/prometheus.yml" "$CONFIG_FILE"
+fi
+
 cd "$APP_DIR" || exit 1
-exec ./prometheus --config.file="$APP_DATA_DIR/prometheus.yml" --storage.tsdb.path="$APP_DATA_DIR/data" --web.listen-address="0.0.0.0:${TRIM_SERVICE_PORT:-9090}"
+exec ./prometheus --config.file="$CONFIG_FILE" --storage.tsdb.path="$APP_DATA_DIR/data" --web.listen-address="0.0.0.0:${TRIM_SERVICE_PORT:-9090}"

@@ -1,0 +1,27 @@
+services:
+  lyranest:
+    image: ${DOCKER_MIRROR}ghcr.io/whwgogogo/lyranest-server:${VERSION}
+    container_name: lyranest
+    ports:
+      - "${TRIM_SERVICE_PORT}:8080"
+    volumes:
+      # Music library: wizard_music_dir (install wizard) wins; otherwise the
+      # "LyraNest" data-share declared in config/resource (visible in the fnOS
+      # file manager). fnOS substitutes wizard vars before container creation
+      # (issue #146) — do NOT inject via env_file/.env/service_postinst.
+      - ${wizard_music_dir:-/var/apps/lyranest/shares/LyraNest}:/music:ro
+      - ${TRIM_PKGVAR:?}/downloads:/downloads:rw
+      - ${TRIM_PKGVAR:?}/data:/data:rw
+      - ${TRIM_PKGVAR:?}/cache:/cache:rw
+    environment:
+      - TZ=Asia/Shanghai
+      # Container always listens on 8080 internally; host port comes from
+      # manifest.service_port via TRIM_SERVICE_PORT.
+      - SERVER_ADDR=:8080
+      - MUSIC_LIBRARY_DIR=/music
+      - MUSIC_LIBRARY_ROOTS=/music:/downloads
+      - MUSIC_DATA_DIR=/data
+      - MUSIC_CACHE_DIR=/cache
+      - DOWNLOADS_ROOT=/downloads
+      - LOG_LEVEL=info
+    restart: unless-stopped

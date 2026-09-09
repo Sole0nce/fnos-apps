@@ -5,7 +5,7 @@
             "title": "Mihomo",
             "desc": "Mihomo proxy with MetaCubeXD dashboard",
             "icon": "images/{0}.png",
-            "type": "iframe",
+            "type": "url",
             "port": "9097",
             "protocol": "http",
             "url": "/",

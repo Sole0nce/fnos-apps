@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# Keep in sync with shared/cmd/common: fnOS gives lifecycle scripts a TRIM_*
+# environment with no PATH, and bash never exports the default it substitutes,
+# so spawned daemons inherit an unset PATH and anything they shell out to fails
+# with `executable file not found in $PATH` (issue #268).
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 MV="/bin/mv -f"
 RM="/bin/rm -rf"
 CP="/bin/cp -rfp"

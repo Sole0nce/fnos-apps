@@ -3,10 +3,24 @@
     "stepTitle": "卸载 Feigram",
     "items": [
       {
-        "type": "checkbox",
+        "type": "tips",
+        "helpText": "保留或删除 Feigram 数据（账户、Telegram session、缓存与下载记录）。"
+      },
+      {
+        "type": "radio",
         "field": "wizard_delete_data",
-        "label": "同时删除 Feigram 数据（账户、Telegram session、缓存与下载记录）",
-        "initValue": false
+        "label": "仅卸载，保留现有文件以备将来重新安装。",
+        "initValue": "false",
+        "options": [
+          {
+            "label": "保留现有文件",
+            "value": "false"
+          },
+          {
+            "label": "清除所有 Feigram 数据文件（不可恢复）！！！",
+            "value": "true"
+          }
+        ]
       }
     ]
   }

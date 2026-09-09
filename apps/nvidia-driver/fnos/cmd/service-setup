@@ -1,228 +1,694 @@
 #!/bin/bash
 #
 # nvidia-driver service-setup
-# Handles the complete lifecycle for NVIDIA GPU driver + nvidia-container-toolkit.
 #
-# Post-install:
-#   1. Check prerequisites (kernel headers, build-essential)
-#   2. Run NVIDIA .run installer with DKMS support
-#   3. Install nvidia-container-toolkit .deb packages
-#   4. Configure Docker GPU runtime (if Docker is available)
-#   5. Set up kernel module auto-loading
+# DESIGN — why this package never builds a kernel module
+# =====================================================
+# fnOS bakes prebuilt NVIDIA kernel modules for its own kernel into the system
+# image:
 #
-# Pre-uninstall:
-#   1. Stop GPU-using processes
-#   2. Remove nvidia-container-toolkit
-#   3. Run nvidia-uninstall
-#   4. Clean up system configuration
+#   /usr/lib/modules_trim/<kver>/nvidia-gpu-open/*.ko
+#   /usr/lib/modules_trim/<kver>/nvidia-gpu-proprietary/*.ko
+#   /usr/lib/firmware/nvidia/<driver-version>/
+#
+# and selects one through a symlink slot:
+#
+#   /lib/modules/<kver>/updates/trim/alternatives  ->
+#   /usr/lib/modules_trim/<kver>/alternatives
+#
+# The previous version of this package DKMS-compiled its OWN modules at a
+# version chosen at package-build time, and moved fnOS's alternative aside so
+# its modules would win. Both halves of that break on an fnOS system update:
+#
+#   * fnOS replaces the root filesystem, so /etc/modules-load.d/nvidia.conf and
+#     the DKMS build for the previous kernel disappear;
+#   * linux-headers-<kver> is only ever present as a locally-installed dpkg (no
+#     apt repo serves it), so DKMS cannot rebuild for the NEW kernel;
+#   * the userspace left behind then mismatches fnOS's baked-in modules
+#     (observed: modules 580.142 vs userspace 580.167.08) and NVML reports
+#     "Driver/library version mismatch".
+#
+# Net effect for the user: the GPU vanishes after an fnOS update.
+#
+# This version instead treats the driver version as a RUNTIME property:
+# read the version off fnOS's own module file, install ONLY the matching NVIDIA
+# userspace (--no-kernel-modules), and let fnOS keep owning the kernel side.
+# reconcile_driver() is idempotent and runs on install, upgrade and every
+# `cmd/main start`, so a system update self-heals on the next boot.
+#
+# Ownership rules (never fight fnOS or its official Nvidia-Driver app):
+#   * we create the alternatives symlink ONLY when the slot is empty;
+#   * we record what we created and remove it on uninstall only if unchanged;
+#   * we never touch /usr/lib/modules_trim/*/nvidia-gpu-* or /usr/lib/firmware.
 #
 
 # ============================================================
 # Constants
 # ============================================================
 
-DRIVER_DIR="${TRIM_APPDEST}"
-TOOLKIT_DEB_DIR="${DRIVER_DIR}/nvidia-container-toolkit"
-MODULES_CONF="/etc/modules-load.d/nvidia.conf"
+MODULES_TRIM_ROOT="/usr/lib/modules_trim"
+TOOLKIT_DEB_DIR="${TRIM_APPDEST}/nvidia-container-toolkit"
 CDI_SPEC="/etc/cdi/nvidia.yaml"
+DOCKER_DAEMON_JSON="/etc/docker/daemon.json"
+
+STATE_DIR="${TRIM_PKGVAR}/driver-state"
+CACHE_DIR="${TRIM_PKGVAR}/cache"
+STATE_FILE="${STATE_DIR}/state"
+FIRMWARE_SINK="${STATE_DIR}/unused-firmware"
+
+NV_LIB_DIR="/usr/lib/x86_64-linux-gnu"
+
+# NVIDIA CDN candidates, in the order they are tried.
+#
+# `us.download.nvidia.com` 301-redirects mainland-China clients to
+# `us.download.nvidia.cn`, which answers 403 for these files (measured on a
+# real fnOS box in China; the same URL is fine from elsewhere). Every
+# `<region>.download.nvidia.com` host behaves that way, but the bare
+# `download.nvidia.com` does NOT geo-redirect and serves the XFree86 channel
+# fine from China — so it is tried first. fnOS ships XFree86-channel versions
+# (e.g. 580.142); `tesla` is kept for 3-part datacenter versions, which only
+# the `us.` host carries.
+NV_CDN_URLS="
+https://download.nvidia.com/XFree86/Linux-x86_64/%s/NVIDIA-Linux-x86_64-%s.run
+https://us.download.nvidia.com/XFree86/Linux-x86_64/%s/NVIDIA-Linux-x86_64-%s.run
+https://us.download.nvidia.com/tesla/%s/NVIDIA-Linux-x86_64-%s.run
+https://download.nvidia.com/tesla/%s/NVIDIA-Linux-x86_64-%s.run
+"
+
+# Toolkit packages this app installs, in dependency order.
+TOOLKIT_PKGS="libnvidia-container1 libnvidia-container-tools nvidia-container-toolkit-base nvidia-container-toolkit"
 
 # ============================================================
-# Post-install: Install NVIDIA driver + container toolkit
+# Small helpers
+# ============================================================
+
+nv_kver() { uname -r; }
+
+nv_state_get() {
+    [ -r "$STATE_FILE" ] || return 1
+    local v
+    v=$(grep -E "^$1=" "$STATE_FILE" 2>/dev/null | tail -1 | cut -d= -f2-)
+    [ -n "$v" ] && echo "$v"
+}
+
+nv_state_set() {
+    mkdir -p "$STATE_DIR"
+    touch "$STATE_FILE"
+    local key="$1" val="$2" tmp="${STATE_FILE}.tmp"
+    grep -vE "^${key}=" "$STATE_FILE" 2>/dev/null > "$tmp" || true
+    echo "${key}=${val}" >> "$tmp"
+    mv -f "$tmp" "$STATE_FILE"
+}
+
+# An NVIDIA display/3D controller on the PCI bus. Deliberately does NOT rely on
+# lspci (not always present) or on a loaded driver.
+nv_has_gpu() {
+    local d vendor class
+    for d in /sys/bus/pci/devices/*; do
+        [ -r "$d/vendor" ] || continue
+        vendor=$(cat "$d/vendor" 2>/dev/null)
+        [ "$vendor" = "0x10de" ] || continue
+        class=$(cat "$d/class" 2>/dev/null)
+        case "$class" in
+            0x0300*|0x0302*) return 0 ;;   # VGA controller / 3D controller
+        esac
+    done
+    return 1
+}
+
+# Processes that hold a GPU device node but are NOT a real workload, so they
+# must not block a driver repair. fnOS's own resource monitor opens
+# /dev/nvidia0, /dev/nvidiactl and /dev/nvidia-uvm permanently on every box
+# with a GPU (verified on a live Tesla P4 host): treating that as "busy" would
+# mean the userspace repair could NEVER run on real hardware.
+NV_BENIGN_GPU_PROCS="resmon_service nvidia-persistenced"
+
+# True only when something that would actually break is using the GPU.
+nv_gpu_busy() {
+    # Preferred signal: NVML's own list of compute clients. Empty here even
+    # while resmon_service holds the device nodes.
+    local apps
+    if apps=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev/null); then
+        [ -n "$(printf '%s' "$apps" | tr -d '[:space:]')" ] && return 0
+    fi
+
+    # Fallback (e.g. nvidia-smi broken by the very mismatch we are repairing):
+    # inspect the device-node holders and ignore the known-benign ones.
+    local n p comm
+    for n in /dev/nvidia[0-9]* /dev/nvidiactl /dev/nvidia-uvm; do
+        [ -e "$n" ] || continue
+        for p in $(fuser "$n" 2>/dev/null); do
+            comm=$(ps -p "$p" -o comm= 2>/dev/null | tr -d '[:space:]')
+            [ -n "$comm" ] || continue
+            case " ${NV_BENIGN_GPU_PROCS} " in
+                *" ${comm} "*) continue ;;
+            esac
+            return 0
+        done
+    done
+    return 1
+}
+
+# ============================================================
+# fnOS module discovery
+# ============================================================
+
+# Version reported by an EXPLICIT fnOS module file. Never `modinfo nvidia`,
+# which resolves through the live module tree and can pick up a stale DKMS
+# build from an older version of this package.
+nv_flavor_version() {
+    local ko v
+    ko="${MODULES_TRIM_ROOT}/$(nv_kver)/nvidia-gpu-$1/nvidia.ko"
+    [ -f "$ko" ] || return 1
+    v=$(modinfo -F version "$ko" 2>/dev/null | head -1)
+    [ -n "$v" ] || return 1
+    echo "$v"
+}
+
+nv_available_flavors() {
+    local f
+    for f in proprietary open; do
+        nv_flavor_version "$f" >/dev/null 2>&1 && echo "$f"
+    done
+}
+
+nv_alt_link() { echo "${MODULES_TRIM_ROOT}/$(nv_kver)/alternatives/nvidia-gpu"; }
+
+# Signature used to prove the alternatives symlink is still the one we made.
+nv_alt_signature() {
+    local link="$1"
+    [ -L "$link" ] || return 1
+    printf '%s|%s\n' "$(readlink "$link" 2>/dev/null)" "$(stat -c '%d:%i' "$link" 2>/dev/null)"
+}
+
+# ============================================================
+# Userspace discovery
+# ============================================================
+
+# The full driver version of the installed userspace, e.g. 580.142 or
+# 580.167.08. NOTE: the directory also holds the SONAME link
+# libnvidia-ml.so.1 — matching that instead would report "1", make every
+# reconcile see a mismatch, and re-download the ~400MB installer on every
+# boot. So require at least one dot in the suffix.
+nv_installed_userspace_version() {
+    local f v
+    for f in "${NV_LIB_DIR}"/libnvidia-ml.so.*; do
+        [ -f "$f" ] || continue
+        v="${f##*/libnvidia-ml.so.}"
+        case "$v" in
+            *[!0-9.]*) continue ;;   # not a pure version suffix
+            *.*)       echo "$v"; return 0 ;;
+        esac
+    done
+    return 1
+}
+
+# ============================================================
+# Installer acquisition
+# ============================================================
+
+nv_run_file() { echo "${CACHE_DIR}/NVIDIA-Linux-x86_64-$1.run"; }
+
+# Fetch the .run matching $1 into the cache. Walks every CDN candidate rather
+# than guessing from the version shape: fnOS has shipped both 2-part XFree86
+# versions (580.142) and 3-part datacenter versions, and the reachable host
+# differs by region (see NV_CDN_URLS).
+nv_fetch_run() {
+    local version="$1"
+    local dst part url tmpl ok=0
+    dst=$(nv_run_file "$version")
+
+    if [ -f "$dst" ] && "$dst" --check >/dev/null 2>&1; then
+        install_log "使用已缓存的驱动安装包: $(basename "$dst")"
+        return 0
+    fi
+    rm -f "$dst"
+
+    mkdir -p "$CACHE_DIR"
+    part="${dst}.part"
+
+    for tmpl in ${NV_CDN_URLS}; do
+        # shellcheck disable=SC2059
+        url=$(printf "$tmpl" "$version" "$version")
+        install_log "下载 NVIDIA 用户态组件 ${version}: ${url}"
+        rm -f "$part"
+        if curl -fL --retry 3 --retry-delay 5 --connect-timeout 20 -o "$part" "$url" 2>/dev/null; then
+            chmod +x "$part"
+            if "$part" --check >/dev/null 2>&1; then
+                mv -f "$part" "$dst"
+                chmod +x "$dst"
+                ok=1
+                break
+            fi
+            install_log "下载的安装包自检失败，尝试下一个镜像"
+        fi
+    done
+    rm -f "$part"
+
+    [ "$ok" = "1" ] || return 1
+    install_log "驱动安装包就绪: $(basename "$dst")"
+    return 0
+}
+
+# ============================================================
+# Userspace installation (NO kernel modules, ever)
+# ============================================================
+
+nv_install_userspace() {
+    local version="$1"
+    local run_file log rc
+    run_file=$(nv_run_file "$version")
+
+    # fnOS owns /usr/lib/firmware/nvidia/<version>; divert the installer's copy
+    # so we never overwrite a first-party file. If fnOS somehow has no firmware
+    # for this version, let the installer put it in the normal place.
+    local fw_args=()
+    if [ -d "/usr/lib/firmware/nvidia/${version}" ] || [ -d "/lib/firmware/nvidia/${version}" ]; then
+        mkdir -p "${FIRMWARE_SINK}/${version}"
+        fw_args=(--override-file-type-destination="FIRMWARE:${FIRMWARE_SINK}/${version}")
+        install_log "飞牛已提供 ${version} GSP 固件，安装器固件写入将被重定向"
+    fi
+
+    install_log "安装 NVIDIA 用户态组件 ${version}（不编译、不安装任何内核模块）"
+    log=$(mktemp)
+
+    # --no-kernel-modules is the authoritative userspace-only switch:
+    #   "Install everything but the kernel modules, and do not remove any
+    #    existing, possibly conflicting, kernel modules."
+    # The rest make sure nothing kernel-side is touched even indirectly.
+    "$run_file" \
+        --silent \
+        --no-kernel-modules \
+        --no-kernel-module-source \
+        --no-dkms \
+        --skip-module-load \
+        --skip-depmod \
+        --no-rebuild-initramfs \
+        --no-systemd \
+        --no-distro-scripts \
+        --no-disable-nouveau \
+        --no-check-for-alternate-installs \
+        --no-opengl-files \
+        --no-wine-files \
+        "${fw_args[@]}" \
+        > "$log" 2>&1
+    rc=$?
+
+    while IFS= read -r line; do install_log "  $line"; done < "$log"
+    rm -f "$log"
+
+    if [ "$rc" -ne 0 ]; then
+        return 1
+    fi
+
+    ldconfig 2>/dev/null || true
+    nv_state_set userspace_version "$version"
+    nv_state_set owns_userspace yes
+    return 0
+}
+
+# ============================================================
+# Kernel-module activation (link only — never build)
+# ============================================================
+
+# Populate the fnOS alternatives slot when, and only when, it is empty.
+# A slot already filled by fnOS or its official app is left strictly alone.
+nv_ensure_alternative() {
+    local flavor="$1" kver link target
+    kver=$(nv_kver)
+    link=$(nv_alt_link)
+    target="${MODULES_TRIM_ROOT}/${kver}/nvidia-gpu-${flavor}"
+
+    if [ -e "$link" ] || [ -L "$link" ]; then
+        local resolved
+        resolved=$(readlink -f "$link" 2>/dev/null)
+        case "$resolved" in
+            "${MODULES_TRIM_ROOT}/${kver}/nvidia-gpu-open"|"${MODULES_TRIM_ROOT}/${kver}/nvidia-gpu-proprietary")
+                if [ "$(nv_alt_signature "$link")" = "$(nv_state_get alternative_signature)" ]; then
+                    nv_state_set mode self
+                else
+                    install_log "内核模块替代项由系统/官方驱动管理，保持不变: ${resolved}"
+                    nv_state_set mode external
+                fi
+                echo "$resolved"
+                return 0
+                ;;
+            *)
+                install_log "WARNING: 替代项指向未知位置，保持不变: ${resolved:-$link}"
+                nv_state_set mode external
+                echo "${resolved:-$link}"
+                return 0
+                ;;
+        esac
+    fi
+
+    mkdir -p "$(dirname "$link")"
+    ln -sfn "../nvidia-gpu-${flavor}" "$link" || return 1
+    nv_state_set mode self
+    nv_state_set alternative_flavor "$flavor"
+    nv_state_set alternative_target "$target"
+    nv_state_set alternative_signature "$(nv_alt_signature "$link")"
+    install_log "已启用飞牛预置内核模块: nvidia-gpu-${flavor}"
+    echo "$target"
+}
+
+nv_choose_flavor() {
+    local kver link resolved recommended version run_file
+    kver=$(nv_kver)
+    link=$(nv_alt_link)
+
+    # An existing valid selection always wins.
+    if [ -L "$link" ]; then
+        resolved=$(readlink -f "$link" 2>/dev/null)
+        case "$resolved" in
+            *nvidia-gpu-open)        echo open; return 0 ;;
+            *nvidia-gpu-proprietary) echo proprietary; return 0 ;;
+        esac
+    fi
+
+    # Ask the installer what this actual GPU wants. The .run is a makeself
+    # archive and prints its extraction banner on stdout before the answer
+    # ("Verifying archive integrity... OK" / "Uncompressing ..."), so the
+    # payload must be picked out by token — stripping whitespace wholesale
+    # yields one long blob that matches nothing and silently falls through to
+    # the fallback below. That is harmless on Pascal, where the fallback is
+    # also `proprietary`, but Blackwell REQUIRES `open`.
+    version="$1"
+    run_file=$(nv_run_file "$version")
+    if [ -x "$run_file" ]; then
+        recommended=$("$run_file" --print-recommended-kernel-module-type 2>/dev/null \
+            | tr -s '[:space:]' '\n' | grep -xE 'open|proprietary' | tail -1)
+        case "$recommended" in
+            open|proprietary)
+                if nv_flavor_version "$recommended" >/dev/null 2>&1; then
+                    echo "$recommended"
+                    return 0
+                fi
+                ;;
+        esac
+    fi
+
+    # Fall back to whatever fnOS actually shipped, proprietary first (widest
+    # GPU coverage: Maxwell through pre-Blackwell).
+    nv_available_flavors | head -1
+}
+
+nv_load_modules() {
+    # Only what a NAS needs for compute + transcoding. modeset/drm/peermem are
+    # optional and must never fail the reconcile.
+    modprobe nvidia 2>&1 | install_log
+    modprobe nvidia-uvm 2>&1 | install_log
+    modprobe nvidia-modeset 2>/dev/null || true
+    modprobe nvidia-drm 2>/dev/null || true
+}
+
+nv_loaded_version() {
+    [ -r /sys/module/nvidia/version ] || return 1
+    cat /sys/module/nvidia/version 2>/dev/null
+}
+
+# ============================================================
+# Container runtime
+# ============================================================
+
+nv_install_toolkit() {
+    [ -d "$TOOLKIT_DEB_DIR" ] || { install_log "未找到 nvidia-container-toolkit 安装包，跳过"; return 0; }
+
+    if command -v nvidia-ctk >/dev/null 2>&1; then
+        install_log "nvidia-container-toolkit 已安装: $(nvidia-ctk --version 2>/dev/null | head -1)"
+        return 0
+    fi
+
+    # Record which toolkit packages predate us, so uninstall can leave alone
+    # anything the user already had.
+    local pkg preexisting=""
+    for pkg in $TOOLKIT_PKGS; do
+        dpkg -s "$pkg" >/dev/null 2>&1 && preexisting="${preexisting}${pkg} "
+    done
+    nv_state_set toolkit_preexisting "${preexisting% }"
+
+    install_log "安装 nvidia-container-toolkit..."
+    local deb
+    for pkg in $TOOLKIT_PKGS; do
+        for deb in "${TOOLKIT_DEB_DIR}/${pkg}_"*.deb; do
+            [ -f "$deb" ] || continue
+            dpkg -i "$deb" 2>&1 | install_log
+        done
+    done
+
+    if command -v nvidia-ctk >/dev/null 2>&1; then
+        nv_state_set owns_toolkit yes
+        install_log "nvidia-container-toolkit 安装成功: $(nvidia-ctk --version 2>/dev/null | head -1)"
+    else
+        install_log "WARNING: nvidia-container-toolkit 安装可能不完整"
+    fi
+}
+
+nv_configure_docker() {
+    command -v docker      >/dev/null 2>&1 || { install_log "未检测到 Docker，跳过 GPU runtime 配置"; return 0; }
+    command -v nvidia-ctk  >/dev/null 2>&1 || return 0
+
+    local before after
+    before=$(md5sum "$DOCKER_DAEMON_JSON" 2>/dev/null | awk '{print $1}')
+
+    # Register the `nvidia` runtime WITHOUT --set-as-default: making every
+    # container GPU-bound breaks unrelated apps when the driver is absent.
+    nvidia-ctk runtime configure --runtime=docker 2>&1 | install_log
+
+    after=$(md5sum "$DOCKER_DAEMON_JSON" 2>/dev/null | awk '{print $1}')
+    if [ "$before" != "$after" ]; then
+        nv_state_set docker_json_md5 "$after"
+        install_log "重启 Docker 以加载 nvidia runtime"
+        systemctl restart docker 2>/dev/null || true
+    else
+        install_log "Docker 已配置 nvidia runtime，无需重启"
+    fi
+}
+
+nv_generate_cdi() {
+    command -v nvidia-ctk >/dev/null 2>&1 || return 0
+    mkdir -p "$(dirname "$CDI_SPEC")"
+    if nvidia-ctk cdi generate --output="$CDI_SPEC" 2>&1 | install_log; then
+        nv_state_set cdi_md5 "$(md5sum "$CDI_SPEC" 2>/dev/null | awk '{print $1}')"
+    fi
+}
+
+# ============================================================
+# One-time migration off the old DKMS-based package
+# ============================================================
+
+nv_migrate_from_dkms() {
+    local had=0
+
+    if command -v dkms >/dev/null 2>&1 && dkms status 2>/dev/null | grep -q '^nvidia/'; then
+        had=1
+    fi
+    [ -x /usr/bin/nvidia-uninstall ] && ls -d /usr/src/nvidia-* >/dev/null 2>&1 && had=1
+    [ "$had" = "1" ] || return 0
+
+    install_log "检测到旧版本 DKMS 安装，正在清理（不再编译内核模块）..."
+
+    if [ -x /usr/bin/nvidia-uninstall ]; then
+        /usr/bin/nvidia-uninstall --silent --skip-module-unload --skip-depmod --no-distro-scripts 2>&1 | install_log || true
+    fi
+
+    local mod
+    if command -v dkms >/dev/null 2>&1; then
+        while read -r mod; do
+            [ -n "$mod" ] || continue
+            install_log "  dkms remove ${mod}"
+            dkms remove "$mod" --all 2>&1 | install_log || true
+        done < <(dkms status 2>/dev/null | grep '^nvidia/' | cut -d, -f1 | sort -u)
+    fi
+
+    # Restore an fnOS alternative the old code moved aside.
+    local backup newest link
+    backup="${TRIM_PKGETC}/disabled-alternatives"
+    link=$(nv_alt_link)
+    if [ -d "$backup" ] && [ ! -e "$link" ]; then
+        newest=$(ls -1t "$backup" 2>/dev/null | head -1)
+        if [ -n "$newest" ]; then
+            install_log "恢复此前被移走的飞牛内核模块替代项: ${newest}"
+            mv "${backup}/${newest}" "$link" 2>/dev/null || true
+        fi
+    fi
+
+    # The old package pinned module auto-loading in a location fnOS wipes on
+    # update; reconcile on every start replaces it.
+    rm -f /etc/modules-load.d/nvidia.conf
+
+    depmod -a "$(nv_kver)" 2>&1 | install_log || true
+    install_log "旧版 DKMS 清理完成"
+}
+
+# ============================================================
+# The reconciler — idempotent, safe to run on every start
+# ============================================================
+
+reconcile_driver() {
+    local kver flavor want_version have_version target loaded
+    kver=$(nv_kver)
+
+    mkdir -p "$STATE_DIR" "$CACHE_DIR"
+
+    # --- No GPU: still a valid, healthy install ---------------------------
+    if ! nv_has_gpu; then
+        install_log "未检测到 NVIDIA GPU，跳过驱动配置（安装 GPU 后重启即可自动生效）"
+        nv_state_set mode pending-no-gpu
+        nv_install_toolkit
+        return 0
+    fi
+
+    # --- What does fnOS provide for THIS kernel? --------------------------
+    if [ -z "$(nv_available_flavors)" ]; then
+        error_exit "当前飞牛内核 ${kver} 未提供 NVIDIA 内核模块（${MODULES_TRIM_ROOT}/${kver}/nvidia-gpu-*）。请升级飞牛系统到包含 NVIDIA 支持的版本后重试。"
+    fi
+
+    flavor=$(nv_choose_flavor "$(nv_flavor_version "$(nv_available_flavors | head -1)")")
+    want_version=$(nv_flavor_version "$flavor") \
+        || error_exit "无法读取飞牛内核模块版本（${MODULES_TRIM_ROOT}/${kver}/nvidia-gpu-${flavor}/nvidia.ko）"
+
+    install_log "飞牛预置内核模块: nvidia-gpu-${flavor} 版本 ${want_version}"
+    nv_state_set kernel_module_version "$want_version"
+
+    # --- Userspace must match that version exactly ------------------------
+    have_version=$(nv_installed_userspace_version 2>/dev/null || true)
+
+    if [ "$have_version" != "$want_version" ]; then
+        if [ -n "$have_version" ] && [ "$(nv_state_get owns_userspace)" != "yes" ]; then
+            error_exit "检测到其他应用管理的 NVIDIA 用户态组件（${have_version}），与飞牛内核模块（${want_version}）版本不一致。为避免覆盖飞牛官方驱动，本应用不会自动修改。请卸载官方 Nvidia-Driver 后重试。"
+        fi
+
+        if nv_gpu_busy; then
+            error_exit "NVIDIA GPU 正在被容器或应用占用，无法安全更新用户态驱动。请停止所有 GPU 工作负载后重试。"
+        fi
+
+        if ! nv_fetch_run "$want_version"; then
+            error_exit "无法下载与飞牛内核驱动 ${want_version} 匹配的 NVIDIA 用户态组件。请检查网络，或将 NVIDIA-Linux-x86_64-${want_version}.run 放入 ${CACHE_DIR} 后重试。"
+        fi
+
+        # Unload before swapping libraries so nothing runs against a
+        # half-replaced userspace.
+        rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia 2>/dev/null || true
+
+        nv_install_userspace "$want_version" \
+            || error_exit "NVIDIA 用户态组件 ${want_version} 安装失败，详见安装日志。"
+    else
+        install_log "用户态组件已匹配: ${have_version}"
+    fi
+
+    # --- Activate fnOS's modules and load them ----------------------------
+    target=$(nv_ensure_alternative "$flavor")
+    depmod -a "$kver" 2>&1 | install_log || true
+
+    local resolved_ko
+    resolved_ko=$(modinfo -k "$kver" -n nvidia 2>/dev/null)
+    case "$resolved_ko" in
+        *updates/dkms/*)
+            error_exit "内核仍解析到旧的 DKMS 模块（${resolved_ko}）。请卸载本应用后重新安装，或手动执行 dkms remove。"
+            ;;
+    esac
+    install_log "内核模块解析路径: ${resolved_ko:-未知}（替代项目标 ${target}）"
+
+    nv_load_modules
+
+    loaded=$(nv_loaded_version 2>/dev/null || true)
+    if [ -z "$loaded" ]; then
+        install_log "WARNING: NVIDIA 内核模块未能加载，GPU 暂不可用。请检查 dmesg 输出。"
+        return 0
+    fi
+    if [ "$loaded" != "$want_version" ]; then
+        install_log "WARNING: 已加载模块版本 ${loaded} 与预期 ${want_version} 不一致"
+    fi
+
+    if nvidia-smi --query-gpu=name --format=csv,noheader >/dev/null 2>&1; then
+        install_log "GPU 就绪: $(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | paste -sd, -)"
+        nvidia-smi -pm 1 >/dev/null 2>&1 || true
+    else
+        install_log "WARNING: nvidia-smi 无法查询 GPU，请检查 dmesg 输出。"
+    fi
+
+    # --- Container runtime -------------------------------------------------
+    nv_install_toolkit
+    nv_configure_docker
+    nv_generate_cdi
+
+    nv_state_set last_reconcile "$(date +%s)"
+    return 0
+}
+
+# ============================================================
+# Lifecycle hooks
 # ============================================================
 
 service_postinst() {
-    install_log "开始安装 NVIDIA 驱动..."
-
-    # --- 1. Ensure build prerequisites are installed ---
-    # service_postinst 以 root 运行，按需自动安装缺失的编译依赖
-    local missing_pkgs=()
-    [ -d "/lib/modules/$(uname -r)/build" ] || missing_pkgs+=("linux-headers-$(uname -r)")
-    { command -v make &>/dev/null && command -v gcc &>/dev/null; } || missing_pkgs+=("build-essential")
-    command -v dkms &>/dev/null || missing_pkgs+=("dkms")
-
-    if [ ${#missing_pkgs[@]} -gt 0 ]; then
-        install_log "自动安装缺失的编译依赖: ${missing_pkgs[*]}"
-        DEBIAN_FRONTEND=noninteractive apt-get install -y "${missing_pkgs[@]}" 2>&1 | install_log \
-            || error_exit "编译依赖安装失败: ${missing_pkgs[*]}。请检查 apt 源后重试。"
-    fi
-
-    # 验证安装后的状态
-    [ -d "/lib/modules/$(uname -r)/build" ] || error_exit "内核头文件仍不可用: linux-headers-$(uname -r)"
-    command -v make &>/dev/null && command -v gcc &>/dev/null || error_exit "编译工具仍不可用 (make/gcc)"
-    command -v dkms &>/dev/null || error_exit "DKMS 仍不可用"
-
-    # --- 2. Disable conflicting fnOS official driver alternatives ---
-    # fnOS 系统可能以 alternatives 机制提供自己的 nvidia 驱动,
-    # 该路径会被 modprobe 优先于 DKMS 加载,造成版本不一致。
-    local alt_link="/lib/modules/$(uname -r)/updates/trim/alternatives/nvidia-gpu"
-    if [ -L "$alt_link" ] || [ -e "$alt_link" ]; then
-        local backup_dir="${TRIM_PKGETC}/disabled-alternatives"
-        mkdir -p "$backup_dir"
-        install_log "发现飞牛官方 nvidia 模块替代项,移至备份: $alt_link"
-        mv "$alt_link" "$backup_dir/nvidia-gpu.$(date +%s)" || install_log "WARNING: 备份替代项失败"
-        depmod -a "$(uname -r)" 2>&1 | install_log
-    fi
-
-    # --- 3. Clean up any previous broken NVIDIA installation ---
-    install_log "清理旧的 NVIDIA 安装残留..."
-    fuser -k /dev/nvidia* 2>/dev/null || true
-    rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia 2>/dev/null || true
-
-    # --- 4. Run NVIDIA driver installer ---
-    local run_file
-    run_file=$(ls "${DRIVER_DIR}"/NVIDIA-Linux-x86_64-*.run 2>/dev/null | head -1)
-    if [ -z "$run_file" ] || [ ! -f "$run_file" ]; then
-        error_exit "未找到 NVIDIA 驱动安装文件 (.run)"
-    fi
-
-    chmod +x "$run_file"
-    install_log "安装 NVIDIA 驱动: $(basename "$run_file")"
-
-    local installer_log
-    installer_log=$(mktemp)
-    if ! "$run_file" --silent --dkms --no-opengl-files > "$installer_log" 2>&1; then
-        while IFS= read -r line; do install_log "  $line"; done < "$installer_log"
-        rm -f "$installer_log"
-        error_exit "NVIDIA 驱动安装失败。请检查内核头文件和编译工具是否完整。"
-    fi
-    while IFS= read -r line; do install_log "  $line"; done < "$installer_log"
-    rm -f "$installer_log"
-
-    # Verify driver installation
-    if ! nvidia-smi &>/dev/null; then
-        error_exit "NVIDIA 驱动安装后验证失败。nvidia-smi 无法执行。"
-    fi
-    install_log "NVIDIA 驱动安装成功: $(nvidia-smi --query-gpu=driver_version --format=csv,noheader 2>/dev/null)"
-
-    # --- 5. Install nvidia-container-toolkit ---
-    if [ -d "$TOOLKIT_DEB_DIR" ]; then
-        install_log "安装 nvidia-container-toolkit..."
-
-        # Install in dependency order
-        dpkg -i "${TOOLKIT_DEB_DIR}"/libnvidia-container1_*.deb 2>&1 | while IFS= read -r line; do
-            install_log "  $line"
-        done
-        dpkg -i "${TOOLKIT_DEB_DIR}"/libnvidia-container-tools_*.deb 2>&1 | while IFS= read -r line; do
-            install_log "  $line"
-        done
-        dpkg -i "${TOOLKIT_DEB_DIR}"/nvidia-container-toolkit-base_*.deb 2>&1 | while IFS= read -r line; do
-            install_log "  $line"
-        done
-        dpkg -i "${TOOLKIT_DEB_DIR}"/nvidia-container-toolkit_1*.deb 2>&1 | while IFS= read -r line; do
-            install_log "  $line"
-        done
-
-        # Verify toolkit installation
-        if command -v nvidia-ctk &>/dev/null; then
-            install_log "nvidia-container-toolkit 安装成功: $(nvidia-ctk --version 2>/dev/null | head -1)"
-        else
-            install_log "WARNING: nvidia-container-toolkit 安装可能不完整"
-        fi
-    else
-        install_log "未找到 nvidia-container-toolkit 安装包，跳过"
-    fi
-
-    # --- 6. Configure Docker GPU runtime ---
-    if command -v docker &>/dev/null && command -v nvidia-ctk &>/dev/null; then
-        install_log "配置 Docker GPU 支持..."
-
-        # Configure nvidia as default Docker runtime
-        nvidia-ctk runtime configure --runtime=docker --set-as-default 2>&1 | while IFS= read -r line; do
-            install_log "  $line"
-        done
-
-        # Generate CDI spec
-        mkdir -p "$(dirname "$CDI_SPEC")"
-        nvidia-ctk cdi generate --output="$CDI_SPEC" 2>&1 | while IFS= read -r line; do
-            install_log "  $line"
-        done
-
-        # Restart Docker to pick up changes
-        systemctl restart docker 2>/dev/null || true
-        install_log "Docker GPU 支持配置完成"
-    else
-        install_log "Docker 未安装或 nvidia-ctk 不可用，跳过 Docker GPU 配置"
-    fi
-
-    # --- 7. Configure kernel module auto-loading ---
-    install_log "配置内核模块自动加载..."
-    cat > "$MODULES_CONF" << 'MODULES_EOF'
-nvidia
-nvidia-uvm
-nvidia-modeset
-nvidia-drm
-MODULES_EOF
-
-    # --- 8. Enable persistence mode ---
-    nvidia-smi -pm 1 2>/dev/null || true
-    install_log "已启用 GPU Persistence Mode"
-
-    install_log "NVIDIA 驱动安装完成"
+    install_log "开始配置 NVIDIA 驱动（使用飞牛预置内核模块，不编译）..."
+    nv_migrate_from_dkms
+    reconcile_driver
+    install_log "NVIDIA 驱动配置完成"
 }
-
-# ============================================================
-# Post-upgrade: Re-install driver and toolkit
-# ============================================================
 
 service_postupgrade() {
-    install_log "开始升级 NVIDIA 驱动..."
-
-    # Unload old modules
-    fuser -k /dev/nvidia* 2>/dev/null || true
-    sleep 2
-    rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia 2>/dev/null || true
-
-    # Remove old toolkit (if installed)
-    dpkg -r nvidia-container-toolkit nvidia-container-toolkit-base \
-        libnvidia-container-tools libnvidia-container1 2>/dev/null || true
-
-    # Run old nvidia-uninstall to clean up before installing new version
-    /usr/bin/nvidia-uninstall --silent 2>/dev/null || true
-
-    # Re-run postinst to install new version
-    service_postinst
+    install_log "升级 NVIDIA 驱动配置..."
+    nv_migrate_from_dkms
+    reconcile_driver
+    install_log "NVIDIA 驱动升级完成"
 }
-
-# ============================================================
-# Pre-uninstall: Remove everything cleanly
-# ============================================================
 
 service_preuninst() {
     install_log "开始卸载 NVIDIA 驱动..."
 
-    # --- 1. Stop GPU-using processes ---
-    fuser -k /dev/nvidia* 2>/dev/null || true
-    sleep 2
-
-    # --- 2. Unload kernel modules ---
-    rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia 2>/dev/null || true
-
-    # --- 3. Remove nvidia-container-toolkit ---
-    if dpkg -l nvidia-container-toolkit &>/dev/null 2>&1; then
-        install_log "卸载 nvidia-container-toolkit..."
-        dpkg -r nvidia-container-toolkit nvidia-container-toolkit-base \
-            libnvidia-container-tools libnvidia-container1 2>/dev/null || true
+    if nv_gpu_busy; then
+        error_exit "NVIDIA GPU 正在被容器或应用占用，无法安全卸载。请停止所有 GPU 工作负载后重试。"
     fi
 
-    # --- 4. Uninstall NVIDIA driver ---
-    if [ -x /usr/bin/nvidia-uninstall ]; then
-        install_log "卸载 NVIDIA 驱动..."
-        /usr/bin/nvidia-uninstall --silent 2>/dev/null || true
+    # 1. Remove ONLY a userspace installation this app performed.
+    if [ "$(nv_state_get owns_userspace)" = "yes" ] && [ -x /usr/bin/nvidia-uninstall ]; then
+        install_log "卸载本应用安装的 NVIDIA 用户态组件..."
+        rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia 2>/dev/null || true
+        /usr/bin/nvidia-uninstall --silent --skip-module-unload --no-distro-scripts 2>&1 | install_log || true
+    else
+        install_log "用户态组件非本应用安装，保持不变"
     fi
 
-    # --- 5. Clean up configuration ---
-    rm -f "$MODULES_CONF"
-    rm -f "$CDI_SPEC"
+    # 2. Remove the alternatives symlink only if it is still exactly ours.
+    local link
+    link=$(nv_alt_link)
+    if [ -L "$link" ] && [ "$(nv_alt_signature "$link")" = "$(nv_state_get alternative_signature)" ]; then
+        install_log "移除本应用创建的内核模块替代项"
+        rm -f "$link"
+        depmod -a "$(nv_kver)" 2>&1 | install_log || true
+    else
+        install_log "内核模块替代项由系统管理，保持不变"
+    fi
 
-    # Refresh dynamic linker cache
+    # 3. CDI spec — only if still the file we generated.
+    if [ -f "$CDI_SPEC" ] && \
+       [ "$(md5sum "$CDI_SPEC" 2>/dev/null | awk '{print $1}')" = "$(nv_state_get cdi_md5)" ]; then
+        rm -f "$CDI_SPEC"
+    fi
+
+    # 4. Toolkit packages we introduced (never ones the user already had).
+    if [ "$(nv_state_get owns_toolkit)" = "yes" ]; then
+        local pre pkg remove=""
+        pre=" $(nv_state_get toolkit_preexisting) "
+        for pkg in $TOOLKIT_PKGS; do
+            case "$pre" in *" $pkg "*) continue ;; esac
+            dpkg -s "$pkg" >/dev/null 2>&1 && remove="${remove}${pkg} "
+        done
+        if [ -n "$remove" ]; then
+            install_log "卸载 nvidia-container-toolkit: ${remove}"
+            # shellcheck disable=SC2086
+            dpkg -r $remove 2>&1 | install_log || true
+        fi
+    fi
+
+    # 5. Legacy config from the DKMS-era package.
+    rm -f /etc/modules-load.d/nvidia.conf
+
     ldconfig 2>/dev/null || true
-
-    install_log "NVIDIA 驱动卸载完成"
+    install_log "NVIDIA 驱动卸载完成（飞牛预置内核模块与固件未被修改）"
 }
-
-# ============================================================
-# Post-stop: No-op (kernel modules stay loaded)
-# ============================================================
 
 service_poststop() {
     :

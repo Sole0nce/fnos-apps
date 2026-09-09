@@ -1,0 +1,14 @@
+appname         = danmu-api
+version         = 0.0.0
+display_name    = Danmu API
+platform        = x86
+maintainer      = huangxd-
+maintainer_url  = https://github.com/huangxd-/danmu_api
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = danmu-api.Application
+service_port    = 9321
+desc            = 弹幕 API 服务器：支持爱优腾芒哔咪人韩巴狐乐西埋帆红弹幕直接获取，兼容弹弹play 搜索/详情/弹幕接口规范，提供日志记录与 Web 管理界面
+source          = thirdparty
+checksum        = 

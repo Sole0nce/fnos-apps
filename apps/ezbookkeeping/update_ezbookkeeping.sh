@@ -60,8 +60,7 @@ app_build_app_tgz() {
 
     info "Building app.tgz..."
     local dst="$WORK_DIR/app_root"
-    mkdir -p "$dst/bin" "$dst/ui"
-    mkdir -p "$dst/var"
+    mkdir -p "$dst/bin" "$dst/ui" "$dst/config"
 
     cp extracted/ezbookkeeping "$dst/ezbookkeeping"
     chmod +x "$dst/ezbookkeeping"
@@ -69,7 +68,8 @@ app_build_app_tgz() {
     cp "$PKG_DIR/bin/ezbookkeeping-server" "$dst/bin/ezbookkeeping-server"
     chmod +x "$dst/bin/ezbookkeeping-server"
     cp -a "$PKG_DIR/ui"/* "$dst/ui/" 2>/dev/null || true
-    cp "$SCRIPT_DIR/var/ezbookkeeping.ini" "$dst/var/ezbookkeeping.ini"
+    # 首启种子配置直接用上游自带的 ini，bin/ezbookkeeping-server 在首次启动时投放
+    cp extracted/conf/ezbookkeeping.ini "$dst/config/ezbookkeeping.ini"
     cp -a extracted/public "$dst/public"
     cp -a extracted/templates "$dst/templates"
 

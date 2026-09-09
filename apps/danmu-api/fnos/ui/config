@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "danmu-api.Application":
+        {
+            "title": "Danmu API",
+            "desc": "Self-hosted danmu API server (dandanplay-compatible)",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "9321",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

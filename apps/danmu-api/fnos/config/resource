@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "Danmu API.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "Danmu API",
+                "permission": {
+                    "rw": [
+                        "danmu-api"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "danmu-api",
+                "path": "docker"
+            }
+        ]
+    }
+}

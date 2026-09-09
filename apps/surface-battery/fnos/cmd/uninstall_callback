@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+
+legacy_path="/var/apps/surface_battery_driver"
+current_path="/var/apps/${TRIM_APPNAME:-surface-battery}"
+if [ -L "$legacy_path" ] && [ "$(readlink "$legacy_path")" = "$current_path" ]; then
+  rm -f "$legacy_path"
+fi

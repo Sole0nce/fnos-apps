@@ -24,11 +24,15 @@ service_postinst() {
 service_postupgrade() { service_postinst; }
 
 service_preuninst() {
-    # Sweep both binaries by name (-x for exact match, avoids killing appcenter-cli args)
-    pkill -x "fnos-mihomo-dashboard" 2>/dev/null || true
+    # "fnos-mihomo-dashboard" 有 21 个字符，超过内核 comm 的 15 字符上限（实际进程
+    # 名是 "fnos-mihomo-das"），pkill -x 对它永远匹配不到。改用 -f 匹配安装目录的
+    # 绝对路径（wrapper 是 exec "$APP_DIR/fnos-mihomo-dashboard"）；这串路径不会
+    # 出现在 `appcenter-cli stop mihomo` 的命令行里，不会重蹈 issue #112。
+    # mihomo 子进程名只有 6 个字符，-x 本来就有效，保持不变。
+    pkill -f "$APP_DIR/fnos-mihomo-dashboard" 2>/dev/null || true  # pkill-f-ok
     pkill -x "mihomo" 2>/dev/null || true
     sleep 1
-    pkill -9 -x "fnos-mihomo-dashboard" 2>/dev/null || true
+    pkill -9 -f "$APP_DIR/fnos-mihomo-dashboard" 2>/dev/null || true  # pkill-f-ok
     pkill -9 -x "mihomo" 2>/dev/null || true
 }
 

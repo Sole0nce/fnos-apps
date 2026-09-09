@@ -7,14 +7,14 @@ PKG_DIR="$SCRIPT_DIR/fnos"
 
 APP_NAME="nvidia-driver"
 APP_DISPLAY_NAME="NVIDIA Driver"
-APP_VERSION_VAR="NVIDIA_DRIVER_VERSION"
-APP_VERSION="${NVIDIA_DRIVER_VERSION:-latest}"
+APP_VERSION_VAR="NCT_VERSION"
+APP_VERSION="${NCT_VERSION:-latest}"
 APP_DEPS=(curl tar)
 APP_FPK_PREFIX="nvidia-driver"
-APP_HELP_VERSION_EXAMPLE="580.126.20"
+APP_HELP_VERSION_EXAMPLE="1.17.8"
 
+# shellcheck source=/dev/null
 source "$REPO_ROOT/scripts/apps/nvidia-driver/meta.env"
-NCT_VERSION="${NCT_VERSION:-1.17.8}"
 
 app_set_arch_vars() {
     case "$ARCH" in
@@ -25,14 +25,16 @@ app_set_arch_vars() {
 
 app_show_help_examples() {
     cat << EOF
-  $0 580.126.20              # 指定驱动版本
-  $0 --arch x86 580.126.20   # 指定版本和架构
-  NCT_VERSION=1.17.8 $0      # 指定 nvidia-container-toolkit 版本
+  $0 1.17.8                  # 指定 nvidia-container-toolkit 版本
+  $0 --arch x86 1.17.8       # 指定版本和架构
+
+说明: 本包不再内置 NVIDIA 驱动安装器。驱动版本由飞牛系统自带的内核模块
+决定，安装时在设备上自动匹配下载。
 EOF
 }
 
 app_get_latest_version() {
-    info "获取最新 R580 LTS 驱动版本..."
+    info "获取最新 nvidia-container-toolkit 版本..."
 
     if [ "$APP_VERSION" = "latest" ]; then
         local resolved
@@ -43,21 +45,14 @@ app_get_latest_version() {
         fi
     fi
 
-    [ -z "$APP_VERSION" ] && error "无法获取版本信息，请手动指定: $0 580.126.20"
-    info "目标驱动版本: $APP_VERSION"
-    info "nvidia-container-toolkit 版本: $NCT_VERSION"
+    [ -z "$APP_VERSION" ] && error "无法获取版本信息，请手动指定: $0 1.17.8"
+    info "nvidia-container-toolkit 版本: $APP_VERSION"
 }
 
 app_download() {
     mkdir -p "$WORK_DIR"
 
-    local driver_url="https://us.download.nvidia.com/tesla/${APP_VERSION}/NVIDIA-Linux-x86_64-${APP_VERSION}.run"
-    info "下载 NVIDIA 驱动: $driver_url"
-    curl -L -f --progress-bar -o "$WORK_DIR/NVIDIA-Linux-x86_64-${APP_VERSION}.run" "$driver_url" \
-        || error "驱动下载失败"
-    info "驱动下载完成: $(du -h "$WORK_DIR/NVIDIA-Linux-x86_64-${APP_VERSION}.run" | cut -f1)"
-
-    local nct_url="https://github.com/NVIDIA/nvidia-container-toolkit/releases/download/v${NCT_VERSION}/nvidia-container-toolkit_${NCT_VERSION}_deb_amd64.tar.gz"
+    local nct_url="https://github.com/NVIDIA/nvidia-container-toolkit/releases/download/v${APP_VERSION}/nvidia-container-toolkit_${APP_VERSION}_deb_amd64.tar.gz"
     info "下载 nvidia-container-toolkit: $nct_url"
     curl -L -f --progress-bar -o "$WORK_DIR/nct.tar.gz" "$nct_url" \
         || error "nvidia-container-toolkit 下载失败"
@@ -70,9 +65,6 @@ app_build_app_tgz() {
 
     local dst="$WORK_DIR/app_root"
     mkdir -p "$dst/nvidia-container-toolkit"
-
-    cp "NVIDIA-Linux-x86_64-${APP_VERSION}.run" "$dst/"
-    chmod +x "$dst/NVIDIA-Linux-x86_64-${APP_VERSION}.run"
 
     info "提取 nvidia-container-toolkit .deb 包..."
     mkdir -p nct_extracted

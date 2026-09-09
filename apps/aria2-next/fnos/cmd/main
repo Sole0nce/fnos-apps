@@ -1,0 +1,31 @@
+#!/bin/bash
+# Docker 模式：容器生命周期由 fnOS 通过 compose 管理，这里只做状态查询。
+FILE_PATH="${TRIM_APPDEST}/docker/docker-compose.yaml"
+
+is_docker_running() {
+    local name
+    [ -f "$FILE_PATH" ] || return 1
+    name=$(grep "container_name" "$FILE_PATH" | awk -F ':' '{print $2}' | xargs)
+    [ -n "$name" ] || return 1
+    command -v docker >/dev/null 2>&1 || return 1
+    docker inspect "$name" 2>/dev/null | grep -q '"Status": "running",' || return 1
+    return 0
+}
+
+case $1 in
+start) exit 0 ;;
+stop) exit 0 ;;
+status) if is_docker_running; then exit 0; else exit 3; fi ;;
+log)
+    LINES="${2:-100}"
+    if [ -f "$FILE_PATH" ] && command -v docker >/dev/null 2>&1; then
+        cname=$(grep "container_name" "$FILE_PATH" | awk -F ':' '{print $2}' | xargs)
+        docker logs --tail "$LINES" "$cname" 2>&1
+    else
+        echo "compose 文件或 docker 不可用：$FILE_PATH"
+        exit 1
+    fi
+    exit 0
+    ;;
+*) exit 1 ;;
+esac

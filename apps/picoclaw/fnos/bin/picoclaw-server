@@ -6,10 +6,27 @@ DATA_DIR="$APP_DATA_DIR/data"
 CONFIG_DIR="$APP_DATA_DIR/.picoclaw"
 mkdir -p "$DATA_DIR" "$CONFIG_DIR"
 
+# Seed the default config on first start. picoclaw's gateway aborts when no
+# usable model is configured ("error creating provider: model \"\" not found in
+# model_list"), and nothing else ever created this file, so a fresh install
+# could never start. Written only when absent, so user edits survive upgrades.
+# The gateway keeps its upstream default port 18790 (issue #283); the fnOS
+# service port now fronts the WebUI launcher.
+CONFIG_FILE="$CONFIG_DIR/config.json"
+if [ ! -f "$CONFIG_FILE" ]; then
+    cp "$APP_DIR/config/picoclaw-config.json" "$CONFIG_FILE"
+fi
+
 export HOME="$APP_DATA_DIR"
-export PICOCLAW_GATEWAY_PORT="${TRIM_SERVICE_PORT}"
+# The launcher spawns `picoclaw gateway` as a child process when the user
+# starts it from the WebUI, so APP_DIR must be on PATH and the gateway must
+# bind beyond loopback to serve LAN webhook channels (upstream default is
+# 127.0.0.1).
+export PATH="$APP_DIR:$PATH"
 export PICOCLAW_GATEWAY_HOST="0.0.0.0"
 export PICOCLAW_HOME="$CONFIG_DIR"
 
 cd "$APP_DIR" || exit 1
-exec ./picoclaw gateway
+# WebUI launcher on the fnOS service port; first visit shows /launcher-setup
+# to set a dashboard password. -no-browser: headless NAS has no desktop.
+exec ./picoclaw-launcher -public -no-browser -port "${TRIM_SERVICE_PORT:-18800}"

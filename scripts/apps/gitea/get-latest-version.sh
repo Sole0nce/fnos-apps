@@ -1,10 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../../lib/gh-api.sh
+source "$SCRIPT_DIR/../../lib/gh-api.sh"
+
 INPUT_VERSION="${1:-}"
 
-TAG=$(curl -sL "https://api.github.com/repos/go-gitea/gitea/releases/latest" | \
-  jq -r '.tag_name')
+TAG=$(gh_latest_tag "go-gitea/gitea") || { echo "Failed to resolve version for gitea" >&2; exit 1; }
 
 if [ -n "$INPUT_VERSION" ]; then
   VERSION="$INPUT_VERSION"

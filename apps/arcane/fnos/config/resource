@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "Arcane.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "Arcane",
+                "permission": {
+                    "rw": [
+                        "arcane"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "arcane",
+                "path": "docker"
+            }
+        ]
+    }
+}

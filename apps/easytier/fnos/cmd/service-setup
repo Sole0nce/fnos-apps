@@ -15,9 +15,15 @@ service_postinst() {
 }
 
 service_preuninst() {
-    pkill -x "easytier-web-embed" 2>/dev/null || true
+    # "easytier-web-embed" 有 18 个字符，超过内核 comm 的 15 字符上限（实际进程
+    # 名是 "easytier-web-em"），pkill -x 永远匹配不到。改用 -f，并带上 --db 参数
+    # 限定到本安装实例：这个子串不会出现在 `appcenter-cli stop easytier` 的
+    # 命令行里，避开 issue #112 那个误杀调用方的坑。
+    # （wrapper 先 cd 到 APP_DIR 再跑 ./easytier-web-embed，所以 cmdline 里是相对
+    #   路径，不能用 "$APP_DIR/easytier-web-embed" 匹配。）
+    pkill -f "easytier-web-embed --db $APP_DATA_DIR" 2>/dev/null || true  # pkill-f-ok
     sleep 1
-    pkill -9 -x "easytier-web-embed" 2>/dev/null || true
+    pkill -9 -f "easytier-web-embed --db $APP_DATA_DIR" 2>/dev/null || true  # pkill-f-ok
 }
 
 service_poststop() {

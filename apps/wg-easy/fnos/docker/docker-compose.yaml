@@ -7,14 +7,27 @@ services:
       - "51820:51820/udp"
     volumes:
       - ${TRIM_PKGVAR:?}/config:/etc/wireguard
-    # WG_HOST / PASSWORD_HASH are literals here; service_postinst seds them
-    # in-place when wizard supplies values. fnOS reads docker-compose.yaml via
-    # Docker API directly (no \`docker compose\` CLI), so env_file is ignored
-    # and \`${VAR:-default}\` is not interpolated for non-TRIM_ env vars.
+    # wg-easy 15 bootstraps its first admin account from INIT_* on first boot.
+    #
+    # This used to pass WG_HOST / PASSWORD_HASH, patched in by service_postinst.
+    # Both halves were broken. WG_HOST is a v14 name that appears in no file of
+    # the v15 image, and PASSWORD_HASH received the RAW wizard password where a
+    # bcrypt hash was expected. More fundamentally the delivery could never work:
+    # fnOS creates the container BEFORE install_callback runs, so sed-patching
+    # the compose afterwards only changes the file on disk (AGENTS.md pitfall #3).
+    # Measured on fnOS 1.2.0203 — the on-disk compose read WG_HOST=vpn.example.com
+    # while the running container still had WG_HOST= and PASSWORD_HASH=, i.e. the
+    # admin UI shipped with no password at all.
+    #
+    # Compose substitution is the channel that does reach the container (verified
+    # the same way), so the wizard answers are referenced directly here.
     environment:
       - TZ=Asia/Shanghai
-      - WG_HOST=
-      - PASSWORD_HASH=
+      - INIT_ENABLED=true
+      - INIT_USERNAME=admin
+      - INIT_PASSWORD=${wizard_password:-}
+      - INIT_HOST=${wizard_wg_host:-}
+      - INIT_PORT=51820
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

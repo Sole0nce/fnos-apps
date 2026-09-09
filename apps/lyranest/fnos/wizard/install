@@ -1,0 +1,25 @@
+[
+    {
+        "stepTitle": "基本说明",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "LyraNest（律巢音乐）是自托管多端音乐服务：Web、Windows、Android 客户端共用服务端曲库、收藏、歌单与播放队列。<br><br>安装后访问 <code>http://&lt;NAS地址&gt;:8080/</code> 打开 Web 端；Android / Windows 客户端请在官网或 GitHub Release 下载。"
+            }
+        ]
+    },
+    {
+        "stepTitle": "音乐库目录",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "请填写 NAS 上已有音乐库的绝对路径（如 <code>/vol1/music</code>），将以<b>只读</b>方式挂载到容器内 <code>/music</code>。<br>留空则使用 fnOS 文件管理器中的「LyraNest」共享文件夹（可把音乐上传到该文件夹）。"
+            },
+            {
+                "type": "text",
+                "field": "wizard_music_dir",
+                "label": "音乐库目录（可选）"
+            }
+        ]
+    }
+]

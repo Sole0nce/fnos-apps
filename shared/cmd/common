@@ -1,4 +1,17 @@
 #!/bin/bash
+
+# fnOS runs app lifecycle scripts with a curated TRIM_* environment that holds
+# no PATH at all (verified on fnOS 1.2.0203). bash falls back to a compiled-in
+# default for its OWN lookups but never exports it, so every process started
+# from here — the app daemon included — inherits an environment where PATH is
+# unset. Shell commands keep resolving, which is why this stayed invisible, but
+# an app that shells out dies on it: filebrowser's user lookup exits with
+# `exec: "getent": executable file not found in $PATH` (issue #268).
+# Export the same PATH fnOS's own daemons run with. Deliberately NOT derived
+# from the inherited value — bash's default ends in `.`, and exporting that
+# would put the app's user-writable data dir (SVC_CWD) on the daemon's search
+# path. Apps needing extra directories prepend them in their own service-setup.
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 MV="/bin/mv -f"
 RM="/bin/rm -rf"
 CP="/bin/cp -rfp"
@@ -348,6 +361,58 @@ start_daemon ()
             fi
         fi
     done
+
+    # Readiness gate for the background + PID-tracked path (the default for
+    # native apps): confirm the daemon actually stays up before returning.
+    # fnOS checks status immediately after `cmd/main start` returns; racing a
+    # still-initialising process surfaces as a transient "code 10500" and,
+    # worse, an instantly-dying command used to report start success
+    # (issues #264 #260 #258 #253 #251 #246). Poll once a second, bounded by
+    # SVC_WAIT_TIMEOUT (default 15s; apps may override, e.g. msf sets 30):
+    #   - every started pid alive   -> return 0 (confirmed running)
+    #   - all started pids dead     -> return 1 (hard failure: never came up)
+    #   - timeout with a survivor   -> warn but return 0: slow starters (JVM
+    #                                  apps like ani-rss) must not be punished.
+    # NOTE: this block runs AFTER the `printf | while read` pipeline, in the
+    # function's own scope, so `return` here sets start_daemon's real exit
+    # status. Returning from INSIDE the while loop would only exit that
+    # pipeline's subshell and the verdict would never reach the caller.
+    if [ -n "${SVC_WRITE_PID}" -a -n "${SVC_BACKGROUND}" -a -n "${PID_FILE}" ]; then
+        local svc_pids svc_wait svc_elapsed svc_alive svc_pid
+        svc_pids=$(cat "${PID_FILE}" 2>/dev/null)
+        if [ -n "${svc_pids}" ]; then
+            svc_wait=${SVC_WAIT_TIMEOUT:-15}
+            case "${svc_wait}" in ''|*[!0-9]*) svc_wait=15 ;; esac
+            [ "${svc_wait}" -lt 1 ] && svc_wait=1
+            # Give instantly-dying commands a beat to exit and be reaped —
+            # otherwise a not-yet-reaped zombie still looks alive to kill -0.
+            sleep 1
+            svc_elapsed=1
+            while [ "${svc_elapsed}" -le "${svc_wait}" ]; do
+                if daemon_status "${svc_pids}"; then
+                    return 0
+                fi
+                svc_alive=0
+                for svc_pid in ${svc_pids}; do
+                    kill -0 "${svc_pid}" 2>/dev/null && svc_alive=$((svc_alive + 1))
+                done
+                if [ "${svc_alive}" -eq 0 ]; then
+                    if [ -z "${SVC_QUIET}" ]; then
+                        echo "${DNAME} failed to start (process exited immediately)" >> ${LOG_FILE}
+                    fi
+                    echo "ERROR: ${DNAME} failed to start (process exited immediately), check ${LOG_FILE}" >&2
+                    return 1
+                fi
+                sleep 1
+                svc_elapsed=$((svc_elapsed + 1))
+            done
+            if [ -z "${SVC_QUIET}" ]; then
+                echo "${DNAME} not confirmed running within ${svc_wait}s, continuing anyway (slow start)" >> ${LOG_FILE}
+            fi
+            echo "WARNING: ${DNAME} not confirmed running within ${svc_wait}s, continuing anyway (slow start)" >&2
+        fi
+    fi
+    return 0
 }
 
 stop_daemon ()

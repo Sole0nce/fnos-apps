@@ -60,7 +60,7 @@ app_build_app_tgz() {
 
     info "构建 app.tgz..."
     local dst="$WORK_DIR/app_root"
-    mkdir -p "$dst/bin" "$dst/ui"
+    mkdir -p "$dst/bin" "$dst/ui" "$dst/config"
 
     local loki_bin="$WORK_DIR/loki-linux-${ZIP_ARCH}"
     [ ! -f "$loki_bin" ] && error "在 zip 中找不到 loki-linux-${ZIP_ARCH} 二进制文件"
@@ -70,6 +70,8 @@ app_build_app_tgz() {
 
     cp "$PKG_DIR/bin/loki-server" "$dst/bin/loki-server"
     chmod +x "$dst/bin/loki-server"
+    # 上游 zip 只有二进制，需要随包投放默认配置，否则首启必挂
+    cp "$PKG_DIR/config/loki-config.yaml" "$dst/config/loki-config.yaml"
     cp -a "$PKG_DIR/ui"/* "$dst/ui/" 2>/dev/null || true
 
     cd "$dst"

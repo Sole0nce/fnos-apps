@@ -60,7 +60,7 @@ app_build_app_tgz() {
 
     info "构建 app.tgz..."
     local dst="$WORK_DIR/app_root"
-    mkdir -p "$dst/bin" "$dst/ui"
+    mkdir -p "$dst/bin" "$dst/ui" "$dst/config"
 
     local prometheus_bin
     prometheus_bin=$(find . -path "*/prometheus-${APP_VERSION}.linux-${ZIP_ARCH}/prometheus" -type f | head -1)
@@ -68,6 +68,12 @@ app_build_app_tgz() {
 
     cp "$prometheus_bin" "$dst/prometheus"
     chmod +x "$dst/prometheus"
+
+    # 上游 tar.gz 自带默认 prometheus.yml，随包投放作为首启配置
+    local prometheus_conf
+    prometheus_conf=$(find . -path "*/prometheus-${APP_VERSION}.linux-${ZIP_ARCH}/prometheus.yml" -type f | head -1)
+    [ -z "$prometheus_conf" ] && error "在 tar.gz 中找不到 prometheus.yml"
+    cp "$prometheus_conf" "$dst/config/prometheus.yml"
 
     cp "$PKG_DIR/bin/prometheus-server" "$dst/bin/prometheus-server"
     chmod +x "$dst/bin/prometheus-server"

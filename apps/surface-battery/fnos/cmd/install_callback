@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+# The upstream CGI uses its original app path. The upstream scripts and UI are
+# preserved in app.tgz; this compatibility link lets them run under our slug.
+legacy_path="/var/apps/surface_battery_driver"
+current_path="/var/apps/${TRIM_APPNAME:-surface-battery}"
+if [ -L "$legacy_path" ]; then
+  rm -f "$legacy_path"
+fi
+if [ ! -e "$legacy_path" ]; then
+  ln -s "$current_path" "$legacy_path"
+fi
+
+echo "Surface 电池驱动管理器已安装。请从桌面打开应用，检查依赖后点击编译并安装驱动。"

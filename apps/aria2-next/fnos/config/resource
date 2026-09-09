@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "Aria2 Next.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "Aria2 Next",
+                "permission": {
+                    "rw": [
+                        "aria2-next"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "aria2-next",
+                "path": "docker"
+            }
+        ]
+    }
+}

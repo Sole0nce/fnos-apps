@@ -1,0 +1,31 @@
+[
+    {
+        "stepTitle": "MiAir Next 端口设置",
+        "items": [
+            {
+                "type": "text",
+                "field": "wizard_port",
+                "label": "Web 管理端口",
+                "initValue": "8300",
+                "rules": [
+                    { "required": true, "message": "请输入 Web 管理端口" },
+                    { "pattern": "^[0-9]+$", "message": "端口必须为数字" }
+                ]
+            },
+            {
+                "type": "text",
+                "field": "wizard_dlna_port",
+                "label": "DLNA 服务端口",
+                "initValue": "8201",
+                "rules": [
+                    { "required": true, "message": "请输入 DLNA 服务端口" },
+                    { "pattern": "^[0-9]+$", "message": "端口必须为数字" }
+                ]
+            },
+            {
+                "type": "tips",
+                "helpText": "fnOS 自带 DLNA 可能占用 8200，本应用默认使用 8201。请勿将 DLNA 服务端口与 Web 管理端口混淆。"
+            }
+        ]
+    }
+]

@@ -1,6 +1,17 @@
 #!/bin/sh
 APP_DIR="${TRIM_APPDEST}"
 APP_DATA_DIR=$1
+CONFIG_FILE="$APP_DATA_DIR/config.yaml"
+
+# Seed the default config on first start. headscale exits immediately when
+# --config does not exist and nothing else ever created it, so a fresh install
+# could never start. Written only when absent, so user edits survive upgrades.
+# __APP_DATA_DIR__ is resolved here rather than hardcoded, so installs on any
+# storage volume (/vol1, /vol2, ...) get correct paths.
+if [ ! -f "$CONFIG_FILE" ]; then
+    sed "s|__APP_DATA_DIR__|${APP_DATA_DIR}|g" \
+        "$APP_DIR/config/config.yaml" > "$CONFIG_FILE"
+fi
 
 cd "$APP_DIR" || exit 1
-exec ./headscale serve --config "$APP_DATA_DIR/config.yaml"
+exec ./headscale serve --config "$CONFIG_FILE"

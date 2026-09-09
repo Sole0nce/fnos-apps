@@ -1,7 +1,7 @@
 # fnOS Apps
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Apps](https://img.shields.io/badge/apps-124-2ea44f)
+![Apps](https://img.shields.io/badge/apps-157-2ea44f)
 ![Platform](https://img.shields.io/badge/fnOS-third--party-orange)
 
 面向飞牛 fnOS 的第三方应用打包仓库。自动跟踪上游版本，构建可直接安装的 `.fpk` 包。
@@ -25,13 +25,14 @@
 | <img src="apps/copaw/fnos/ICON.PNG" width="28"> | **CoPaw** | `8088` | 基于 AgentScope 的个人 AI 助手工作站，支持多渠道聊天、本地大模型和定时任务 | [GitHub](https://github.com/agentscope-ai/CoPaw) | [Release][r-copaw] |
 | <img src="apps/cowagent/fnos/ICON.PNG" width="28"> | **CowAgent** | `9899` | AI 超级助手，支持微信/飞书/钉钉/QQ/Web 等多平台接入，基于大语言模型的智能对话 | [GitHub](https://github.com/zhayujie/chatgpt-on-wechat) | [Release][r-cowagent] |
 | <img src="apps/zeroclaw/fnos/ICON.PNG" width="28"> | **ZeroClaw** | `42617` | 轻量级 AI 智能体运行时，Rust 编写，<5MB 内存占用 | [GitHub](https://github.com/zeroclaw-labs/zeroclaw) | [Release][r-zeroclaw] |
-| <img src="apps/picoclaw/fnos/ICON.PNG" width="28"> | **PicoClaw** | `18790` | 超轻量 AI 智能体框架，Go 编写，10MB 内存占用 | [GitHub](https://github.com/sipeed/picoclaw) | [Release][r-picoclaw] |
+| <img src="apps/picoclaw/fnos/ICON.PNG" width="28"> | **PicoClaw** | `18800` | 超轻量 AI 智能体框架，Go 编写，10MB 内存占用，WebUI 端口 18800（网关 18790） | [GitHub](https://github.com/sipeed/picoclaw) | [Release][r-picoclaw] |
 | <img src="apps/nanobot/fnos/ICON.PNG" width="28"> | **Nanobot** | `18780` | 超轻量 AI 智能体，Web 管理面板，默认账号 `admin/nanobot` | [GitHub](https://github.com/HKUDS/nanobot) | [Release][r-nanobot] |
 | <img src="apps/localai/fnos/ICON.PNG" width="28"> | **LocalAI** | `8185` | 本地 AI 推理，兼容 OpenAI API | [官网](https://localai.io) | [Release][r-localai] |
 | <img src="apps/librechat/fnos/ICON.PNG" width="28"> | **LibreChat** | `3085` | AI 聊天界面，支持多模型 | [官网](https://librechat.ai) | [Release][r-librechat] |
 | <img src="apps/open-webui/fnos/ICON.PNG" width="28"> | **Open WebUI** | `8080` | AI 聊天界面，支持多模型对话 | [GitHub](https://github.com/open-webui/open-webui) | [Release][r-openwebui] |
 | <img src="apps/ollama/fnos/ICON.PNG" width="28"> | **Ollama** | `11434` | 本地大语言模型运行引擎 | [官网](https://ollama.com) | [Release][r-ollama] |
 | <img src="apps/maxkb/fnos/ICON.PNG" width="28"> | **MaxKB** | `8083` | AI 知识库问答系统，支持 RAG 和多模型对接 | [GitHub](https://github.com/1Panel-dev/MaxKB) | [Release][r-maxkb] |
+| <img src="apps/qwenpaw/fnos/ICON.PNG" width="28"> | **QwenPaw** | `8088` | AgentScope 团队出品的自托管个人 AI 助手，多通道接入、定时任务与本地模型 | [GitHub](https://github.com/agentscope-ai/QwenPaw) | [Release][r-qwenpaw] |
 
 ### 🎬 媒体服务
 
@@ -62,6 +63,8 @@
 | <img src="apps/bililive-go/fnos/ICON.PNG" width="28"> | **Bililive-go** | `8680` | 多平台直播录制工具，支持 Bilibili、斗鱼、虎牙等 | [GitHub](https://github.com/hr3lxphr6j/bililive-go) | [Release][r-bililive-go] |
 | <img src="apps/handbrake/fnos/ICON.PNG" width="28"> | **HandBrake** | `5800` | 开源视频转码工具，支持 GPU 硬件加速 | [GitHub](https://github.com/jlesage/docker-handbrake) | [Release][r-handbrake] |
 | <img src="apps/suwayomi/fnos/ICON.PNG" width="28"> | **Suwayomi** | `4567` | 免费开源漫画阅读服务器，支持多来源扩展 | [GitHub](https://github.com/Suwayomi/Suwayomi-Server) | [Release][r-suwayomi] |
+| <img src="apps/lyranest/fnos/ICON.PNG" width="28"> | **LyraNest** | `8080` | 律巢音乐：自托管多端音乐服务，共享曲库/歌单/播放队列，支持歌词偏移与离线下载 | [GitHub](https://github.com/WHWgogogo/LyraNest) | [Release][r-lyranest] |
+| <img src="apps/miair-next/fnos/ICON.PNG" width="28"> | **MiAir Next** | `8300` | 将小米小爱音箱转换为 DLNA 渲染器与 AirPlay 接收器，含 Web 管理后台 | [GitHub](https://github.com/deerwan/miair-next) | [Release][r-miair-next] |
 
 ### ⬇️ 下载工具
 
@@ -69,6 +72,7 @@
 |:---:|---|---:|---|:---:|:---:|
 | <img src="apps/qbittorrent/fnos/ICON.PNG" width="28"> | **qBittorrent** | `8085` | BitTorrent 客户端，默认账号 `admin/adminadmin` | [官网](https://www.qbittorrent.org) | [Release][r-qb] |
 | <img src="apps/transmission/fnos/ICON.PNG" width="28"> | **Transmission** | `9091` | 轻量级 BitTorrent 客户端 | [官网](https://transmissionbt.com) | [Release][r-transmission] |
+| <img src="apps/aria2-next/fnos/ICON.PNG" width="28"> | **Aria2 Next** | `6800` | 活跃维护的 aria2 分支下载引擎（RPC，无内置网页，配 AriaNg 使用） | [GitHub](https://github.com/AnInsomniacy/aria2-next) | [Release][r-aria2-next] |
 | <img src="apps/gopeed/fnos/ICON.PNG" width="28"> | **Gopeed** | `9999` | 高速下载器，支持 HTTP/BT/Magnet | [官网](https://gopeed.com) | [Release][r-gopeed] |
 | <img src="apps/syncthing/fnos/ICON.PNG" width="28"> | **Syncthing** | `8384` | 文件同步工具，P2P 架构 | [官网](https://syncthing.net) | [Release][r-syncthing] |
 | <img src="apps/alist/fnos/ICON.PNG" width="28"> | **Alist** | `5246` | 网盘聚合工具，挂载阿里云盘/百度盘等 | [GitHub](https://github.com/AlistGo/alist) | [Release][r-alist] |
@@ -82,6 +86,7 @@
 | | App | 端口 | 说明 | 来源 | 下载 |
 |:---:|---|---:|---|:---:|:---:|
 | <img src="apps/ani-rss/fnos/ICON.PNG" width="28"> | **ANI-RSS** | `7789` | 动漫 RSS 自动追番，默认账号 `admin/admin` | [GitHub](https://github.com/wushuo894/ani-rss) | [Release][r-ani] |
+| <img src="apps/danmu-api/fnos/ICON.PNG" width="28"> | **Danmu API** | `9321` | 弹幕 API 服务器，兼容弹弹play 接口规范 | [GitHub](https://github.com/huangxd-/danmu_api) | [Release][r-danmu-api] |
 | <img src="apps/auto-bangumi/fnos/ICON.PNG" width="28"> | **AutoBangumi** | `7892` | RSS 自动追番下载整理，默认账号 `admin/adminadmin` | [GitHub](https://github.com/EstrellaXD/Auto_Bangumi) | [Release][r-ab] |
 | <img src="apps/audiobookshelf/fnos/ICON.PNG" width="28"> | **Audiobookshelf** | `13378` | 有声书和播客服务器 | [官网](https://www.audiobookshelf.org) | [Release][r-abs] |
 | <img src="apps/moviepilot/fnos/ICON.PNG" width="28"> | **MoviePilot** | `3000` | 影视自动化管理 | [GitHub](https://github.com/jxxghp/MoviePilot) | [Release][r-mp] |
@@ -153,6 +158,8 @@
 | <img src="apps/penpot/fnos/ICON.PNG" width="28"> | **Penpot** | `9001` | 开源设计和原型工具，Figma 的自托管替代方案 | [官网](https://penpot.app) | [Release][r-penpot] |
 | <img src="apps/surveyking/fnos/ICON.PNG" width="28"> | **SurveyKing** | `1991` | 开源问卷调查和在线考试系统，支持多种题型、逻辑跳转和数据导出 | [官网](https://github.com/anji-plus/survey) | [Release][r-surveyking] |
 | <img src="apps/nvidia-driver/fnos/ICON.PNG" width="28"> | **NVIDIA Driver** | — | NVIDIA GPU 驱动（R580 LTS）+ nvidia-container-toolkit，仅 x86 | [官网](https://www.nvidia.com/drivers) | [Release][r-nvidia-driver] |
+| <img src="apps/arcane/fnos/ICON.PNG" width="28"> | **Arcane** | `3552` | 现代化 Docker 管理界面，可视化管理容器、镜像、Compose 项目与存储卷 | [GitHub](https://github.com/getarcaneapp/arcane) | [Release][r-arcane] |
+| <img src="apps/surface-battery/fnos/ICON.PNG" width="28"> | **Surface 电池驱动** | — | Microsoft Surface 电池驱动（Surface Aggregator），应用内按需编译安装，仅 x86 | [GitHub](https://github.com/xiowo/fnos_surface_battery_driver) | [Release][r-surface-battery] |
 
 ### 🌐 网络工具
 
@@ -168,6 +175,7 @@
 | <img src="apps/cloudflared/fnos/ICON.PNG" width="28"> | **Cloudflare Tunnel** | `14333` | Cloudflare 内网穿透隧道，通过 Web 界面管理 Tunnel Token 配置 | [GitHub](https://github.com/WisdomSky/Cloudflared-web) | [Release][r-cloudflared] |
 | <img src="apps/easytier/fnos/ICON.PNG" width="28"> | **EasyTier** | `11210` | 简单安全的去中心化异地组网方案，支持 Web 管理和子网代理 | [GitHub](https://github.com/EasyTier/EasyTier) | [Release][r-easytier] |
 | <img src="apps/mihomo/fnos/ICON.PNG" width="28"> | **Mihomo** | `9097` | Clash.Meta 内核 + MetaCubeXD dashboard，含开箱即用配置模板、TUN 模式与 LAN 混合代理 | [GitHub](https://github.com/MetaCubeX/mihomo) | [Release][r-mihomo] |
+| <img src="apps/opensurge/fnos/ICON.PNG" width="28"> | **OpenSurge** | `61767` | 旁路由透明代理网关（mihomo + dnsmasq + nftables），TUN 模式与按设备分流（另用 7890/53） | [GitHub](https://github.com/funchs/opensurge-fnos) | [Release][r-opensurge] |
 
 ### 🌐 浏览器
 
@@ -386,3 +394,11 @@ fnos-apps/
 [r-hermes-bbis]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-agent-bbis
 [r-hermes-studio]: https://github.com/Sole0nce/fnos-apps/releases?q=hermes-studio
 [r-mslx]: https://github.com/Sole0nce/fnos-apps/releases?q=MSLX
+[r-qwenpaw]: https://github.com/conversun/fnos-apps/releases?q=qwenpaw
+[r-lyranest]: https://github.com/conversun/fnos-apps/releases?q=lyranest
+[r-arcane]: https://github.com/conversun/fnos-apps/releases?q=arcane
+[r-miair-next]: https://github.com/conversun/fnos-apps/releases?q=miair-next
+[r-surface-battery]: https://github.com/conversun/fnos-apps/releases?q=surface-battery
+[r-danmu-api]: https://github.com/conversun/fnos-apps/releases?q=danmu-api
+[r-aria2-next]: https://github.com/conversun/fnos-apps/releases?q=aria2-next
+[r-opensurge]: https://github.com/conversun/fnos-apps/releases?q=opensurge

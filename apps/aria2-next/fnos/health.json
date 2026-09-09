@@ -1,0 +1,7 @@
+{
+    "type": "tcp",
+    "startup_timeout_seconds": 60,
+    "post_install_warmup_seconds": 15,
+    "skip_arch": [],
+    "note": "RPC engine without a web UI; a TCP connect on the service port (default 6800) is the proof of life"
+}

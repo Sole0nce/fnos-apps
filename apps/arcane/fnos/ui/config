@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "arcane.Application":
+        {
+            "title": "Arcane",
+            "desc": "Modern Docker Management",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "3552",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

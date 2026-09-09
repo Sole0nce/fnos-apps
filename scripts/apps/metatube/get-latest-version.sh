@@ -1,13 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../../lib/gh-api.sh
+source "$SCRIPT_DIR/../../lib/gh-api.sh"
+
 INPUT_VERSION="${1:-}"
 
 # Binaries are cross-posted to metatube-server-releases via GitHub Actions;
 # the SDK repo (metatube-community/metatube-sdk-go) holds the tags but the
 # release artifacts live in metatube-community/metatube-server-releases.
-TAG=$(curl -sL "https://api.github.com/repos/metatube-community/metatube-server-releases/releases/latest" | \
-  jq -r '.tag_name')
+TAG=$(gh_latest_tag "metatube-community/metatube-server-releases") || { echo "Failed to resolve version for metatube" >&2; exit 1; }
 
 if [ -n "$INPUT_VERSION" ]; then
   VERSION="$INPUT_VERSION"

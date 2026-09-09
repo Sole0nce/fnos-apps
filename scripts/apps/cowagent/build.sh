@@ -10,7 +10,10 @@ trap "rm -rf $WORK_DIR" EXIT
 
 mkdir -p "${WORK_DIR}/docker"
 cp "${SCRIPT_DIR}/../../../apps/cowagent/fnos/docker/docker-compose.yaml" "${WORK_DIR}/docker/"
-sed -i "s/\${VERSION}/${VERSION}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+# Portable in-place edit (AGENTS.md): bare `sed -i` is GNU-only and aborts on
+# macOS with "invalid command code", so the app could not be built locally.
+sed -i.bak "s/\${VERSION}/${VERSION}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+rm -f "${WORK_DIR}/docker/docker-compose.yaml.bak"
 
 cp -a "${SCRIPT_DIR}/../../../apps/cowagent/fnos/ui" "${WORK_DIR}/ui"
 

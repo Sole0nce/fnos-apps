@@ -1,0 +1,21 @@
+services:
+  arcane:
+    image: ${DOCKER_MIRROR}ghcr.io/getarcaneapp/manager:v${VERSION}
+    container_name: arcane
+    ports:
+      - "${TRIM_SERVICE_PORT}:3552"
+    volumes:
+      # Arcane manages Docker itself — the host socket is required.
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${TRIM_PKGVAR:?}/data:/app/data
+    environment:
+      - TZ=Asia/Shanghai
+      - GIN_MODE=release
+      - ENVIRONMENT=production
+      - PORT=3552
+      # Secrets come from REQUIRED install-wizard fields — no fallback defaults (issue #146 pattern).
+      - ENCRYPTION_KEY=${wizard_encryption_key}
+      - JWT_SECRET=${wizard_jwt_secret}
+      # Non-secret optional value — safe fallback to upstream default.
+      - APP_URL=${wizard_app_url:-http://localhost:3552}
+    restart: unless-stopped

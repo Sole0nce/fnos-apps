@@ -1,0 +1,14 @@
+appname         = arcane
+version         = 0.0.0
+display_name    = Arcane
+platform        = x86
+maintainer      = getarcaneapp
+maintainer_url  = https://github.com/getarcaneapp/arcane
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = arcane.Application
+service_port    = 3552
+desc            = 现代化的 Docker 管理界面，可视化管理容器、镜像、Compose 项目与存储卷
+source          = thirdparty
+checksum        = 

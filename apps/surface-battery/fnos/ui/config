@@ -1,0 +1,15 @@
+{
+  ".url": {
+    "surface-battery.main": {
+      "title": "Surface 电池驱动",
+      "icon": "images/icon_{0}.png",
+      "type": "iframe",
+      "protocol": "http",
+      "url": "/cgi/ThirdParty/surface_battery_driver/index.cgi/",
+      "allUsers": false,
+      "control": {
+        "accessPerm": "readonly"
+      }
+    }
+  }
+}

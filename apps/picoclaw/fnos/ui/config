@@ -6,7 +6,7 @@
             "desc": "PicoClaw",
             "icon": "images/{0}.png",
             "type": "url",
-            "port": "18790",
+            "port": "18800",
             "protocol": "http",
             "url": "/",
             "allUsers": true

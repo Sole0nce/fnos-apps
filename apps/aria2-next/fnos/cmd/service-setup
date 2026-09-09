@@ -1,0 +1,43 @@
+#!/bin/bash
+# Aria2 Next is an RPC engine with no web UI: seed a config that listens on
+# all interfaces (LAN frontends like AriaNg must reach it through the mapped
+# port) and keeps the RPC secret empty, matching the store's trusted-LAN
+# default. Written only when absent so user edits survive upgrades.
+#
+# Timing: fnOS creates the container before install_callback runs, but the
+# image entrypoint copies its default config only at container START, which
+# happens after install — so the file seeded here wins on first boot.
+
+CONFIG_DIR="${TRIM_PKGVAR}/config"
+CONFIG_FILE="${CONFIG_DIR}/aria2.conf"
+
+service_postinst() {
+    mkdir -p "${TRIM_PKGVAR}/config" "${TRIM_PKGVAR}/state" "${TRIM_PKGVAR}/downloads" 2>/dev/null || true
+    if [ ! -f "$CONFIG_FILE" ]; then
+        cat > "$CONFIG_FILE" << 'EOF'
+# Seeded by the fnOS package — mirrors the image's own default config
+# (/usr/share/aria2-next/aria2.conf). Safe to edit; upgrades keep this file.
+# No rpc-secret line: the trusted-LAN default. aria2-next, unlike upstream
+# aria2, refuses an EMPTY rpc-secret value, so absence is the only way to
+# express "no secret" — verified on fnOS 1.2.0203.
+enable-rpc=true
+rpc-listen-all=true
+rpc-listen-port=6800
+
+# Downloads land on the data share for this package.
+dir=/downloads
+input-file=/var/lib/aria2-next/session.txt
+save-session=/var/lib/aria2-next/session.txt
+save-session-interval=60
+auto-save-interval=60
+continue=true
+max-concurrent-downloads=5
+EOF
+        chown -R "${TRIM_USERNAME:-aria2-next}:${TRIM_GROUPNAME:-aria2-next}" "${TRIM_PKGVAR}/config" 2>/dev/null || true
+        install_log "Seeded aria2.conf (RPC on 6800, no secret, dir=/downloads)"
+    fi
+}
+
+service_poststop() {
+    :
+}

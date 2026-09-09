@@ -52,6 +52,20 @@ uninstalls and destroys data, cf. #189).
 ./test-upgrade.sh gopeed       # native app, no wizard (answers default to [])
 ```
 
+> **`rpc.sh` is a bash re-implementation of the store's Go daemon client and it
+> has already drifted** — it has no equivalent of the transient-poll tolerance
+> (`10050` / TRPC timeout) that `fnos-store/internal/platform/rpc.go` gained, and
+> `rpc_upgrade` hardcodes `customParameters: []`. To validate the private API
+> *as the store actually uses it* — which is what matters after an fnOS upgrade —
+> use the probe that calls the shipping Go code instead:
+>
+> ```bash
+> cd ../../fnos-store
+> GOOS=linux GOARCH=amd64 go build -o /tmp/rpcprobe ./cmd/rpcprobe
+> scp /tmp/rpcprobe fnos-test:/tmp/
+> ssh fnos-test 'sudo /tmp/rpcprobe capability'   # then stage/wizard/install/upgrade/uninstall
+> ```
+
 `test-upgrade.sh` needs no published version pair: it re-packages the same fpk
 with a bumped manifest version (`rpc_bump_fpk`) and offers it as an upgrade, so
 every app is testable. The data marker is written into the app's `@appdata` and

@@ -10,7 +10,8 @@ trap "rm -rf $WORK_DIR" EXIT
 
 mkdir -p "${WORK_DIR}/docker"
 cp "${SCRIPT_DIR}/../../../apps/songloft/fnos/docker/docker-compose.yaml" "${WORK_DIR}/docker/"
-perl -0pi -e "s/\Q\${VERSION}\E/${VERSION}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+sed -i.bak "s/\${VERSION}/${VERSION}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+rm -f "${WORK_DIR}/docker/docker-compose.yaml.bak"
 
 cp -a "${SCRIPT_DIR}/../../../apps/songloft/fnos/ui" "${WORK_DIR}/ui"
 

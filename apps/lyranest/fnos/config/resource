@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "LyraNest.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "LyraNest",
+                "permission": {
+                    "rw": [
+                        "lyranest"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "lyranest",
+                "path": "docker"
+            }
+        ]
+    }
+}

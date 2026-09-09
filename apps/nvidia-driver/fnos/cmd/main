@@ -1,27 +1,35 @@
 #!/bin/bash
 #
 # nvidia-driver: status-only cmd/main
-# No daemon to manage — kernel modules are loaded at boot.
-# start/stop are no-ops; status checks nvidia-smi availability.
+#
+# There is no daemon. `start` is the reconcile point: fnOS system updates
+# replace the root filesystem and can bring a NEW kernel whose baked-in NVIDIA
+# module is a different version, so the driver state has to be re-derived on
+# every boot rather than pinned at install time. reconcile_driver() is
+# idempotent — when nothing drifted it is just a few stat calls.
 #
 
-COMMON=$(dirname $0)"/common"
+COMMON=$(dirname "$0")"/common"
 if [ -r "${COMMON}" ]; then
     . "${COMMON}"
 fi
 
-SVC_SETUP=$(dirname $0)"/service-setup"
+SVC_SETUP=$(dirname "$0")"/service-setup"
 if [ -r "${SVC_SETUP}" ]; then
     . "${SVC_SETUP}"
 fi
 
-is_driver_loaded() {
-    # Check if NVIDIA kernel module is loaded
+is_driver_ready() {
+    # No GPU is a legitimate healthy state: the package is installed and will
+    # configure itself once a card shows up. Reporting failure here would make
+    # every GPU-less NAS show a broken app.
+    if ! nv_has_gpu; then
+        return 0
+    fi
     if ! lsmod | grep -q "^nvidia "; then
         return 1
     fi
-    # Check if nvidia-smi can query the GPU
-    if ! nvidia-smi --query-gpu=name --format=csv,noheader &>/dev/null; then
+    if ! nvidia-smi --query-gpu=name --format=csv,noheader >/dev/null 2>&1; then
         return 1
     fi
     return 0
@@ -29,23 +37,19 @@ is_driver_loaded() {
 
 case $1 in
 start)
-    # Kernel modules are loaded at boot via /etc/modules-load.d/nvidia.conf
-    # Attempt to load them now if not already loaded
-    if ! is_driver_loaded; then
-        modprobe nvidia 2>/dev/null
-        modprobe nvidia-uvm 2>/dev/null
-        modprobe nvidia-modeset 2>/dev/null
-        modprobe nvidia-drm 2>/dev/null
-        nvidia-smi -pm 1 2>/dev/null
-    fi
+    # Re-derive driver state from what fnOS currently provides. Never fail the
+    # start on a reconcile error: a hard failure here would leave the app
+    # permanently stopped and remove the only thing that can repair it on the
+    # next boot. The reason lands in the install log.
+    reconcile_driver 2>&1 | install_log || true
     exit 0
     ;;
 stop)
-    # Cannot unload kernel modules while GPU may be in use
+    # Kernel modules stay loaded — they may be in use, and fnOS owns them.
     exit 0
     ;;
 status)
-    if is_driver_loaded; then
+    if is_driver_ready; then
         exit 0
     else
         exit 3

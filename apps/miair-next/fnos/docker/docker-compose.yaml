@@ -1,0 +1,11 @@
+services:
+  miair-next:
+    image: ${DOCKER_MIRROR}docker.io/mrdeer1997/miair-next:${VERSION}
+    container_name: miair-next
+    network_mode: host
+    environment:
+      - TZ=Asia/Shanghai
+      - MIAIR_WEB_PORT=${TRIM_SERVICE_PORT}
+    volumes:
+      - ${TRIM_PKGVAR:?}/data:/app/data
+    restart: unless-stopped

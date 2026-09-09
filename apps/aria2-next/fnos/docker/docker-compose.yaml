@@ -1,0 +1,15 @@
+services:
+  aria2-next:
+    image: ${DOCKER_MIRROR}ghcr.io/aninsomniacy/aria2-next:v${VERSION}
+    container_name: aria2-next
+    ports:
+      - "${TRIM_SERVICE_PORT}:6800"
+    volumes:
+      - ${TRIM_PKGVAR:?}/config:/config
+      - ${TRIM_PKGVAR:?}/state:/var/lib/aria2-next
+      - ${TRIM_PKGVAR:?}/downloads:/downloads
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID=${TRIM_UID:-1000}
+      - PGID=${TRIM_GID:-1000}
+    restart: unless-stopped

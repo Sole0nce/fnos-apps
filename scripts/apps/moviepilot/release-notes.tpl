@@ -1,3 +1,10 @@
+> **若你当前运行的是 v2，升级前请注意**（已在 v3 上则可忽略）
+
+- v2 → v3 是大版本升级，镜像仓库已更换（`moviepilot-v2` → `moviepilot-v3`）
+- 升级后数据库会自动迁移，且**不可自动回退**，如需退回 v2 请按官方文档手动降级
+- 部分插件可能与 v3 不兼容而失效，请升级后检查
+- 升级前请务必备份 `/config` 目录
+
 自动构建的 fnOS 安装包
 
 - 基于 [MoviePilot ${VERSION}](https://github.com/jxxghp/MoviePilot)

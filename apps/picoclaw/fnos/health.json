@@ -1,9 +1,9 @@
 {
     "type": "http",
-    "path": "/health",
-    "expect_status": [200],
+    "path": "/",
+    "expect_status": [200, 301, 302],
     "startup_timeout_seconds": 30,
     "post_install_warmup_seconds": 5,
     "skip_arch": [],
-    "note": "picoclaw gateway exposes /health on the gateway port"
+    "note": "WebUI launcher serves the console on the service port; 301/302 allowed for the /launcher-setup redirect"
 }

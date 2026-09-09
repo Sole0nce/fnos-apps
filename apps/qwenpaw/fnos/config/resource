@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "QwenPaw.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "QwenPaw",
+                "permission": {
+                    "rw": [
+                        "qwenpaw"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "qwenpaw",
+                "path": "docker"
+            }
+        ]
+    }
+}

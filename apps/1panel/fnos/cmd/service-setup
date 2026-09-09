@@ -10,12 +10,27 @@ SERVICE_COMMAND="$APP_DIR/bin/1panel-server $APP_DATA_DIR"
 SVC_BACKGROUND=y
 SVC_WRITE_PID=y
 
-# Runs as ROOT (via install_init). 1panel's binary reads its port, base
-# directory and other startup params by grepping /usr/local/bin/1pctl
-# (see core/utils/common/common.go LoadParams). The full upstream 1pctl
-# template ships with 8 required keys; without them the binary panics on
-# boot. Seed it here; 1panel then migrates the values into its SQLite DB.
-service_preinst() {
+# 1panel's binary reads its port, base directory and other startup params by
+# grepping /usr/local/bin/1pctl (see core/utils/common/common.go LoadParams).
+# Without those keys it panics on boot with:
+#   panic: error `BASE_DIR` find in /usr/local/bin/1pctl
+#
+# That file lives outside the app's own directories and needs root to write.
+# fnOS runs every hook as the app's configured run-as user, so while this app
+# ran as the unprivileged "1panel" user the seeding below could never succeed:
+# CREDENTIALS.txt came out owned by 1panel:1panel and the next write failed with
+# "/usr/local/bin/1pctl: Permission denied" (/usr/local/bin is root:root 755),
+# leaving the app permanently panicking on start.
+#
+# The app is therefore packaged as a root install (`install_type = root` in the
+# manifest plus `"run-as": "root"` in config/privilege, same as nvidia-driver /
+# surface-battery). Upstream 1panel expects root anyway: it manages Docker,
+# system services and the firewall. Note this also places the app under
+# /usr/local/apps rather than on a storage volume.
+#
+# seed_1pctl is idempotent and runs on upgrade as well as install, so an install
+# that predates this packaging is repaired by updating the app.
+seed_1pctl() {
     # Idempotent: only generate random secrets on first install.
     local creds="${TRIM_PKGVAR}/CREDENTIALS.txt"
     local username password entrance
@@ -38,7 +53,12 @@ url=http://<NAS-IP>:${TRIM_SERVICE_PORT:-10086}/$entrance
 CREDS
     fi
 
-    mkdir -p /usr/local/bin
+    if ! mkdir -p /usr/local/bin 2>/dev/null || ! : > /usr/local/bin/1pctl 2>/dev/null; then
+        echo "ERROR: cannot write /usr/local/bin/1pctl (running as $(id -un), needs root)." >&2
+        echo "       1panel will panic on start with: error \`BASE_DIR\` find in /usr/local/bin/1pctl" >&2
+        echo "       Check install_type=root in the manifest and run-as root in config/privilege." >&2
+        return 1
+    fi
     cat > /usr/local/bin/1pctl <<EOF
 #!/bin/bash
 # Stub config-source for 1panel. The real 1pctl is the upstream management CLI;
@@ -55,11 +75,21 @@ LANGUAGE=zh
 PANEL_EDITION=cn
 CHANGE_USER_INFO=false
 EOF
-    chmod 755 /usr/local/bin/1pctl
+    chmod 755 /usr/local/bin/1pctl 2>/dev/null || true
+}
+
+service_preinst() {
+    seed_1pctl
+}
+
+# Repairs installs that predate the root packaging, and refreshes the port and
+# version keys after every update.
+service_postupgrade() {
+    seed_1pctl
 }
 
 service_preuninst() {
-    # Runs as ROOT (via uninstall_init). Clean up the 1pctl stub we created.
+    # Clean up the 1pctl stub we created (runs as root).
     rm -f /usr/local/bin/1pctl
 
     # 使用 -x 精确匹配进程名，避免误杀 appcenter-cli 等包含 "1panel" 参数的进程

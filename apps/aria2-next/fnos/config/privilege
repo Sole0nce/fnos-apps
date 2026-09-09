@@ -1,0 +1,7 @@
+{
+    "defaults": {
+        "run-as": "package"
+    },
+    "username": "aria2-next",
+    "groupname": "aria2-next"
+}

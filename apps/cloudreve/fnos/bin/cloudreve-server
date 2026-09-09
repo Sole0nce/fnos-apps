@@ -2,7 +2,33 @@
 APP_DIR="${TRIM_APPDEST}"
 APP_DATA_DIR=$1
 
-mkdir -p "$APP_DATA_DIR"
+CONFIG_FILE="$APP_DATA_DIR/conf.ini"
 
-cd "$APP_DIR" || exit 1
-exec ./cloudreve -c "$APP_DATA_DIR/conf.ini" -l "$APP_DATA_DIR"
+# cloudreve keeps runtime scratch (temp/) relative to its working directory.
+mkdir -p "$APP_DATA_DIR/temp"
+
+# cloudreve resolves relative paths against the BINARY's directory, not the
+# working directory, so with no explicit DBFile it writes cloudreve.db into the
+# app payload dir — which is replaced wholesale on every upgrade, taking all
+# user data with it. Pin the database into the data dir instead. Written only
+# when absent, and the section is appended only when missing, so user edits and
+# cloudreve's own generated secrets are preserved.
+if [ ! -f "$CONFIG_FILE" ]; then
+    cat > "$CONFIG_FILE" <<EOF
+[System]
+Mode = master
+Listen = :${TRIM_SERVICE_PORT:-5212}
+
+[Database]
+Type = sqlite
+DBFile = ${APP_DATA_DIR}/cloudreve.db
+EOF
+elif ! grep -q '^\[Database\]' "$CONFIG_FILE"; then
+    printf '\n[Database]\nType = sqlite\nDBFile = %s/cloudreve.db\n' \
+        "$APP_DATA_DIR" >> "$CONFIG_FILE"
+fi
+
+cd "$APP_DATA_DIR" || exit 1
+# The -l flag was dropped: 3.8.3 does not define it, so the binary exited
+# immediately with "flag provided but not defined: -l" and never started.
+exec "$APP_DIR/cloudreve" -c "$CONFIG_FILE"

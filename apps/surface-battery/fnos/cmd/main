@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+. "$(dirname "$0")/surface-driver-lib.sh"
+case "${1:-status}" in
+  start) log "管理器已启动。未编译安装前不会自动加载内核模块，请在 Web 界面查看状态或点击编译安装。" ;;
+  stop) log "管理器已停止。保留已安装/已加载的电池驱动模块不变。" ;;
+  restart) log "管理器已重启。未编译安装前不会自动加载内核模块，请在 Web 界面查看状态或点击编译安装。" ;;
+  status) echo "surface_battery_driver=ok"; driver_install_status_text || true ;;
+  *) echo "Usage: $0 {start|stop|restart|status}" >&2; exit 1 ;;
+esac

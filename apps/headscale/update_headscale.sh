@@ -56,7 +56,7 @@ app_download() {
 app_build_app_tgz() {
     info "构建 app.tgz..."
     local dst="$WORK_DIR/app_root"
-    mkdir -p "$dst/bin" "$dst/ui"
+    mkdir -p "$dst/bin" "$dst/ui" "$dst/config"
 
     cp "$WORK_DIR/headscale" "$dst/headscale"
     chmod +x "$dst/headscale"
@@ -64,10 +64,8 @@ app_build_app_tgz() {
     cp "$PKG_DIR/bin/headscale-server" "$dst/bin/headscale-server"
     chmod +x "$dst/bin/headscale-server"
     cp -a "$PKG_DIR/ui"/* "$dst/ui/" 2>/dev/null || true
-    # Copy var/ overlay (config templates synced to TRIM_PKGVAR on install)
-    if [ -d "$SCRIPT_DIR/var" ]; then
-        cp -a "$SCRIPT_DIR/var" "$dst/var"
-    fi
+    # 首启种子配置：bin/headscale-server 在 @appdata 中不存在时才投放
+    cp "$PKG_DIR/config/config.yaml" "$dst/config/config.yaml"
 
     cd "$dst"
     tar -czf "$WORK_DIR/app.tgz" .

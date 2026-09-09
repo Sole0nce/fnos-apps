@@ -51,7 +51,8 @@ app_build_app_tgz() {
     mkdir -p "$dst/docker" "$dst/ui"
 
     cp "$PKG_DIR/docker/docker-compose.yaml" "$dst/docker/docker-compose.yaml"
-    perl -0pi -e "s/\Q\${VERSION}\E/${APP_VERSION}/g" "$dst/docker/docker-compose.yaml"
+    sed -i.bak "s/\${VERSION}/${APP_VERSION}/g" "$dst/docker/docker-compose.yaml"
+    rm -f "$dst/docker/docker-compose.yaml.bak"
     cp -a "$PKG_DIR/ui"/* "$dst/ui/" 2>/dev/null || true
 
     cd "$dst"

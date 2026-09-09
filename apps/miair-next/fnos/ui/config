@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "miair-next.Application":
+        {
+            "title": "MiAir Next",
+            "desc": "DLNA and AirPlay receiver for Xiaomi Xiao AI speakers",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "${wizard_port}",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

@@ -11,10 +11,13 @@ SVC_BACKGROUND=y
 SVC_WRITE_PID=y
 
 service_preuninst() {
-    # 兜底：确保 chinesesubfinder 进程被完全终止
-    pkill -x "chinesesubfinder" 2>/dev/null || true
+    # 兜底：确保 chinesesubfinder 进程被完全终止。
+    # 必须用 -f 匹配绝对路径："chinesesubfinder" 有 16 个字符，超过内核 comm
+    # 的 15 字符上限（实际进程名被截断成 "chinesesubfinde"），pkill -x 永远匹配
+    # 不到，stop/uninstall 会漏掉进程。
+    pkill -f "$APP_DIR/chinesesubfinder" 2>/dev/null || true  # pkill-f-ok
     sleep 1
-    pkill -9 -x "chinesesubfinder" 2>/dev/null || true
+    pkill -9 -f "$APP_DIR/chinesesubfinder" 2>/dev/null || true  # pkill-f-ok
 }
 
 service_poststop() {

@@ -1,0 +1,3 @@
+#!/bin/bash
+set -euo pipefail
+echo "Surface 电池驱动管理器已升级。请从桌面打开应用后按需重新编译安装驱动。"

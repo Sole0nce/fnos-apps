@@ -4,6 +4,13 @@ APP_DATA_DIR=$1
 CONFIG_DIR="$APP_DATA_DIR/config"
 
 export HOME="$APP_DATA_DIR"
+
+# Upstream ships a Go 1.17.13 cgo build. Its cgo resolver calls getaddrinfo(3)
+# through the host NSS modules, which SIGSEGVs on the glibc 2.36 that fnOS
+# (Debian 12) ships — the process dies during package init, before main(), so
+# the app installs fine but never starts (issue #225). Forcing the pure-Go
+# resolver avoids getaddrinfo entirely. No change to the upstream binary.
+export GODEBUG=netdns=go
 mkdir -p "$CONFIG_DIR"
 
 cd "$APP_DATA_DIR" || exit 1

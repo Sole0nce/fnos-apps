@@ -1,6 +1,6 @@
 services:
   homarr:
-    image: ${DOCKER_MIRROR}ghcr.io/homarr-labs/homarr:${VERSION}
+    image: ${DOCKER_MIRROR}ghcr.io/homarr-labs/homarr:v${VERSION}
     container_name: homarr
     ports:
       - "${TRIM_SERVICE_PORT}:7575"

@@ -1,0 +1,59 @@
+# Loki 默认配置 — 基于上游 cmd/loki/loki-local-config.yaml（单机 filesystem 模式）
+# 改动仅限于把上游的 /tmp/loki 路径换成 fnOS 的应用数据目录，其余保持上游原样。
+# __APP_DATA_DIR__ 由 bin/loki-server 在首次启动投放配置时替换为真实路径。
+# 本文件只在 @appdata 中不存在同名文件时投放，升级不会覆盖你的修改。
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9096
+  log_level: info
+  grpc_server_max_concurrent_streams: 1000
+
+common:
+  instance_addr: 127.0.0.1
+  path_prefix: __APP_DATA_DIR__/loki
+  storage:
+    filesystem:
+      chunks_directory: __APP_DATA_DIR__/loki/chunks
+      rules_directory: __APP_DATA_DIR__/loki/rules
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 100
+
+limits_config:
+  metric_aggregation_enabled: true
+  enable_multi_variant_queries: true
+
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+pattern_ingester:
+  enabled: true
+  metric_aggregation:
+    loki_address: localhost:3100
+
+ruler:
+  alertmanager_url: http://localhost:9093
+
+frontend:
+  encoding: protobuf
+
+# 上游默认会向 Grafana Labs 发送匿名使用统计，这里默认关闭。
+analytics:
+  reporting_enabled: false

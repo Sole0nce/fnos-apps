@@ -1,0 +1,7 @@
+#!/bin/bash
+# Docker mode: fnOS creates the container from docker/docker-compose.yaml via
+# the Docker API. These hooks only prepare host-side data directories.
+
+service_postinst() {
+    mkdir -p "${TRIM_PKGVAR}/config" "${TRIM_PKGVAR}/.cache" 2>/dev/null || true
+}

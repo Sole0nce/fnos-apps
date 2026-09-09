@@ -1,0 +1,15 @@
+appname         = aria2-next
+version         = 0.0.0
+display_name    = Aria2 Next
+platform        = x86
+maintainer      = AnInsomniacy
+maintainer_url  = https://github.com/AnInsomniacy/aria2-next
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = aria2-next.Application
+service_port    = 6800
+checkport       = false
+desc            = 活跃维护的 aria2 分支下载引擎（RPC 服务，无内置网页）。支持 HTTP/FTP/BT/磁力/ED2K，JSON-RPC 端口 6800，可用 AriaNg / Motrix Next 等前端连接。
+source          = thirdparty
+checksum        =

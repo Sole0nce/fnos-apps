@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "lyranest.Application":
+        {
+            "title": "LyraNest",
+            "desc": "Multi-client music server",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "8080",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

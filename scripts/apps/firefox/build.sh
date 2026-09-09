@@ -10,7 +10,9 @@ trap "rm -rf $WORK_DIR" EXIT
 
 mkdir -p "${WORK_DIR}/docker"
 cp "${SCRIPT_DIR}/../../../apps/firefox/fnos/docker/docker-compose.yaml" "${WORK_DIR}/docker/"
-sed -i "s/\${VERSION}/${VERSION}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+# Portable in-place edit: bare `sed -i` is GNU-only and aborts on macOS.
+sed -i.bak "s/\${VERSION}/${VERSION}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+rm -f "${WORK_DIR}/docker/docker-compose.yaml.bak"
 
 # Seed .env so docker compose validates BEFORE service_postinst runs.
 # docker-compose.yaml declares env_file: [.env] which requires the file to

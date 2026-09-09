@@ -1,0 +1,15 @@
+appname         = qwenpaw
+version         = 0.0.0
+display_name    = QwenPaw
+platform        = x86
+maintainer      = AgentScope
+maintainer_url  = https://github.com/agentscope-ai/QwenPaw
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = qwenpaw.Application
+service_port    = 8088
+checkport       = false
+desc            = AgentScope 团队出品的自托管个人 AI 助手，支持钉钉/飞书/Discord/Telegram 等多通道接入、多智能体协作、定时任务、Skills 扩展与本地模型，数据完全保存在本地。
+source          = thirdparty
+checksum        = 

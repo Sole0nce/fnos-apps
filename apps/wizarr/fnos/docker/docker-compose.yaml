@@ -1,6 +1,6 @@
 services:
   wizarr:
-    image: ${DOCKER_MIRROR}ghcr.io/wizarrrr/wizarr:${VERSION}
+    image: ${DOCKER_MIRROR}ghcr.io/wizarrrr/wizarr:v${VERSION}
     container_name: wizarr
     ports:
       - "${TRIM_SERVICE_PORT}:5690"

@@ -1,6 +1,6 @@
 services:
   suggestarr:
-    image: ${DOCKER_MIRROR}docker.io/ciuse99/suggestarr:${VERSION}
+    image: ${DOCKER_MIRROR}docker.io/ciuse99/suggestarr:v${VERSION}
     container_name: suggestarr
     ports:
       - "${TRIM_SERVICE_PORT}:5000"

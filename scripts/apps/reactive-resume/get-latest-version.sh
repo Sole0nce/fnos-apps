@@ -1,12 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../../lib/gh-api.sh
+source "$SCRIPT_DIR/../../lib/gh-api.sh"
+
 INPUT_VERSION="${1:-}"
 
 if [ -n "$INPUT_VERSION" ]; then
   VERSION="$INPUT_VERSION"
 else
-  VERSION=$(curl -sL "https://api.github.com/repos/amruthpillai/reactive-resume/releases/latest" | jq -r '.tag_name')
+  VERSION=$(gh_latest_tag "amruthpillai/reactive-resume") || { echo "Failed to resolve version for reactive-resume" >&2; exit 1; }
 fi
 
 [ -z "$VERSION" ] || [ "$VERSION" = "null" ] && { echo "Failed to resolve version for reactive-resume" >&2; exit 1; }

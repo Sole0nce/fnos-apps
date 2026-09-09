@@ -1,0 +1,5 @@
+{
+    "type": "skip",
+    "skip_arch": [],
+    "note": "Docker-mode app: the L3 fpk-runner sandbox has no Docker daemon, so the container (and its HTTP listener on 8080) cannot be started here. Install/uninstall lifecycle hooks are still exercised. On real fnOS the web UI serves http://<nas>:8080/ and the server exposes /health."
+}

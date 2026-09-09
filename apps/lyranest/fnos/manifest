@@ -1,0 +1,14 @@
+appname         = lyranest
+version         = 0.0.0
+display_name    = LyraNest
+platform        = x86
+maintainer      = WHWgogogo
+maintainer_url  = https://github.com/WHWgogogo/LyraNest
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = lyranest.Application
+service_port    = 8080
+desc            = 律巢音乐：自托管多端音乐服务，Web/Windows/Android 共享曲库、收藏、歌单与播放队列，支持歌词偏移、离线下载与听歌统计
+source          = thirdparty
+checksum        = 

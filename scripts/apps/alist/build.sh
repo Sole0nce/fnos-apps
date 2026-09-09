@@ -13,7 +13,7 @@ curl -fL --retry 5 --retry-delay 5 --retry-all-errors --connect-timeout 30 -o al
 
 tar -xzf alist.tar.gz
 
-mkdir -p app_root/bin app_root/ui
+mkdir -p app_root/bin app_root/ui app_root/config
 ALIST_BIN=$(find . -name "alist" -type f | head -1)
 [ -z "$ALIST_BIN" ] && { echo "alist binary not found in tarball" >&2; exit 1; }
 
@@ -21,6 +21,8 @@ cp "$ALIST_BIN" app_root/alist
 chmod +x app_root/alist
 
 cp apps/alist/fnos/bin/alist-server app_root/bin/alist-server
+# Seed config: bin/alist-server templates this on first start.
+cp apps/alist/fnos/config/config.json app_root/config/config.json
 chmod +x app_root/bin/alist-server
 cp -a apps/alist/fnos/ui/* app_root/ui/ 2>/dev/null || true
 

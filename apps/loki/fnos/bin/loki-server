@@ -1,6 +1,17 @@
 #!/bin/sh
 APP_DIR="${TRIM_APPDEST}"
 APP_DATA_DIR=$1
+CONFIG_FILE="$APP_DATA_DIR/loki-config.yaml"
+
+# Seed the default config on first start. Loki exits immediately when
+# -config.file does not exist and nothing else ever created it, so a fresh
+# install could never start. Copied only when absent, so user edits survive.
+# __APP_DATA_DIR__ is resolved here because the data dir depends on which
+# storage volume the app was installed onto.
+if [ ! -f "$CONFIG_FILE" ]; then
+    sed "s|__APP_DATA_DIR__|${APP_DATA_DIR}|g" \
+        "$APP_DIR/config/loki-config.yaml" > "$CONFIG_FILE"
+fi
 
 cd "$APP_DIR" || exit 1
-exec ./loki -config.file="$APP_DATA_DIR/loki-config.yaml" -server.http-listen-address=0.0.0.0 -server.http-listen-port=${TRIM_SERVICE_PORT:-3100}
+exec ./loki -config.file="$CONFIG_FILE" -server.http-listen-address=0.0.0.0 -server.http-listen-port=${TRIM_SERVICE_PORT:-3100}

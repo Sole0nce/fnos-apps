@@ -242,6 +242,62 @@ check_docker_image_exists() {
     done <<<"$images"
 }
 
+# The compose file shipped INSIDE app.tgz is the one fnOS actually runs, and it
+# is produced by a build-time version substitution. A malformed substitution can
+# corrupt it while leaving the source compose (checked by static-check.sh) pristine
+# — songloft shipped a compose with the version injected between every character,
+# which fnOS rejected with "top-level object must be a mapping" (#269 #261 #256 #207).
+# check_docker_image_exists only warns in that case, because its `image:` grep stops
+# matching, so validate the built artifact structurally here.
+check_built_compose_valid() {
+    local app_tgz_dir="$WORK_DIR/app"
+    local compose=""
+    if [ -f "$app_tgz_dir/docker-compose.yaml" ]; then
+        compose="$app_tgz_dir/docker-compose.yaml"
+    elif [ -f "$app_tgz_dir/docker/docker-compose.yaml" ]; then
+        compose="$app_tgz_dir/docker/docker-compose.yaml"
+    else
+        return 0
+    fi
+
+    if grep -q '\${VERSION}' "$compose"; then
+        fail "built compose still contains an unsubstituted \${VERSION}"
+        return 1
+    fi
+
+    # Parser-free structural gate. This runs everywhere, including hosts without
+    # pyyaml/yq, because a check that silently skips is exactly how the corrupted
+    # songloft compose reached users in the first place. Every compose in this repo
+    # declares its services block at column 0.
+    if ! grep -qE '^services:[[:space:]]*$' "$compose"; then
+        fail "built compose has no top-level 'services:' block (corrupted substitution?)"
+        return 1
+    fi
+
+    if has_cmd python3 && python3 -c 'import yaml' >/dev/null 2>&1; then
+        if ! python3 - "$compose" <<'PY'
+import sys
+import yaml
+d = yaml.safe_load(open(sys.argv[1]))
+if not isinstance(d, dict):
+    sys.exit(1)
+if 'services' not in d or not isinstance(d['services'], dict) or not d['services']:
+    sys.exit(1)
+PY
+        then
+            fail "built compose is not a valid mapping with a 'services' block"
+            return 1
+        fi
+    elif has_cmd yq; then
+        if ! yq eval -e '.services | keys | length > 0' "$compose" >/dev/null 2>&1; then
+            fail "built compose is not a valid mapping with a 'services' block"
+            return 1
+        fi
+    fi
+
+    pass "built compose is a valid mapping with services"
+}
+
 # ---------------------------------------------------------------------------
 # Run
 # ---------------------------------------------------------------------------
@@ -252,6 +308,7 @@ extract_fpk      || error "fpk cannot be extracted; aborting further checks"
 check_manifest_fields
 check_app_tgz_checksum
 check_app_tgz_arch
+check_built_compose_valid
 check_docker_image_exists
 
 report_summary "verify-fpk:$FPK_NAME"

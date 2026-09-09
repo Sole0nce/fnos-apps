@@ -1,0 +1,14 @@
+appname         = miair-next
+version         = 0.0.0
+display_name    = MiAir Next
+platform        = x86
+maintainer      = deerwan
+maintainer_url  = https://github.com/deerwan/miair-next
+distributor     = conversun
+distributor_url = https://github.com/conversun/fnos-apps
+desktop_uidir   = ui
+desktop_applaunchname = miair-next.Application
+service_port    = 8300
+desc            = 将小米小爱音箱转换为 DLNA 与 AirPlay 接收器，提供 Web 管理后台
+source          = thirdparty
+checksum        = 

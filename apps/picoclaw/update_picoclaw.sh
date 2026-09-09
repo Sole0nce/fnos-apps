@@ -56,7 +56,7 @@ app_build_app_tgz() {
 
     info "构建 app.tgz..."
     local dst="$WORK_DIR/app_root"
-    mkdir -p "$dst/bin" "$dst/ui"
+    mkdir -p "$dst/bin" "$dst/ui" "$dst/config"
 
     local picoclaw_bin
     picoclaw_bin=$(find extracted -name "picoclaw" -type f ! -name "picoclaw-launcher*" | head -1)
@@ -66,6 +66,8 @@ app_build_app_tgz() {
     chmod +x "$dst/picoclaw"
 
     cp "$PKG_DIR/bin/picoclaw-server" "$dst/bin/picoclaw-server"
+    # 首启种子配置，缺了 gateway 会因为没有 model_list 直接退出
+    cp "$PKG_DIR/config/picoclaw-config.json" "$dst/config/picoclaw-config.json"
     chmod +x "$dst/bin/picoclaw-server"
     cp -a "$PKG_DIR/ui"/* "$dst/ui/" 2>/dev/null || true
 

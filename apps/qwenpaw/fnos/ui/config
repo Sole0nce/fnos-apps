@@ -1,0 +1,15 @@
+{
+    ".url": {
+        "qwenpaw.Application":
+        {
+            "title": "QwenPaw",
+            "desc": "Personal AI Assistant",
+            "icon": "images/{0}.png",
+            "type": "url",
+            "port": "8088",
+            "protocol": "http",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

@@ -2,32 +2,35 @@
 APP_DIR="${TRIM_APPDEST}"
 APP_DATA_DIR=$1
 DATA_DIR="$APP_DATA_DIR/data"
-CONFIG_FILE="$APP_DATA_DIR/config.yml"
+ENV_FILE="$APP_DATA_DIR/server.env"
 
 mkdir -p "$DATA_DIR"
 
-# 首次运行时生成默认配置文件
-if [ ! -f "$CONFIG_FILE" ]; then
-    cat > "$CONFIG_FILE" <<EOF
-# Gotify 配置文件
+# Gotify 3.0 dropped config.yml entirely and is configured through GOTIFY_*
+# environment variables only (see /etc/gotify/server.env upstream). A stale
+# config.yml is silently ignored, so the server fell back to its default port
+# 80 and died as a non-root user with "listen tcp :80: bind: permission denied".
+# Seed a user-editable env file instead; only written when absent.
+if [ ! -f "$ENV_FILE" ]; then
+    cat > "$ENV_FILE" <<EOF
+# Gotify 配置。Gotify 3.0 起不再读取 config.yml，只支持环境变量。
 # 完整配置项参考: https://gotify.net/docs/config
-
-server:
-  port: ${TRIM_SERVICE_PORT}
-
-database:
-  dialect: sqlite3
-  connection: data/gotify.db
-
-defaultuser:
-  name: admin
-  pass: admin
-
-uploadedimagesdir: data/images
-pluginsdir: data/plugins
-registration: false
+GOTIFY_SERVER_PORT=${TRIM_SERVICE_PORT:-8070}
+GOTIFY_DATABASE_DIALECT=sqlite3
+GOTIFY_DATABASE_CONNECTION=data/gotify.db
+GOTIFY_DEFAULTUSER_NAME=admin
+GOTIFY_DEFAULTUSER_PASS=admin
+GOTIFY_UPLOADEDIMAGESDIR=data/images
+GOTIFY_PLUGINSDIR=data/plugins
+GOTIFY_REGISTRATION=false
 EOF
 fi
+
+# set -a exports everything the file defines, so user-added keys work too.
+set -a
+# shellcheck source=/dev/null
+. "$ENV_FILE"
+set +a
 
 cd "$APP_DATA_DIR" || exit 1
 

@@ -60,7 +60,7 @@ app_build_app_tgz() {
 
     info "构建 app.tgz..."
     local dst="$WORK_DIR/app_root"
-    mkdir -p "$dst/bin" "$dst/ui"
+    mkdir -p "$dst/bin" "$dst/ui" "$dst/config"
 
     local alist_bin
     alist_bin=$(find . -name "alist" -type f | head -1)
@@ -70,6 +70,8 @@ app_build_app_tgz() {
     chmod +x "$dst/alist"
 
     cp "$PKG_DIR/bin/alist-server" "$dst/bin/alist-server"
+    # 首启种子配置，由 bin/alist-server 做占位符替换
+    cp "$PKG_DIR/config/config.json" "$dst/config/config.json"
     chmod +x "$dst/bin/alist-server"
     cp -a "$PKG_DIR/ui"/* "$dst/ui/" 2>/dev/null || true
 

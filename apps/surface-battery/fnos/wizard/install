@@ -1,0 +1,23 @@
+[
+  {
+    "stepTitle": "安装确认",
+    "items": [
+      {
+        "type": "tips",
+        "helpText": "一个 Surface ACPI 电池驱动模块快捷安装程序，可为 Surface 编译并安装 Surface Aggregator 电池驱动。"
+      },
+      {
+        "type": "tips",
+        "helpText": "驱动模块相关文件由 <a href=\"https://github.com/linux-surface/surface-aggregator-module\" target=\"_blank\" rel=\"noopener noreferrer\">linux-surface/surface-aggregator-module</a> 项目相关贡献者编写，使用 GPL-2.0 许可证发布。"
+      },
+      {
+        "type": "tips",
+        "helpText": "使用本项目前请阅读驱动模块仓库的README确保支持你的设备型号。"
+      },
+      {
+        "type": "tips",
+        "helpText": "安装后请从桌面打开“Surface 电池驱动”，检查依赖后点击“编译并安装驱动”。"
+      }
+    ]
+  }
+]

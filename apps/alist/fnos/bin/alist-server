@@ -4,6 +4,14 @@ APP_DATA_DIR=$1
 CONFIG_FILE="$APP_DATA_DIR/data/config.json"
 mkdir -p "$APP_DATA_DIR/data"
 
+# Seed the packaged config on first start. The placeholder substitution below
+# was written for a seed file that CI never actually shipped, so on a fresh
+# install it had nothing to act on and alist generated its own config on its
+# default port instead. Written only when absent, so user edits survive.
+if [ ! -f "$CONFIG_FILE" ]; then
+    cp "$APP_DIR/config/config.json" "$CONFIG_FILE"
+fi
+
 # First run: substitute placeholders in seed config.json
 if [ -f "$CONFIG_FILE" ] && grep -q "__TRIM_SERVICE_PORT__" "$CONFIG_FILE"; then
     JWT_SECRET="$(head -c 32 /dev/urandom | base64 | tr -d '\n' | tr -d '+/' | head -c 32)"

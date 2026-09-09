@@ -1,0 +1,25 @@
+{
+    "port-config": {
+        "protocol-file": "MiAirNext.sc"
+    },
+    "data-share": {
+        "shares": [
+            {
+                "name": "MiAir Next",
+                "permission": {
+                    "rw": [
+                        "miair-next"
+                    ]
+                }
+            }
+        ]
+    },
+    "docker-project": {
+        "projects": [
+            {
+                "name": "miair-next",
+                "path": "docker"
+            }
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+[
+    {
+        "stepTitle": "基本说明",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "Danmu API 是自托管弹幕 API 服务器：支持爱优腾芒哔咪人韩巴狐乐西埋帆红等平台弹幕直接获取，兼容弹弹play 的搜索、详情查询和弹幕获取接口规范，并提供日志记录与 Web 管理界面。<br><br>安装后访问 <code>http://&lt;NAS地址&gt;:9321/</code> 打开管理界面；在弹弹play 等客户端中填写 <code>http://&lt;NAS地址&gt;:9321/&lt;TOKEN&gt;</code> 作为自定义弹幕 API 地址。"
+            }
+        ]
+    },
+    {
+        "stepTitle": "访问令牌",
+        "items": [
+            {
+                "type": "tips",
+                "helpText": "TOKEN 用于保护 API 访问，请求路径形如 <code>/&lt;TOKEN&gt;/api/v2/search/anime</code>。<br>保持默认 <code>87654321</code> 时客户端可省略 TOKEN 路径段。<br>更多环境变量（B 站 Cookie、源排序、Redis 等）可在安装后于「Danmu API」数据目录的 <code>config/.env</code> 中配置，保存后自动热更新，无需重启。"
+            },
+            {
+                "type": "password",
+                "field": "wizard_token",
+                "label": "API 访问令牌 (TOKEN)",
+                "placeholder": "默认 87654321",
+                "initValue": "87654321",
+                "rules": [
+                    { "required": true, "message": "请设置 API 访问令牌" },
+                    { "min": 4, "message": "令牌至少 4 位" }
+                ]
+            }
+        ]
+    }
+]

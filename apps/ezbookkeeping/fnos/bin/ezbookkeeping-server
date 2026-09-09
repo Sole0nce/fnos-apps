@@ -3,14 +3,22 @@ APP_DIR="${TRIM_APPDEST}"
 APP_DATA_DIR=$1
 CONFIG_FILE="$APP_DATA_DIR/ezbookkeeping.ini"
 
-DATA_DIR="$APP_DATA_DIR/storage"
-mkdir -p "$DATA_DIR"
+# ezbookkeeping resolves log/, data/ and storage/ relative to its working
+# directory, so it runs from the data dir; only the bundled static web files
+# stay in the app dir.
+mkdir -p "$APP_DATA_DIR/data" "$APP_DATA_DIR/log" "$APP_DATA_DIR/storage"
 
-# First-run config templating: substitute placeholders if config still has them
-if grep -q "__TRIM_SERVICE_PORT__" "$CONFIG_FILE" 2>/dev/null; then
+# Seed the upstream default config on first start. The app exits immediately
+# when --conf-path does not exist and nothing else ever created it, so a fresh
+# install could never start. Written only when absent, so user edits survive.
+# Each key below is unique and line-anchored in the upstream ini.
+if [ ! -f "$CONFIG_FILE" ]; then
     SECRET_KEY=$(head -c 32 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 32)
-    sed -i "s|__TRIM_SERVICE_PORT__|${TRIM_SERVICE_PORT}|g; s|__APP_DATA_DIR__|${APP_DATA_DIR}|g; s|__SECRET_KEY__|${SECRET_KEY}|g" "$CONFIG_FILE"
+    sed -e "s|^http_port *=.*|http_port = ${TRIM_SERVICE_PORT:-8580}|" \
+        -e "s|^static_root_path *=.*|static_root_path = ${APP_DIR}/public|" \
+        -e "s|^secret_key *=.*|secret_key = ${SECRET_KEY}|" \
+        "$APP_DIR/config/ezbookkeeping.ini" > "$CONFIG_FILE"
 fi
 
-cd "$APP_DIR" || exit 1
-exec ./ezbookkeeping server run --conf-path "$CONFIG_FILE"
+cd "$APP_DATA_DIR" || exit 1
+exec "$APP_DIR/ezbookkeeping" server run --conf-path "$CONFIG_FILE"

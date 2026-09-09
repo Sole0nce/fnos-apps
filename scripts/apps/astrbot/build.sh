@@ -13,7 +13,9 @@ cp "${SCRIPT_DIR}/../../../apps/astrbot/fnos/docker/docker-compose.yaml" "${WORK
 IMAGE_TAG="v${VERSION}"
 [ "$VERSION" = "latest" ] && IMAGE_TAG="latest"
 if sed --version >/dev/null 2>&1; then
-    sed -i "s/v\${VERSION}/${IMAGE_TAG}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+    # Portable in-place edit: bare `sed -i` is GNU-only and aborts on macOS.
+    sed -i.bak "s/v\${VERSION}/${IMAGE_TAG}/g" "${WORK_DIR}/docker/docker-compose.yaml"
+    rm -f "${WORK_DIR}/docker/docker-compose.yaml.bak"
 else
     sed -i '' "s/v\${VERSION}/${IMAGE_TAG}/g" "${WORK_DIR}/docker/docker-compose.yaml"
 fi

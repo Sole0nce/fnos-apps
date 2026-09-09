@@ -1,6 +1,6 @@
 services:
   mealie:
-    image: ${DOCKER_MIRROR}ghcr.io/mealie-recipes/mealie:${VERSION}
+    image: ${DOCKER_MIRROR}ghcr.io/mealie-recipes/mealie:v${VERSION}
     container_name: mealie
     ports:
       - "${TRIM_SERVICE_PORT}:9000"

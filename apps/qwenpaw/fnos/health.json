@@ -1,0 +1,9 @@
+{
+    "type": "skip",
+    "path": "/",
+    "expect_status": [200, 301, 302, 401, 403],
+    "startup_timeout_seconds": 180,
+    "post_install_warmup_seconds": 0,
+    "skip_arch": [],
+    "note": "Docker 应用：容器由 fnOS docker-project 运行时拉起，fpk-runner 沙箱内无 Docker 守护进程，无法执行 start/probe（CI L3 WHITELIST 亦仅含原生应用）。真实 fnOS 上控制台位于 http://<nas>:8088/ ，首次启动较慢。"
+}

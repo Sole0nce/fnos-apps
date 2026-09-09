@@ -4,62 +4,59 @@ set -euo pipefail
 #
 # get-latest-version.sh for nvidia-driver
 #
-# Resolves the latest NVIDIA R580 LTS driver version.
-# Strategy: HEAD-check the known NVIDIA CDN URL pattern for R580 versions.
-# Falls back to hardcoded version if detection fails.
+# Resolves the latest nvidia-container-toolkit release.
 #
+# The package version tracks nvidia-container-toolkit, NOT the NVIDIA driver.
+# The driver version is a runtime property of the user's fnOS image: fnOS ships
+# prebuilt nvidia*.ko under /usr/lib/modules_trim/<kver>/nvidia-gpu-*/ and the
+# matching userspace is resolved on the device by cmd/service-setup. Pinning a
+# driver version at build time is exactly what made the GPU vanish after an
+# fnOS system update.
+#
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=/dev/null
+source "${SCRIPT_DIR}/meta.env"
 
 INPUT_VERSION="${1:-}"
 
-# Hardcoded fallback — update when new R580 LTS versions are released
-FALLBACK_VERSION="580.126.20"
+# Hardcoded fallback — used when the GitHub API is unreachable
+FALLBACK_VERSION="${NCT_FALLBACK_VERSION:-1.17.8}"
 
-# R580 LTS branch: versions follow pattern 580.X.Y
-# Known releases (chronological): 580.65.06, 580.82.07, 580.95.05,
-# 580.105.08, 580.126.09, 580.126.16, 580.126.20
+toolkit_asset_exists() {
+    local v="$1" status
+    status=$(curl -sIL -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 20 \
+        "https://github.com/NVIDIA/nvidia-container-toolkit/releases/download/v${v}/nvidia-container-toolkit_${v}_deb_amd64.tar.gz" 2>/dev/null) || true
+    [ "$status" = "200" ]
+}
 
-resolve_latest_r580() {
-    # Try to find the latest R580 version by checking the NVIDIA download page
+resolve_latest_toolkit() {
     local version=""
 
-    # Method 1: Parse NVIDIA datacenter driver archive page
     version=$(curl -sL --connect-timeout 10 --max-time 30 \
-        "https://developer.nvidia.com/datacenter-driver-archive" 2>/dev/null \
-        | grep -oE '580\.[0-9]+\.[0-9]+' \
-        | sort -t. -k1,1n -k2,2n -k3,3n \
-        | tail -1) || true
+        -H "Accept: application/vnd.github+json" \
+        "https://api.github.com/repos/NVIDIA/nvidia-container-toolkit/releases/latest" 2>/dev/null \
+        | grep -oE '"tag_name"[[:space:]]*:[[:space:]]*"v?[0-9]+\.[0-9]+\.[0-9]+"' \
+        | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
+        | head -1) || true
 
-    if [ -n "$version" ]; then
-        # Verify the download URL actually exists
-        local status
-        status=$(curl -sI -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 15 \
-            "https://us.download.nvidia.com/tesla/${version}/NVIDIA-Linux-x86_64-${version}.run" 2>/dev/null) || true
-        if [ "$status" = "200" ]; then
-            echo "$version"
-            return 0
-        fi
-    fi
-
-    # Method 2: HEAD-check the fallback version
-    local status
-    status=$(curl -sI -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 15 \
-        "https://us.download.nvidia.com/tesla/${FALLBACK_VERSION}/NVIDIA-Linux-x86_64-${FALLBACK_VERSION}.run" 2>/dev/null) || true
-    if [ "$status" = "200" ]; then
-        echo "$FALLBACK_VERSION"
+    if [ -n "$version" ] && toolkit_asset_exists "$version"; then
+        echo "$version"
         return 0
     fi
 
-    # All methods failed
+    # Fall back to the pinned version regardless of reachability so CI still
+    # produces a deterministic build when GitHub is throttling us.
     echo "$FALLBACK_VERSION"
 }
 
 if [ -n "$INPUT_VERSION" ]; then
     VERSION="$INPUT_VERSION"
 else
-    VERSION=$(resolve_latest_r580)
+    VERSION=$(resolve_latest_toolkit)
 fi
 
-[ -z "$VERSION" ] && { echo "Failed to resolve NVIDIA driver version" >&2; exit 1; }
+[ -z "$VERSION" ] && { echo "Failed to resolve nvidia-container-toolkit version" >&2; exit 1; }
 
 echo "VERSION=$VERSION"
 

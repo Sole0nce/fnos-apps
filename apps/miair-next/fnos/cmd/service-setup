@@ -1,0 +1,50 @@
+#!/bin/bash
+
+CONFIG_DIR="${TRIM_PKGVAR}/data/conf"
+CONFIG_FILE="${CONFIG_DIR}/config.json"
+
+valid_port() {
+    case "$1" in
+        ''|*[!0-9]*) return 1 ;;
+    esac
+    [ "$1" -ge 1 ] && [ "$1" -le 65535 ]
+}
+
+seed_dlna_port() {
+    local port="${1:-8201}"
+    local tmp_file="${CONFIG_FILE}.tmp"
+
+    if ! valid_port "$port"; then
+        install_log "Invalid DLNA port '${port}', falling back to 8201"
+        port=8201
+    fi
+
+    mkdir -p "$CONFIG_DIR" 2>/dev/null || true
+
+    if [ -s "$CONFIG_FILE" ] && grep -q '"dlna_port"[[:space:]]*:' "$CONFIG_FILE"; then
+        sed 's/"dlna_port"[[:space:]]*:[[:space:]]*[0-9][0-9]*/"dlna_port": '"${port}"'/' \
+            "$CONFIG_FILE" > "$tmp_file" && mv "$tmp_file" "$CONFIG_FILE"
+    else
+        printf '{\n  "dlna_port": %s\n}\n' "$port" > "$CONFIG_FILE"
+    fi
+
+    chmod 600 "$CONFIG_FILE" 2>/dev/null || true
+    install_log "Seeded MiAir Next DLNA port ${port} in ${CONFIG_FILE}"
+}
+
+restart_container() {
+    if docker inspect miair-next >/dev/null 2>&1; then
+        docker restart miair-next >/dev/null 2>&1 || \
+            install_log "Warning: unable to restart miair-next; restart it manually"
+    fi
+}
+
+service_postinst() {
+    seed_dlna_port "${wizard_dlna_port:-8201}"
+    restart_container
+}
+
+service_postconfig() {
+    seed_dlna_port "${wizard_dlna_port:-8201}"
+    restart_container
+}

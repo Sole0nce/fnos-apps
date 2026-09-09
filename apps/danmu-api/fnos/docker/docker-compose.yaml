@@ -1,0 +1,21 @@
+services:
+  danmu-api:
+    image: ${DOCKER_MIRROR}docker.io/logvar/danmu-api:${VERSION}
+    container_name: danmu-api
+    ports:
+      # Container always listens on 9321 internally (upstream EXPOSE); the host
+      # port comes from manifest.service_port via TRIM_SERVICE_PORT.
+      - "${TRIM_SERVICE_PORT}:9321"
+    volumes:
+      # config/: drop a .env here to hot-reload settings without a container
+      # restart (upstream chokidar watcher on /app/config/.env).
+      - ${TRIM_PKGVAR:?}/config:/app/config
+      # .cache/: favorites cache + scheduled-refresh plans survive restarts.
+      - ${TRIM_PKGVAR:?}/.cache:/app/.cache
+    environment:
+      - TZ=Asia/Shanghai
+      # API access token from the install wizard; falls back to the upstream
+      # default. fnOS substitutes wizard vars before container creation
+      # (issue #146) — do NOT inject via env_file/.env/service_postinst.
+      - TOKEN=${wizard_token:-87654321}
+    restart: unless-stopped

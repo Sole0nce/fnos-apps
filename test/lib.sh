@@ -132,7 +132,13 @@ case "$tv" in
 esac
 
 $AC uninstall "$APP" >/dev/null 2>&1 && echo "uninstall=PASS" || echo "uninstall=FAIL"
-command -v docker >/dev/null 2>&1 && docker system prune -af >/dev/null 2>&1   # bound disk for docker apps (no-op for native)
+# Reclaim disk between apps. NOT `prune -a`: that deletes images which are
+# still referenced by OTHER apps' stopped containers, and those containers
+# can then never start again —
+#   error creating overlay mount to /vol2/docker/overlay2/<id>/merged:
+#   no such file or directory
+# which is how astrbot and cowagent got bricked on the debug VM.
+command -v docker >/dev/null 2>&1 && docker system prune -f >/dev/null 2>&1   # bound disk for docker apps (no-op for native)
 rm -f "$FPK"
 REMOTE
 }
@@ -185,7 +191,7 @@ for _ in $(seq 1 $((ST_TO/2))); do stt=$($AC status "$APP" 2>/dev/null); [ "$stt
 echo "start=$s:$stt"
 
 $AC uninstall "$APP" >/dev/null 2>&1 && echo "uninstall=PASS" || echo "uninstall=FAIL"
-command -v docker >/dev/null 2>&1 && docker system prune -af >/dev/null 2>&1
+command -v docker >/dev/null 2>&1 && docker system prune -f >/dev/null 2>&1   # -f not -af: see note above
 rm -f "$FPK"
 REMOTE
 }
@@ -256,7 +262,7 @@ for _ in $(seq 1 $((ST_TO/2))); do stt=$($AC status "$APP" 2>/dev/null); [ "$stt
 echo "start=$s:$stt"
 
 $AC uninstall "$APP" >/dev/null 2>&1 && echo "uninstall=PASS" || echo "uninstall=FAIL"
-command -v docker >/dev/null 2>&1 && docker system prune -af >/dev/null 2>&1
+command -v docker >/dev/null 2>&1 && docker system prune -f >/dev/null 2>&1   # -f not -af: see note above
 rm -f "$FPK" "$FPK2"
 REMOTE
 }

@@ -1,7 +1,5 @@
 {
     "defaults": {
-        "run-as": "package"
-    },
-    "username": "1panel",
-    "groupname": "1panel"
+        "run-as": "root"
+    }
 }

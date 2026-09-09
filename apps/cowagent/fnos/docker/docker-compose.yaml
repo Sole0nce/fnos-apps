@@ -8,4 +8,13 @@ services:
       - ${TRIM_PKGVAR:?}/data:/app/data
     environment:
       - TZ=Asia/Shanghai
+      # The web console binds 127.0.0.1 inside the container unless a password is
+      # set, so the published port reached nothing and the UI was unusable from
+      # the LAN. Upstream picks the bind address itself:
+      #   host = web_host or ("0.0.0.0" if password_enabled else "127.0.0.1")
+      # so passing the password alone is what opens it up. web_host is
+      # deliberately NOT set: that keeps it impossible to expose an
+      # unauthenticated console. Empty (a CLI install with no wizard answers)
+      # therefore stays safely on loopback.
+      - WEB_PASSWORD=${wizard_web_password:-}
     restart: unless-stopped

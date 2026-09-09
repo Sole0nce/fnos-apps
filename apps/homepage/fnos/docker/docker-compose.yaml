@@ -1,6 +1,6 @@
 services:
   homepage:
-    image: ${DOCKER_MIRROR}ghcr.io/gethomepage/homepage:${VERSION}
+    image: ${DOCKER_MIRROR}ghcr.io/gethomepage/homepage:v${VERSION}
     container_name: homepage
     ports:
       - "${TRIM_SERVICE_PORT}:3000"

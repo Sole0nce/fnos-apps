@@ -12,7 +12,7 @@ services:
       - TZ=Asia/Shanghai
       - CC_PORT=11987
       - CC_HOST_IP4=0.0.0.0
-      - CC_HOST_IP6=::
+      - "CC_HOST_IP6=::"
       - CC_TLS=OFF
       - CC_DBUS=OFF
       - CC_SERVICE_MANAGER=OFF
