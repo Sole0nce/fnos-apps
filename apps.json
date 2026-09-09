@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-09T17:54:53Z",
+  "generated_at": "2026-09-09T17:55:13Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -2560,8 +2560,8 @@
       "display_name": "Readarr",
       "description": "电子书自动化管理工具，自动搜索和下载电子书与有声书",
       "version": "0.4.18.2805",
-      "fpk_version": "0.4.18.2805-r11",
-      "release_tag": "readarr/v0.4.18.2805-r11",
+      "fpk_version": "0.4.18.2805-r12",
+      "release_tag": "readarr/v0.4.18.2805-r12",
       "service_port": 8787,
       "homepage_url": "https://readarr.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/readarr/fnos/ICON_256.PNG",
@@ -2569,7 +2569,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-08-03T00:31:30Z",
+      "updated_at": "2026-09-09T17:54:53Z",
       "download_count": 179,
       "app_type": "native",
       "category": "automation"
