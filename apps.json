@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-09T17:55:13Z",
+  "generated_at": "2026-09-09T17:55:34Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -2960,8 +2960,8 @@
       "display_name": "Transmission",
       "description": "Transmission 是一个轻量级的 BitTorrent 客户端，以简洁高效著称，支持 Web 远程管理。",
       "version": "latest-2026.09.09",
-      "fpk_version": "latest-2026.09.09",
-      "release_tag": "transmission/vlatest-2026.09.09",
+      "fpk_version": "latest-2026.09.09-r1",
+      "release_tag": "transmission/vlatest-2026.09.09-r1",
       "service_port": 9091,
       "homepage_url": "https://transmissionbt.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/transmission/fnos/ICON_256.PNG",
@@ -2969,7 +2969,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-09T12:55:03Z",
+      "updated_at": "2026-09-09T17:55:11Z",
       "download_count": 61,
       "app_type": "docker",
       "category": "download"
