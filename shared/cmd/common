@@ -478,3 +478,4 @@ wait_for_status ()
     done
     return 1
 }
+# trigger rebuild
