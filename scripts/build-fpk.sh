@@ -55,7 +55,7 @@ require_manifest_key "service_port"
 require_manifest_key "source"
 
 # Read appname from manifest
-APPNAME=$(grep "^appname=" "$APP_DIR/fnos/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
+APPNAME=$(grep "^appname[[:space:]]*=" "$APP_DIR/fnos/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
 [ -z "$APPNAME" ] && error "Cannot read appname from manifest"
 
 info "Building fpk for: $APPNAME"
@@ -129,16 +129,16 @@ fi
 cp "$APP_DIR/fnos/manifest" "$PKG_DIR/manifest"
 
 if [ -n "$VERSION" ]; then
-    sed -i.tmp "s/^version=.*/version=\"${VERSION}\"/" "$PKG_DIR/manifest"
+    sed -i.tmp "s/^version[[:space:]]*=.*/version=\"${VERSION}\"/" "$PKG_DIR/manifest"
 fi
 if [ -n "$PLATFORM" ]; then
-    if grep -q "^platform=" "$PKG_DIR/manifest"; then
-        sed -i.tmp "s/^platform=.*/platform=\"${PLATFORM}\"/" "$PKG_DIR/manifest"
+    if grep -q "^platform[[:space:]]*=" "$PKG_DIR/manifest"; then
+        sed -i.tmp "s/^platform[[:space:]]*=.*/platform=\"${PLATFORM}\"/" "$PKG_DIR/manifest"
     else
         echo "platform=\"${PLATFORM}\"" >> "$PKG_DIR/manifest"
     fi
 fi
-sed -i.tmp "s/^checksum=.*/checksum=\"${CHECKSUM}\"/" "$PKG_DIR/manifest"
+sed -i.tmp "s/^checksum[[:space:]]*=.*/checksum=\"${CHECKSUM}\"/" "$PKG_DIR/manifest"
 if [ -n "$FPK_VERSION" ]; then
     echo "fpk_version=\"${FPK_VERSION}\"" >> "$PKG_DIR/manifest"
 fi
@@ -146,8 +146,8 @@ rm -f "$PKG_DIR/manifest.tmp"
 
 # Determine output filename
 # Manifest now uses key="value" quoting, so strip surrounding quotes here.
-MANIFEST_VERSION=$(grep "^version=" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
-MANIFEST_PLATFORM=$(grep "^platform=" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
+MANIFEST_VERSION=$(grep "^version[[:space:]]*=" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
+MANIFEST_PLATFORM=$(grep "^platform[[:space:]]*=" "$PKG_DIR/manifest" | awk -F'=' '{print $2}' | tr -d ' "' | tr -d '\r')
 FPK_NAME="${APPNAME}_${MANIFEST_VERSION}_${MANIFEST_PLATFORM:-x86}.fpk"
 
 # 11. Create fpk
