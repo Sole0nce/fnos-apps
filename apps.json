@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T12:09:36Z",
+  "generated_at": "2026-09-13T05:45:10Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -89,6 +89,27 @@
       "download_count": 111,
       "app_type": "docker",
       "category": "system"
+    },
+    {
+      "slug": "aellus",
+      "appname": "aellus",
+      "file_prefix": "aellus",
+      "display_name": "Aellus",
+      "description": "轻量局域网文件互传工具：手机 / 电脑浏览器访问 NAS 地址即可上传、浏览与下载文件，零配置、免流量、不经过中转服务器。文件按设备名归档、自动加时间戳防覆盖；删除与路径修改仅限本机（飞牛桌面打开）操作，远程设备只读，防误删。",
+      "version": "1.0.0",
+      "fpk_version": "1.0.0",
+      "release_tag": "aellus/v1.0.0",
+      "service_port": 8000,
+      "homepage_url": "https://github.com/YGQ8988/Aellus",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/aellus/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:43:33Z",
+      "download_count": 4,
+      "app_type": "native",
+      "category": "network"
     },
     {
       "slug": "alist",
@@ -975,6 +996,27 @@
       "category": "media"
     },
     {
+      "slug": "frps",
+      "appname": "frps",
+      "file_prefix": "frps",
+      "display_name": "FRP Server",
+      "description": "高性能内网穿透服务端（frps）：配合 frpc 客户端将 NAS 或内网服务暴露到公网服务器，内置 Web 管理面板（7500 端口，初始密码见应用日志）",
+      "version": "0.71.0",
+      "fpk_version": "0.71.0",
+      "release_tag": "frps/v0.71.0",
+      "service_port": 7000,
+      "homepage_url": "https://github.com/fatedier/frp",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/frps/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:42:20Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "network"
+    },
+    {
       "slug": "gitea",
       "appname": "gitea",
       "file_prefix": "gitea",
@@ -992,6 +1034,27 @@
       ],
       "updated_at": "2026-09-09T17:52:39Z",
       "download_count": 191,
+      "app_type": "native",
+      "category": "system"
+    },
+    {
+      "slug": "glance",
+      "appname": "glance",
+      "file_prefix": "glance",
+      "display_name": "Glance",
+      "description": "高颜值自托管仪表盘：一页聚合 RSS、书签、站点监控、Docker 状态、市场行情等数十种小组件",
+      "version": "0.8.6",
+      "fpk_version": "0.8.6",
+      "release_tag": "glance/v0.8.6",
+      "service_port": 9678,
+      "homepage_url": "https://github.com/glanceapp/glance",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/glance/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:42:21Z",
+      "download_count": 0,
       "app_type": "native",
       "category": "system"
     },
@@ -1266,6 +1329,27 @@
       "updated_at": "2026-09-12T12:07:30Z",
       "download_count": 269,
       "app_type": "docker",
+      "category": "system"
+    },
+    {
+      "slug": "homebox",
+      "appname": "homebox",
+      "file_prefix": "homebox",
+      "display_name": "Homebox",
+      "description": "家庭物品资产管理与库存系统：登记家当、拍照归档、位置/标签/保修期管理，搬家与理赔好帮手",
+      "version": "0.26.2",
+      "fpk_version": "0.26.2",
+      "release_tag": "homebox/v0.26.2",
+      "service_port": 7745,
+      "homepage_url": "https://homebox.software",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/homebox/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:43:29Z",
+      "download_count": 0,
+      "app_type": "native",
       "category": "system"
     },
     {
@@ -1633,8 +1717,8 @@
       "display_name": "LocalAI",
       "description": "本地 AI 模型推理服务器，兼容 OpenAI API 接口。",
       "version": "4.9.0",
-      "fpk_version": "4.9.0-r1",
-      "release_tag": "localai/v4.9.0-r1",
+      "fpk_version": "4.9.0-r2",
+      "release_tag": "localai/v4.9.0-r2",
       "service_port": 8185,
       "homepage_url": "https://localai.io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/localai/fnos/ICON_256.PNG",
@@ -1642,7 +1726,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-09T17:53:32Z",
+      "updated_at": "2026-09-13T05:43:25Z",
       "download_count": 91,
       "app_type": "docker",
       "category": "ai"
@@ -1675,8 +1759,8 @@
       "display_name": "Lucky",
       "description": "网络工具箱，集成 DDNS、反向代理、HTTPS 证书、端口转发等功能",
       "version": "2.27.2",
-      "fpk_version": "2.27.2-r12",
-      "release_tag": "lucky/v2.27.2-r12",
+      "fpk_version": "2.27.2-r13",
+      "release_tag": "lucky/v2.27.2-r13",
       "service_port": 16601,
       "homepage_url": "https://lucky666.cn",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/lucky/fnos/ICON_256.PNG",
@@ -1684,7 +1768,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-09T17:54:11Z",
+      "updated_at": "2026-09-13T05:42:16Z",
       "download_count": 479,
       "app_type": "native",
       "category": "system"
@@ -1899,6 +1983,27 @@
       "download_count": 499,
       "app_type": "native",
       "category": "media"
+    },
+    {
+      "slug": "metube",
+      "appname": "metube",
+      "file_prefix": "metube",
+      "display_name": "MeTube",
+      "description": "网页版 yt-dlp 下载器：粘贴链接即下，支持 YouTube/B 站等上千站点、多任务队列与音视频格式选择，文件自动落盘到 NAS",
+      "version": "latest-2026.09.13",
+      "fpk_version": "latest-2026.09.13",
+      "release_tag": "metube/vlatest-2026.09.13",
+      "service_port": 8281,
+      "homepage_url": "https://github.com/alexta69/metube",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/metube/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:42:17Z",
+      "download_count": 0,
+      "app_type": "docker",
+      "category": "download"
     },
     {
       "slug": "miair-next",
@@ -2307,9 +2412,9 @@
       "file_prefix": "obsidian",
       "display_name": "Obsidian",
       "description": "基于 Docker 的 Obsidian 个人知识库",
-      "version": "1.13.8",
-      "fpk_version": "1.13.8-r1",
-      "release_tag": "obsidian/v1.13.8-r1",
+      "version": "1.13.7",
+      "fpk_version": "1.13.7-r1",
+      "release_tag": "obsidian/v1.13.7-r1",
       "service_port": 8080,
       "homepage_url": "https://obsidian.md",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/obsidian/fnos/ICON_256.PNG",
@@ -2317,7 +2422,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-09T17:53:24Z",
+      "updated_at": "2026-09-13T05:43:26Z",
       "download_count": 312,
       "app_type": "docker",
       "category": "content"
@@ -2554,6 +2659,27 @@
       "category": "media"
     },
     {
+      "slug": "pocket-id",
+      "appname": "pocket-id",
+      "file_prefix": "pocket-id",
+      "display_name": "Pocket ID",
+      "description": "轻量 OIDC 单点登录/Passkey 身份提供方：为 Jellyfin、Immich、Nginx Proxy Manager 等自托管应用提供「指纹/Passkey 免密码」统一登录，无需暴露密码",
+      "version": "2.14.0",
+      "fpk_version": "2.14.0",
+      "release_tag": "pocket-id/v2.14.0",
+      "service_port": 1411,
+      "homepage_url": "https://pocket-id.org",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/pocket-id/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:43:24Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "system"
+    },
+    {
       "slug": "prometheus",
       "appname": "prometheus",
       "file_prefix": "prometheus",
@@ -2785,6 +2911,27 @@
       "category": "system"
     },
     {
+      "slug": "rustdesk-server",
+      "appname": "rustdesk-server",
+      "file_prefix": "rustdesk-server",
+      "display_name": "RustDesk Server",
+      "description": "开源远程桌面 RustDesk 的自建服务端（hbbs 信令 + hbbr 中继），让远程控制流量完全不经过第三方服务器；公钥位于应用数据目录，客户端填入 NAS 地址即可使用",
+      "version": "1.1.16",
+      "fpk_version": "1.1.16",
+      "release_tag": "rustdesk-server/v1.1.16",
+      "service_port": 21116,
+      "homepage_url": "https://rustdesk.com",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/rustdesk-server/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:43:29Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "network"
+    },
+    {
       "slug": "sabnzbd",
       "appname": "sabnzbd",
       "file_prefix": "sabnzbd",
@@ -2868,6 +3015,27 @@
       "download_count": 122,
       "app_type": "docker",
       "category": "media"
+    },
+    {
+      "slug": "siyuan",
+      "appname": "siyuan",
+      "file_prefix": "siyuan",
+      "display_name": "SiYuan 思源笔记",
+      "description": "隐私优先的块级笔记与双向链接知识库（内核服务器模式），支持网页端访问、多端数据同步与 S3/WebDAV 备份",
+      "version": "3.8.3",
+      "fpk_version": "3.8.3",
+      "release_tag": "siyuan/v3.8.3",
+      "service_port": 6806,
+      "homepage_url": "https://b3log.org/siyuan",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/siyuan/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:43:40Z",
+      "download_count": 0,
+      "app_type": "docker",
+      "category": "content"
     },
     {
       "slug": "smartdns",
@@ -3127,9 +3295,9 @@
       "file_prefix": "tailscale",
       "display_name": "Tailscale",
       "description": "Tailscale VPN 客户端，零配置组建安全私有网络，支持远程访问 NAS。",
-      "version": "1.102.4",
-      "fpk_version": "1.102.4",
-      "release_tag": "tailscale/v1.102.4",
+      "version": "1.102.3",
+      "fpk_version": "1.102.3-r2",
+      "release_tag": "tailscale/v1.102.3-r2",
       "service_port": 8088,
       "homepage_url": "https://github.com/tailscale/tailscale",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/tailscale/fnos/ICON_256.PNG",
@@ -3137,7 +3305,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-11T12:47:52Z",
+      "updated_at": "2026-09-13T05:42:50Z",
       "download_count": 272,
       "app_type": "docker",
       "category": "network"
@@ -3288,6 +3456,27 @@
       "download_count": 51,
       "app_type": "docker",
       "category": "media"
+    },
+    {
+      "slug": "vikunja",
+      "appname": "vikunja",
+      "file_prefix": "vikunja",
+      "display_name": "Vikunja",
+      "description": "开源待办清单与项目看板（列表/看板/甘特/日历多视图），单文件运行、SQLite 存储，配手机 App 与 CalDAV 同步",
+      "version": "2.6.0",
+      "fpk_version": "2.6.0",
+      "release_tag": "vikunja/v2.6.0",
+      "service_port": 3456,
+      "homepage_url": "https://vikunja.io",
+      "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/vikunja/fnos/ICON_256.PNG",
+      "platforms": [
+        "x86",
+        "arm"
+      ],
+      "updated_at": "2026-09-13T05:43:43Z",
+      "download_count": 0,
+      "app_type": "native",
+      "category": "content"
     },
     {
       "slug": "visor",
@@ -3457,195 +3646,6 @@
       "app_type": "docker",
       "category": "automation",
       "post_install_note": "ZoneFoundry Bridge 客户端容器使用 host 网络模式运行。首次启动后到容器日志里找一行『Setup code: ZF-XXXX』，在 ZoneFoundry iOS app → 更多 → 桥接 → + → 输入设置码 中填入即可（~5 秒内自动配对完成）。"
-    },
-    {
-      "slug": "aellus",
-      "appname": "aellus",
-      "file_prefix": "aellus",
-      "display_name": "Aellus",
-      "description": "轻量局域网文件互传工具：手机 / 电脑浏览器访问 NAS 地址即可上传、浏览与下载文件，零配置、免流量、不经过中转服务器。文件按设备名归档、自动加时间戳防覆盖；删除与路径修改仅限本机（飞牛桌面打开）操作，远程设备只读，防误删。",
-      "version": "1.0.0",
-      "fpk_version": "1.0.0",
-      "release_tag": "aellus/v1.0.0",
-      "service_port": 8000,
-      "homepage_url": "https://github.com/YGQ8988/Aellus",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/aellus/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T17:06:56Z",
-      "download_count": 4,
-      "app_type": "native",
-      "category": "network"
-    },
-    {
-      "slug": "frps",
-      "appname": "frps",
-      "file_prefix": "frps",
-      "display_name": "FRP Server",
-      "description": "高性能内网穿透服务端（frps）：配合 frpc 客户端将 NAS 或内网服务暴露到公网服务器，内置 Web 管理面板（7500 端口，初始密码见应用日志）",
-      "version": "0.71.0",
-      "fpk_version": "0.71.0",
-      "release_tag": "frps/v0.71.0",
-      "service_port": 7000,
-      "homepage_url": "https://github.com/fatedier/frp",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/frps/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:03:02Z",
-      "download_count": 0,
-      "app_type": "native",
-      "category": "network"
-    },
-    {
-      "slug": "glance",
-      "appname": "glance",
-      "file_prefix": "glance",
-      "display_name": "Glance",
-      "description": "高颜值自托管仪表盘：一页聚合 RSS、书签、站点监控、Docker 状态、市场行情等数十种小组件",
-      "version": "0.8.6",
-      "fpk_version": "0.8.6",
-      "release_tag": "glance/v0.8.6",
-      "service_port": 9678,
-      "homepage_url": "https://github.com/glanceapp/glance",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/glance/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:04:38Z",
-      "download_count": 0,
-      "app_type": "native",
-      "category": "system"
-    },
-    {
-      "slug": "homebox",
-      "appname": "homebox",
-      "file_prefix": "homebox",
-      "display_name": "Homebox",
-      "description": "家庭物品资产管理与库存系统：登记家当、拍照归档、位置/标签/保修期管理，搬家与理赔好帮手",
-      "version": "0.26.2",
-      "fpk_version": "0.26.2",
-      "release_tag": "homebox/v0.26.2",
-      "service_port": 7745,
-      "homepage_url": "https://homebox.software",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/homebox/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:03:05Z",
-      "download_count": 0,
-      "app_type": "native",
-      "category": "system"
-    },
-    {
-      "slug": "metube",
-      "appname": "metube",
-      "file_prefix": "metube",
-      "display_name": "MeTube",
-      "description": "网页版 yt-dlp 下载器：粘贴链接即下，支持 YouTube/B 站等上千站点、多任务队列与音视频格式选择，文件自动落盘到 NAS",
-      "version": "latest-2026.09.12",
-      "fpk_version": "latest-2026.09.12",
-      "release_tag": "metube/vlatest-2026.09.12",
-      "service_port": 8281,
-      "homepage_url": "https://github.com/alexta69/metube",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/metube/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:02:56Z",
-      "download_count": 0,
-      "app_type": "docker",
-      "category": "download"
-    },
-    {
-      "slug": "pocket-id",
-      "appname": "pocket-id",
-      "file_prefix": "pocket-id",
-      "display_name": "Pocket ID",
-      "description": "轻量 OIDC 单点登录/Passkey 身份提供方：为 Jellyfin、Immich、Nginx Proxy Manager 等自托管应用提供「指纹/Passkey 免密码」统一登录，无需暴露密码",
-      "version": "2.14.0",
-      "fpk_version": "2.14.0",
-      "release_tag": "pocket-id/v2.14.0",
-      "service_port": 1411,
-      "homepage_url": "https://pocket-id.org",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/pocket-id/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:03:03Z",
-      "download_count": 0,
-      "app_type": "native",
-      "category": "system"
-    },
-    {
-      "slug": "rustdesk-server",
-      "appname": "rustdesk-server",
-      "file_prefix": "rustdesk-server",
-      "display_name": "RustDesk Server",
-      "description": "开源远程桌面 RustDesk 的自建服务端（hbbs 信令 + hbbr 中继），让远程控制流量完全不经过第三方服务器；公钥位于应用数据目录，客户端填入 NAS 地址即可使用",
-      "version": "1.1.16",
-      "fpk_version": "1.1.16",
-      "release_tag": "rustdesk-server/v1.1.16",
-      "service_port": 21116,
-      "homepage_url": "https://rustdesk.com",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/rustdesk-server/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:02:58Z",
-      "download_count": 0,
-      "app_type": "native",
-      "category": "network"
-    },
-    {
-      "slug": "siyuan",
-      "appname": "siyuan",
-      "file_prefix": "siyuan",
-      "display_name": "SiYuan 思源笔记",
-      "description": "隐私优先的块级笔记与双向链接知识库（内核服务器模式），支持网页端访问、多端数据同步与 S3/WebDAV 备份",
-      "version": "3.8.3",
-      "fpk_version": "3.8.3",
-      "release_tag": "siyuan/v3.8.3",
-      "service_port": 6806,
-      "homepage_url": "https://b3log.org/siyuan",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/siyuan/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:02:55Z",
-      "download_count": 0,
-      "app_type": "docker",
-      "category": "content"
-    },
-    {
-      "slug": "vikunja",
-      "appname": "vikunja",
-      "file_prefix": "vikunja",
-      "display_name": "Vikunja",
-      "description": "开源待办清单与项目看板（列表/看板/甘特/日历多视图），单文件运行、SQLite 存储，配手机 App 与 CalDAV 同步",
-      "version": "2.6.0",
-      "fpk_version": "2.6.0",
-      "release_tag": "vikunja/v2.6.0",
-      "service_port": 3456,
-      "homepage_url": "https://vikunja.io",
-      "icon_url": "https://raw.githubusercontent.com/conversun/fnos-apps/main/apps/vikunja/fnos/ICON_256.PNG",
-      "platforms": [
-        "x86",
-        "arm"
-      ],
-      "updated_at": "2026-09-12T19:03:01Z",
-      "download_count": 0,
-      "app_type": "native",
-      "category": "content"
     }
   ]
 }
