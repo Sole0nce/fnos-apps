@@ -4,7 +4,7 @@
 
 ## OVERVIEW
 
-Monorepo packaging **155** third-party apps as `.fpk` installers for fnOS NAS. Pure bash — downloads
+Monorepo packaging **165** third-party apps as `.fpk` installers for fnOS NAS. Pure bash — downloads
 upstream release artifacts (or references upstream Docker images), merges them with a shared lifecycle
 framework, and emits `.fpk` tarballs. Daily CI tracks upstream versions and publishes per-app GitHub
 releases; `apps.json` is regenerated from those releases and is what the app store reads.
@@ -13,8 +13,8 @@ Two packaging modes:
 
 | Mode | Count | Shape |
 |---|---:|---|
-| **Docker** | 102 | `apps/<slug>/fnos/docker/docker-compose.yaml`; `app.tgz` holds only the compose file + UI |
-| **Native** | 53 | upstream binary repackaged into `app.tgz`; driven by `cmd/service-setup` |
+| **Docker** | 106 | `apps/<slug>/fnos/docker/docker-compose.yaml`; `app.tgz` holds only the compose file + UI |
+| **Native** | 59 | upstream binary repackaged into `app.tgz`; driven by `cmd/service-setup` |
 
 ## STRUCTURE
 
