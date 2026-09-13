@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T19:04:54Z",
+  "generated_at": "2026-09-13T05:54:52Z",
   "source": {
     "name": "conversun/fnos-apps",
     "url": "https://github.com/conversun/fnos-apps"
@@ -171,7 +171,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T08:02:15Z",
-      "download_count": 50,
+      "download_count": 52,
       "app_type": "docker",
       "category": "system"
     },
@@ -444,7 +444,7 @@
         "arm"
       ],
       "updated_at": "2026-09-03T08:07:38Z",
-      "download_count": 237,
+      "download_count": 240,
       "app_type": "docker",
       "category": "system"
     },
@@ -738,7 +738,7 @@
         "arm"
       ],
       "updated_at": "2026-09-09T08:03:54Z",
-      "download_count": 802,
+      "download_count": 818,
       "app_type": "native",
       "category": "media"
     },
@@ -970,7 +970,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:03:02Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "native",
       "category": "network"
     },
@@ -1012,7 +1012,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:04:38Z",
-      "download_count": 0,
+      "download_count": 9,
       "app_type": "native",
       "category": "system"
     },
@@ -1201,7 +1201,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:03:05Z",
-      "download_count": 0,
+      "download_count": 3,
       "app_type": "native",
       "category": "system"
     },
@@ -1390,7 +1390,7 @@
         "arm"
       ],
       "updated_at": "2026-08-17T09:51:26Z",
-      "download_count": 133,
+      "download_count": 135,
       "app_type": "docker",
       "category": "content"
     },
@@ -1833,7 +1833,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:02:56Z",
-      "download_count": 0,
+      "download_count": 8,
       "app_type": "docker",
       "category": "download"
     },
@@ -1875,7 +1875,7 @@
         "arm"
       ],
       "updated_at": "2026-08-24T20:08:31Z",
-      "download_count": 1383,
+      "download_count": 1394,
       "app_type": "native",
       "category": "network"
     },
@@ -1938,7 +1938,7 @@
         "arm"
       ],
       "updated_at": "2026-08-24T02:54:34Z",
-      "download_count": 496,
+      "download_count": 499,
       "app_type": "docker",
       "category": "content",
       "post_install_note": "请在 Web UI 中设置媒体库和下载目录，确保与下载工具（如 qBittorrent）使用的路径一致。"
@@ -2507,7 +2507,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:03:03Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "native",
       "category": "system"
     },
@@ -2591,7 +2591,7 @@
         "arm"
       ],
       "updated_at": "2026-08-17T08:46:58Z",
-      "download_count": 1137,
+      "download_count": 1155,
       "app_type": "native",
       "category": "download"
     },
@@ -2633,7 +2633,7 @@
         "arm"
       ],
       "updated_at": "2026-09-11T08:02:31Z",
-      "download_count": 53,
+      "download_count": 54,
       "app_type": "docker",
       "category": "system"
     },
@@ -2759,7 +2759,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:02:58Z",
-      "download_count": 0,
+      "download_count": 2,
       "app_type": "native",
       "category": "network"
     },
@@ -2865,7 +2865,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:02:55Z",
-      "download_count": 0,
+      "download_count": 5,
       "app_type": "docker",
       "category": "content"
     },
@@ -3096,7 +3096,7 @@
         "arm"
       ],
       "updated_at": "2026-08-17T09:51:16Z",
-      "download_count": 108,
+      "download_count": 111,
       "app_type": "docker",
       "category": "media"
     },
@@ -3306,7 +3306,7 @@
         "arm"
       ],
       "updated_at": "2026-09-12T19:03:01Z",
-      "download_count": 0,
+      "download_count": 3,
       "app_type": "native",
       "category": "content"
     },
