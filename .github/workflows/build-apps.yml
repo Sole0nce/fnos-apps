@@ -69,6 +69,10 @@ jobs:
               echo "::error::App '$APP' is distributor-built (no scripts/apps/$APP/meta.env) — released by external repo, cannot build here"
               exit 1
             fi
+            if [ "${{ github.ref_name }}" = "main" ] && [ "$APP" = "fnos-apps-store" ]; then
+              echo "::error::fnos-apps-store is fork-owned — build it from main_custom, not the upstream mirror branch"
+              exit 1
+            fi
             MATRIX="[\"$APP\"]"
 
           elif [ "$EVENT" = "schedule" ]; then
@@ -98,6 +102,19 @@ jobs:
                 fi
               fi
             fi
+          fi
+
+          # Fork-owned apps are released from main_custom ONLY. This branch is the
+          # upstream mirror: a build here packages upstream's manifest (distributor
+          # = conversun) plus upstream's binaries into THIS fork's releases, then the
+          # store offers that as an update and installs it over the fork build — the
+          # way fnos-apps-store reverted to the conversun publisher on 1.9.5.
+          FORK_OWNED_APPS="fnos-apps-store"
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            for fork_app in $FORK_OWNED_APPS; do
+              MATRIX=$(printf '%s' "$MATRIX" | jq -c --arg a "$fork_app" 'map(select(. != $a))')
+            done
+            echo "main mirror branch: fork-owned apps filtered out"
           fi
 
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
