@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T13:26:33Z",
+  "generated_at": "2026-09-17T13:24:23Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -244,9 +244,9 @@
       "file_prefix": "audiobookshelf",
       "display_name": "Audiobookshelf",
       "description": "自托管的有声书和播客服务器，支持多用户管理、进度同步和丰富的元数据管理。",
-      "version": "2.36.0",
-      "fpk_version": "2.36.0-r10",
-      "release_tag": "audiobookshelf/v2.36.0-r10",
+      "version": "2.36.1",
+      "fpk_version": "2.36.1",
+      "release_tag": "audiobookshelf/v2.36.1",
       "service_port": 13378,
       "homepage_url": "https://www.audiobookshelf.org",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/audiobookshelf/fnos/ICON_256.PNG",
@@ -254,7 +254,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-13T05:48:21Z",
+      "updated_at": "2026-09-17T13:24:05Z",
       "download_count": 71,
       "app_type": "docker",
       "category": "content"
@@ -812,9 +812,9 @@
       "file_prefix": "ezbookkeeping",
       "display_name": "EZBookkeeping",
       "description": "轻量级个人记账应用，支持多币种、多账户和预算管理",
-      "version": "1.6.1",
-      "fpk_version": "1.6.1-r11",
-      "release_tag": "ezbookkeeping/v1.6.1-r11",
+      "version": "2.0.0",
+      "fpk_version": "2.0.0",
+      "release_tag": "ezbookkeeping/v2.0.0",
       "service_port": 8580,
       "homepage_url": "https://github.com/mayswind/ezbookkeeping",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ezbookkeeping/fnos/ICON_256.PNG",
@@ -822,7 +822,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-13T05:47:47Z",
+      "updated_at": "2026-09-17T13:24:17Z",
       "download_count": 98,
       "app_type": "native",
       "category": "system"
@@ -1190,9 +1190,9 @@
       "file_prefix": "hermes",
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
-      "version": "2026.9.16",
-      "fpk_version": "2026.9.16",
-      "release_tag": "hermes/v2026.9.16",
+      "version": "2026.9.17",
+      "fpk_version": "2026.9.17",
+      "release_tag": "hermes/v2026.9.17",
       "service_port": 9120,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
@@ -1200,7 +1200,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-16T13:24:42Z",
+      "updated_at": "2026-09-17T13:24:13Z",
       "download_count": 23,
       "app_type": "docker",
       "category": "ai"
