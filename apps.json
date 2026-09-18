@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-18T13:01:35Z",
+  "generated_at": "2026-09-18T13:01:56Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -2980,9 +2980,9 @@
       "file_prefix": "seafile",
       "display_name": "Seafile",
       "description": "开源文件同步与共享平台",
-      "version": "13.0.25",
-      "fpk_version": "13.0.25-r11",
-      "release_tag": "seafile/v13.0.25-r11",
+      "version": "13.0.28",
+      "fpk_version": "13.0.28",
+      "release_tag": "seafile/v13.0.28",
       "service_port": 8002,
       "homepage_url": "https://github.com/haiwen/seafile-docker",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/seafile/fnos/ICON_256.PNG",
@@ -2990,7 +2990,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-13T05:49:57Z",
+      "updated_at": "2026-09-18T13:01:40Z",
       "download_count": 20,
       "app_type": "docker",
       "category": "content"
