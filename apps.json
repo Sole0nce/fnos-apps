@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T15:05:49Z",
+  "generated_at": "2026-09-21T15:06:13Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -1421,9 +1421,9 @@
       "file_prefix": "jackett",
       "display_name": "Jackett",
       "description": "Torrent 索引器代理，为 Sonarr/Radarr 等工具提供统一的搜索接口。",
-      "version": "0.24.2627",
-      "fpk_version": "0.24.2627",
-      "release_tag": "jackett/v0.24.2627",
+      "version": "0.24.2631",
+      "fpk_version": "0.24.2631",
+      "release_tag": "jackett/v0.24.2631",
       "service_port": 9117,
       "homepage_url": "https://github.com/Jackett/Jackett",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/jackett/fnos/ICON_256.PNG",
@@ -1431,7 +1431,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-20T13:05:50Z",
+      "updated_at": "2026-09-21T15:05:46Z",
       "download_count": 165,
       "app_type": "native",
       "category": "automation"
@@ -1948,9 +1948,9 @@
       "file_prefix": "memos",
       "display_name": "Memos",
       "description": "轻量级自托管笔记服务,支持Markdown,适合个人知识管理和日常记录。",
-      "version": "0.30.0",
-      "fpk_version": "0.30.0-r10",
-      "release_tag": "memos/v0.30.0-r10",
+      "version": "0.31.0",
+      "fpk_version": "0.31.0",
+      "release_tag": "memos/v0.31.0",
       "service_port": 5230,
       "homepage_url": "https://www.usememos.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/memos/fnos/ICON_256.PNG",
@@ -1958,7 +1958,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-13T05:48:52Z",
+      "updated_at": "2026-09-21T15:05:51Z",
       "download_count": 63,
       "app_type": "native",
       "category": "content"
