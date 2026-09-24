@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-24T13:31:16Z",
+  "generated_at": "2026-09-24T13:32:56Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -3442,9 +3442,9 @@
       "file_prefix": "vibenvr",
       "display_name": "VibeNVR",
       "description": "AI 网络视频录像机，支持摄像头管理、录像与硬件加速转码。",
-      "version": "1.35.8",
-      "fpk_version": "1.35.8",
-      "release_tag": "vibenvr/v1.35.8",
+      "version": "1.36.0",
+      "fpk_version": "1.36.0",
+      "release_tag": "vibenvr/v1.36.0",
       "service_port": 8087,
       "homepage_url": "https://github.com/spupuz/VibeNVR",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/vibenvr/fnos/ICON_256.PNG",
@@ -3452,7 +3452,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-21T15:05:37Z",
+      "updated_at": "2026-09-24T13:32:35Z",
       "download_count": 51,
       "app_type": "docker",
       "category": "media"
