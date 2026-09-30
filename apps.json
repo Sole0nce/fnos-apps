@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-30T14:52:51Z",
+  "generated_at": "2026-09-30T14:53:18Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -769,9 +769,9 @@
       "file_prefix": "embyserver",
       "display_name": "Emby",
       "description": "EmbyServer是一款软件媒体系统，可让您控制媒体的管理和流式传输。可以通过多个应用程序将专用服务器中的媒体提供给最终用户设备。",
-      "version": "4.10.0.40",
-      "fpk_version": "4.10.0.40-r2",
-      "release_tag": "emby/v4.10.0.40-r2",
+      "version": "4.10.1.0",
+      "fpk_version": "4.10.1.0",
+      "release_tag": "emby/v4.10.1.0",
       "service_port": 8096,
       "homepage_url": "https://emby.media",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/emby/fnos/ICON_256.PNG",
@@ -779,7 +779,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-13T05:49:07Z",
+      "updated_at": "2026-09-30T14:53:07Z",
       "download_count": 787,
       "app_type": "native",
       "category": "media"
@@ -790,9 +790,9 @@
       "file_prefix": "ente",
       "display_name": "Ente",
       "description": "端到端加密照片备份和存储服务，Google Photos 的隐私替代方案。",
-      "version": "latest-2026.09.29",
-      "fpk_version": "latest-2026.09.29",
-      "release_tag": "ente/vlatest-2026.09.29",
+      "version": "latest-2026.09.30",
+      "fpk_version": "latest-2026.09.30",
+      "release_tag": "ente/vlatest-2026.09.30",
       "service_port": 8510,
       "homepage_url": "https://ente.io",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ente/fnos/ICON_256.PNG",
@@ -800,7 +800,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-29T14:53:40Z",
+      "updated_at": "2026-09-30T14:52:52Z",
       "download_count": 60,
       "app_type": "docker",
       "category": "media",
