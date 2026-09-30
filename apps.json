@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-30T14:52:23Z",
+  "generated_at": "2026-09-30T14:52:51Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -244,9 +244,9 @@
       "file_prefix": "audiobookshelf",
       "display_name": "Audiobookshelf",
       "description": "自托管的有声书和播客服务器，支持多用户管理、进度同步和丰富的元数据管理。",
-      "version": "2.37.0",
-      "fpk_version": "2.37.0",
-      "release_tag": "audiobookshelf/v2.37.0",
+      "version": "2.37.1",
+      "fpk_version": "2.37.1",
+      "release_tag": "audiobookshelf/v2.37.1",
       "service_port": 13378,
       "homepage_url": "https://www.audiobookshelf.org",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/audiobookshelf/fnos/ICON_256.PNG",
@@ -254,7 +254,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-29T14:53:37Z",
+      "updated_at": "2026-09-30T14:52:22Z",
       "download_count": 71,
       "app_type": "docker",
       "category": "content"
@@ -1022,9 +1022,9 @@
       "file_prefix": "gitea",
       "display_name": "Gitea",
       "description": "轻量级 Git 代码托管服务器，提供代码仓库、Issue 追踪和 CI/CD。",
-      "version": "1.27.3",
-      "fpk_version": "1.27.3-r2",
-      "release_tag": "gitea/v1.27.3-r2",
+      "version": "28.0.0",
+      "fpk_version": "28.0.0",
+      "release_tag": "gitea/v28.0.0",
       "service_port": 3033,
       "homepage_url": "https://gitea.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/gitea/fnos/ICON_256.PNG",
@@ -1032,7 +1032,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-13T05:48:07Z",
+      "updated_at": "2026-09-30T14:52:34Z",
       "download_count": 191,
       "app_type": "native",
       "category": "system"
@@ -1190,9 +1190,9 @@
       "file_prefix": "hermes",
       "display_name": "Hermes-容器版",
       "description": "自进化 AI 智能体，支持多模型供应商、多消息平台接入，具备持久记忆与工具调用能力。",
-      "version": "2026.9.29",
-      "fpk_version": "2026.9.29",
-      "release_tag": "hermes/v2026.9.29",
+      "version": "2026.9.30",
+      "fpk_version": "2026.9.30",
+      "release_tag": "hermes/v2026.9.30",
       "service_port": 9120,
       "homepage_url": "https://github.com/NousResearch/hermes-agent",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/hermes/fnos/ICON_256.PNG",
@@ -1200,7 +1200,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-29T14:53:55Z",
+      "updated_at": "2026-09-30T14:52:28Z",
       "download_count": 23,
       "app_type": "docker",
       "category": "ai"
