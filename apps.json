@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-05T17:05:13Z",
+  "generated_at": "2026-10-05T17:05:35Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -1990,9 +1990,9 @@
       "file_prefix": "metube",
       "display_name": "MeTube",
       "description": "网页版 yt-dlp 下载器：粘贴链接即下，支持 YouTube/B 站等上千站点、多任务队列与音视频格式选择，文件自动落盘到 NAS",
-      "version": "latest-2026.10.04",
-      "fpk_version": "latest-2026.10.04",
-      "release_tag": "metube/vlatest-2026.10.04",
+      "version": "latest-2026.10.05",
+      "fpk_version": "latest-2026.10.05",
+      "release_tag": "metube/vlatest-2026.10.05",
       "service_port": 8281,
       "homepage_url": "https://github.com/alexta69/metube",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/metube/fnos/ICON_256.PNG",
@@ -2000,7 +2000,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-10-04T13:54:07Z",
+      "updated_at": "2026-10-05T17:05:26Z",
       "download_count": 0,
       "app_type": "docker",
       "category": "download"
@@ -2328,9 +2328,9 @@
       "file_prefix": "nginx-ui",
       "display_name": "Nginx UI",
       "description": "Nginx可视化管理面板，内置Nginx引擎，支持在线编辑配置、一键Reload、SSL证书管理。",
-      "version": "2.8.2",
-      "fpk_version": "2.8.2",
-      "release_tag": "nginx-ui/v2.8.2",
+      "version": "2.8.3",
+      "fpk_version": "2.8.3",
+      "release_tag": "nginx-ui/v2.8.3",
       "service_port": 8889,
       "homepage_url": "https://github.com/0xJacky/nginx-ui",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/nginx-ui/fnos/ICON_256.PNG",
@@ -2338,7 +2338,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-10-02T14:41:43Z",
+      "updated_at": "2026-10-05T17:05:12Z",
       "download_count": 177,
       "app_type": "native",
       "category": "system"
@@ -2727,9 +2727,9 @@
       "file_prefix": "puter",
       "display_name": "Puter",
       "description": "开源云桌面环境,在浏览器中提供完整的桌面体验,支持文件管理和应用生态。",
-      "version": "26.09.1",
-      "fpk_version": "26.09.1",
-      "release_tag": "puter/v26.09.1",
+      "version": "26.10",
+      "fpk_version": "26.10",
+      "release_tag": "puter/v26.10",
       "service_port": 4100,
       "homepage_url": "https://puter.com",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/puter/fnos/ICON_256.PNG",
@@ -2737,7 +2737,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-20T13:05:51Z",
+      "updated_at": "2026-10-05T17:05:10Z",
       "download_count": 54,
       "app_type": "docker",
       "category": "content"
