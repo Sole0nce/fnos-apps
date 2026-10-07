@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T15:29:54Z",
+  "generated_at": "2026-10-07T15:30:21Z",
   "source": {
     "name": "Sole0nce/fnos-apps",
     "url": "https://github.com/Sole0nce/fnos-apps"
@@ -833,9 +833,9 @@
       "file_prefix": "feigram",
       "display_name": "Feigram",
       "description": "非官方 Telegram Web 客户端，支持多账号、聊天、媒体预览和下载缓存",
-      "version": "2.6.47",
-      "fpk_version": "2.6.47",
-      "release_tag": "feigram/v2.6.47",
+      "version": "2.6.49",
+      "fpk_version": "2.6.49",
+      "release_tag": "feigram/v2.6.49",
       "service_port": 3088,
       "homepage_url": "https://github.com/g-star1024/Feigram-Public",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/feigram/fnos/ICON_256.PNG",
@@ -843,7 +843,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-09-27T13:52:26Z",
+      "updated_at": "2026-10-07T15:29:54Z",
       "download_count": 276,
       "app_type": "native",
       "category": "content"
@@ -2433,9 +2433,9 @@
       "file_prefix": "ollama",
       "display_name": "Ollama",
       "description": "本地大语言模型运行引擎，支持 Llama、Mistral、Gemma 等开源模型。",
-      "version": "0.35.1",
-      "fpk_version": "0.35.1",
-      "release_tag": "ollama/v0.35.1",
+      "version": "0.40.0",
+      "fpk_version": "0.40.0",
+      "release_tag": "ollama/v0.40.0",
       "service_port": 11434,
       "homepage_url": "https://github.com/ollama/ollama",
       "icon_url": "https://raw.githubusercontent.com/Sole0nce/fnos-apps/main_custom/apps/ollama/fnos/ICON_256.PNG",
@@ -2443,7 +2443,7 @@
         "x86",
         "arm"
       ],
-      "updated_at": "2026-10-03T13:17:15Z",
+      "updated_at": "2026-10-07T15:29:49Z",
       "download_count": 159,
       "app_type": "docker",
       "category": "ai"
